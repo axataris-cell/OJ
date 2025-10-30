@@ -26,4 +26,3 @@ git push -u origin main
 echo ============================
 echo   Push complete!
 echo ============================
-pause
