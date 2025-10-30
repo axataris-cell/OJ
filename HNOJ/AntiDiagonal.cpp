@@ -13,10 +13,10 @@ int main() {
     for (int s = 2; s <= n + m; s++) {
         // s = i + j
         vector<pair<int, int>> diag;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= n; i++) { // Ch?n i t? 1  ->  n
             int j = s - i;
-            if (j >= 1 && j <= m)
-                diag.push_back({i, j});
+            if (j >= 1 && j <= m) // Ch?n j t? 1  ->  m
+                diag.push_back({i, j}); 
         }
 
         if (s % 2 == 0)
