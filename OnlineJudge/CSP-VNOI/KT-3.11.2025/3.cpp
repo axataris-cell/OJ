@@ -10,29 +10,22 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-int A[105] = {};
+int A[1000005] = {};
 
 void testcase() {
 	int n; cin >> n;
-	ll te = 0;
-	ll to = 0;
-	
-	for (int i = 0; i < n; i++) {
+	for (int i = 1; i <= n; i++) {
 		cin >> A[i];
-		if (A[i] & 1) ++to;
-		else ++te;
 	}
-	
-	if (te & 1) {
-		if (to >= 2 && to % 2 == 0) {
-			cout << "YES" << el;
-		} else {
-			cout << "NO" << el;
-		}
-	} else {
-		if (to & 1) cout << "NO" << el;
-		else cout << "YES" << el;
+	sort(A + 1, A + n + 1);
+//	for (int i = 1; i <= n; i++) cout << A[i] << ' ';
+//	cout << el;
+	ll res = 0;
+	for (int i = 1; i <= n; i += 2) {
+		res += A[i + 1] - A[i];
+//		cout << res << ' ' << i << el;
 	}
+	cout << res;
 }
 
 int main() {
@@ -42,7 +35,7 @@ int main() {
 
 	//file();
 
-	ll t = 1; cin >> t;
+	ll t = 1; //cin >> t;
 	while (t--) testcase();
 
 	return 0;

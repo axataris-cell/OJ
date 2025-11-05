@@ -5,32 +5,24 @@
 
 using namespace std;
 
-void file() {
-	freopen("", "r", stdin);
-	freopen("", "w", stdout);
-}	
-
 const int MAXN = 6005;
 int A[MAXN] = {};
+int f[MAXN] = {};
 
 void testcase() {
-	int n, l; cin >> n >> l;
-	ll res = 0;
-	ll cur = 0;
+	int n, l;
+	cin >> n >> l;
+	for (int i = 1; i <= n; i++) cin >> A[i];
 	
 	for (int i = 1; i <= n; i++) {
-		cin >> A[i];
-		if (cur + A[i] <= l) {
-			cur += A[i];
-			res = max(res, l - cur);
-		} else {
-			cur = A[i];
-			res = max(res, l - cur);
+		f[i] = l + 1;
+		int j = i, S = A[i];
+		while (j > 0 && S <= l) {
+			f[i] = min(f[i], max(f[j - 1], l - S));
+			S += A[--j];
 		}
 	}
-	
-	cout << res;
-	
+	cout << f[n];
 }
 
 int main() {
@@ -38,9 +30,7 @@ int main() {
 	cin.tie(nullptr);
 	cout.tie(nullptr);
 
-	//file();
-
-	ll t = 1; //cin >> t;
+	ll t = 1; // cin >> t;
 	while (t--) testcase();
 
 	return 0;

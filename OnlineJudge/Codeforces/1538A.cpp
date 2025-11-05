@@ -14,25 +14,19 @@ int A[105] = {};
 
 void testcase() {
 	int n; cin >> n;
-	ll te = 0;
-	ll to = 0;
 	
-	for (int i = 0; i < n; i++) {
+	// Index, Value
+	pair<int, int> mx = {0, 0};
+	pair<int, int> mn = {0, n + 1};
+	for (int i = 1; i <= n; i++) {
 		cin >> A[i];
-		if (A[i] & 1) ++to;
-		else ++te;
+		if (mx.second < A[i]) mx = {i, A[i]};
+		if (mn.second > A[i]) mn = {i, A[i]};
 	}
+	cout << "OUTPUT" << el;
+	cout << mx.second << ' ' << mx.first << el;
+	cout << mn.second << ' ' << mn.first << el;
 	
-	if (te & 1) {
-		if (to >= 2 && to % 2 == 0) {
-			cout << "YES" << el;
-		} else {
-			cout << "NO" << el;
-		}
-	} else {
-		if (to & 1) cout << "NO" << el;
-		else cout << "YES" << el;
-	}
 }
 
 int main() {
