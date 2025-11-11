@@ -23,11 +23,12 @@ void testcase() {
 	int q; cin >> q;
 	while (q--) {
 		int l, r; cin >> l >> r;
-		++S[l - 1]; --S[r];
+		++S[l]; --S[r + 1];
 	}
 	
-	for (int i = 1; i <= n; i++) {
-		B[i] = S[i] + S[i - 1];
+	B[1] = S[1]; cout << B[1] << ' ';
+	for (int i = 2; i <= n; i++) {
+		B[i] = S[i] + B[i - 1];
 		cout << B[i] << ' ';
 	}
 	
