@@ -10,21 +10,27 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-int x[100005] = {};
-int v[100005] = {};
-int r[100005] = {}; // Vị trí sau t thời gian
+int A[100005] = {};
+int S[100005] = {};
+int B[100005] = {};
 
 void testcase() {
-	int n, t; cin >> n >> t;
-	int cnt = 0;
-	r[0] = 0;
+	int n; cin >> n;
 	for (int i = 1; i <= n; i++) {
-		cin >> x[i] >> v[i];
-		r[i] = x[i] + v[i]*t; //s = s0 + v*t
-		if (r[i] > r[i - 1]) ++cnt;
+		cin >> A[i];
+		S[i] = A[i] - A[i - 1];
 	}
-	cout << cnt;
+	int q; cin >> q;
+	while (q--) {
+		int l, r; cin >> l >> r;
+		++S[l]; --S[r + 1];
+	}
 	
+	B[1] = S[1]; cout << B[1] << ' ';
+	for (int i = 2; i <= n; i++) {
+		B[i] = S[i] + B[i - 1];
+		cout << B[i] << ' ';
+	}
 	
 }
 
