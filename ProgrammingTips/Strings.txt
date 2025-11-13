@@ -1,0 +1,33 @@
+BA THUẬT XỬ LÍ XÂU HAY DÙNG
+
+#-------------------------------------------------------------------------#
+
+Hàm Z
+
+Cho một xâu s. Định nghĩa Z[i] là độ dài substring lớn nhất bắt đầu từ i trong s sao cho substring đó khớp với tiền tố của s với độ dài tương tự.
+
+Ý tưởng: Giữ một cửa sổ với hai giá trị L, R là khoảng xa nhất mà ta đã biết là chắc chắn trùng với tiền tố trong S.
+
+Khi xét tới i. Nếu i thuộc đoạn L, R thì chúng ta sẽ có công thức Z[i] = min(R - i + 1, z[i - L])
+
+Giải thích: Nếu ta đã có string 0....(R-L) trong s bằng với string L.....R trong s thì đương nhiên chúng ta cũng có string
+0.....(i - L) trong xâu s bằng với i....R (khi i <= R).
+Vậy nên chúng ta có Z[i] = Z[i - L].
+Tuy nhiên, chúng ta phải giới hạn cái Z[i - L] này lại bởi nếu khung cửa sổ TẠI I bằng với giá trị Z[i - L] vượt quá giới hạn R mà ta đã biết chắc trùng với một đoạn substring gần tiền tố, thì ta không thể chắc chắn.
+Nên quan trọng là Z[i - L] phải <= R - i + 1. nếu nó vượt qua thì chúng ta sẽ chỉ chắc chắn tới R-i+1 thôi nên gán Z[i] luôn cho R-i+1.
+
+Tiếp đó, chúng ta sẽ mở rộng cái cửa sổ tại i khi mà kí tự tiếp theo của substring đang xét vẫn trùng với kí tự tiếp theo của tiền tố.
+Tức là while (i + z[i] < n && s[i + z[i]] = s[z[i]]) ++z[i];
+
+Cuối cùng thì nếu cái cửa sổ của i đã vượt qua cả R thì chúng ta cập nhật L và R cho i và i + z[i] - 1.
+
+Code mẫu ở trong file ZFunction
+
+#-------------------------------------------------------------------------#
+
+Hàm Tiền Tố
+
+Cho một string s. Định nghĩa S[i] là độ dài lớn nhất sao cho tồn tại một substring vừa là tiền tố vừa là hậu tố của string s[0].....s[i]
+
+Ý tưởng: 
+
