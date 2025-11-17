@@ -18,20 +18,23 @@ void testcase() {
 	int n; cin >> n;
 	for (int i = 1; i <= n; i++) {
 		cin >> A[i];
+	}
+	S[1] = A[1];
+	for (int i = 2; i <= n; i++) {
 		S[i] = A[i] - A[i - 1];
 	}
+	
 	int q; cin >> q;
 	while (q--) {
 		int l, r; cin >> l >> r;
-		++S[l]; --S[r + 1];
+		++S[l];
+		if (r < n) --S[r + 1];
 	}
-	
 	B[1] = S[1]; cout << B[1] << ' ';
 	for (int i = 2; i <= n; i++) {
-		B[i] = S[i] + B[i - 1];
+		B[i] = B[i - 1] + S[i];
 		cout << B[i] << ' ';
 	}
-	
 }
 
 int main() {
