@@ -10,14 +10,28 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-int dp[1000005][2] = {};
+int f[1000005] = {};
+int g[1000005] = {};
 
 void testcase() {
 	string s; cin >> s;
-	dp[0] = 0; dp[1] = 0;
-	for (int i = 1; i < s.length(); i++) {
-		
+	if (s[0] == 'A') {
+		f[0] = 0;
+		g[0] = 1;
+	} else {
+		f[0] = 1;
+		g[0] = 0;
 	}
+	for (int i = 1; i < s.length(); i++) {
+		if (s[i] == 'A') {
+			f[i] = f[i - 1];
+			g[i] = min(g[i - 1] + 1, f[i - 1] + 1);
+		} else {
+			f[i] = min(f[i - 1] + 1, g[i - 1] + 1);
+			g[i] = g[i - 1];
+		}
+	}
+	cout << f[s.length() - 1];
 }
 
 int main() {
