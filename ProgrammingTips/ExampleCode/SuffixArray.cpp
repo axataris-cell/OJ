@@ -15,10 +15,13 @@ int F[1000005] = {};
 void testcase() {
 	string s; cin >> s;
 	F[0] = 0;
+	
 	for (int i = 1; i < s.length(); i++) {
 		int j = F[i - 1];
+		
 		while (j > 0 && s[i] != s[j]) j = F[j - 1];
 		if (s[i] == s[j]) ++j;
+		
 		F[i] = j;
 	}
 	
