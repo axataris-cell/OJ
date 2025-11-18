@@ -26,6 +26,8 @@ void testcase() {
 	}
 	
 	for (int i = 0; i < s.length(); i++) cout << F[i] << ' ';
+	cout << el;
+	for (int i = 0; i < s.length(); i++) cout << s[i] << ' ';
 }
 
 int main() {
