@@ -23,24 +23,6 @@ void testcase() {
 	}
 	
 	for (int i = 0; i < s.length(); i++) cout << F[i] << ' ';
-	
-	int p = 0;
-	int cnt = 0;
-	
-	F[0] = 0;
-	cout << F[0] << ' ';
-	for (int i = 1; i < s.length(); i++) {
-		if (s[p] == s[i]) {
-			++cnt; ++p;
-		} else {
-			cnt = 0; p = 0;
-			if (s[p] == s[i]) {
-				++cnt; ++p;
-			}
-		}
-		F[i] = cnt;
-		cout << F[i] << ' ';
-	}
 }
 
 int main() {
