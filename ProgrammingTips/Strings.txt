@@ -31,3 +31,41 @@ Cho một string s. Định nghĩa S[i] là độ dài lớn nhất sao cho tồ
 
 Ý tưởng: 
 
+Nhận xét 1: Nếu giá trị tiền tố của kí tự trước (kí tự i - 1) là một giá trị != 0 thì chúng ta có thể mở rộng cái đó thêm đúng 1 đơn vị bằng cách xét sự trùng nhau của giá trị i và giá trị tiếp theo trong tiền tố
+
+VD: aaaa
+thì chúng ta có Prefix là 0 1 2 3.
+=> if (s[j] = s[i]) ++j với j = F[i - 1]
+
+Nhận xét 2: Thế nếu như khi muốn mở rộng mà kí tự của chúng không trùng nhau thì sao?
+Giả sử có xâu aabaabaabaac (Suffix: 0 1 0 1 2 3 4 5 6 7 8 0)
+
+Chẳng hạn như chúng ta xét đến giá trị c (tức là i = 11 (0-based)). Ta đã biết rằng giá trị prefix của thằng đằng trước là 8 rồi, và nó đã so sánh tới kí tự 'a' tại vị trí 7.
+Nhưng chúng ta lại thấy kí tự 'b' và kí tự 'c' khi mở rộng lại không khớp nhau.
+Khi này, chúng ta sẽ tận dụng tiền tố của những giá trị trước hơn nữa.
+
+Ta đã biết rằng, F[10] = 8. Tức là hậu tố tính đến vị trí kí tự thứ 10 trùng đến tận 8 kí tự so với tiền tố. Khi đó nếu chúng ta bớt mấy kí tự đầu của cái xâu kí tự con giống nhau đó thì nó cũng result ra một xâu kí tự giống nhau.
+tức 'aabaabaa' (0 1 2 3 4 5 6 7) == 'aabaabaa' ( 3 4 5 6 7 8 9 10)
+thì 'abaabaa' (1 2 3 4 5 6 7) == 'abaabaa' (4 5 6 7 8 9 10)
+Để có thể tính giá trị tiền tố tại vị trí 11 'c' thì chúng ta phải biết xem cái thứ nó bám vào có phải đã là 1 tiền tố hay không.
+Giả sử ta muốn biết 'abaabaa' tại (4 5 6 7 8 9 10) có là tiền tố hay không, thì ta lại xét xem 'abaabaa' (1 2 3 4 5 6 7) có phải tiền tố hay không. Nhận thấy chúng ta đã biết được giá trị hàm tiền tố dài nhất tại vị trí số 7 nên để cái string đó thỏa mãn vừa là hậu tố, tiền tố thì độ dài của nó phải bằng F[7], tức là ta phải cắt xén đi vài kí tự đầu sao cho nó bằng F[7]. Rồi chúng ta lặp lại điều này Cho đến khi độ dài nó về không (1 kí tự).
+
+Từ đó có thể rút ra công thức tổng quát.
+=> while (j > 0 && s[j] != s[i]) j = F[j - 1]; 
+
+Sau tất cả thì hãy đừng quên gắn giá trị của thằng j cho tiền tố tại i
+=> F[i] = j
+
+Code mẫu ở trong file Suffix
+
+#-------------------------------------------------------------------------#
+
+Thuật toán KMP (Knuth - Morris - Pratt)
+
+Cho xâu s và xâu t. Đếm số lần xuất hiện của xâu s trong xâu t.
+
+Cách 1: Sử dụng Hàm Z.
+Ta dựng một xâu c có cấu trúc là s + '#' + t.
+Dựng hàm Z của xâu c. Sau đó xét các giá trị trong hàm z từ vị trí bắt đầu của xâu t trong xâu c trở đi. Mỗi khi giá trị của nó bằng với độ dài xâu s thì đó là 1 lần xuất hiện xâu s.
+
+Cách 2: Sử dụng Hàm Tiền Tố 
