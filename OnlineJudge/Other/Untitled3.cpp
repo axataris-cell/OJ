@@ -10,12 +10,8 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-
 void testcase() {
-	ll n; cin >> n;
-	
+	for (int i = 1; i < 2; i++) cout << 1 << el;
 }
 
 int main() {

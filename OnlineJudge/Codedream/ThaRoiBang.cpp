@@ -10,12 +10,24 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-
+int A[105][105] = {};
 void testcase() {
-	ll n; cin >> n;
+	int n, m, q; cin >> n >> m >> q;
 	
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			cin >> A[i][j];
+		}
+	}
+	
+	while (q--) {
+		int f; cin >> f;
+		if (f == 1) {
+			
+		} else if (f == 2) {
+			
+		}
+	}
 }
 
 int main() {

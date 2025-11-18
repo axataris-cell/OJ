@@ -10,12 +10,22 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-
 void testcase() {
-	ll n; cin >> n;
+	int n; cin >> n;
+	int a, b; cin >> a >> b;
+	vector<int> s(n, 0); // aaa....aaaa
 	
+	int cnt = -1;
+	for (int i = 0; i < n; i++) {
+		++cnt;
+		s[i] = cnt;
+		if (cnt == b - 1) {
+			cnt = -1;
+		}
+	}
+	
+	for (auto x : s) cout << (char)(x + 'a');
+	cout << el;
 }
 
 int main() {
@@ -25,7 +35,7 @@ int main() {
 
 	//file();
 
-	ll t = 1; //cin >> t;
+	ll t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;
