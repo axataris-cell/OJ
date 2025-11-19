@@ -9,17 +9,19 @@ void file() {
 	freopen("", "r", stdin);
 	freopen("", "w", stdout);
 }
-
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-ll a[105] = {};
-
+int A[10000005] = {};
+int F[177013];
 void testcase() {
-	ll n; cin >> n;
-	for (int i = 1; i <= 100; i++) {
-		a[i] = i*i;
+	int n; cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> A[i];
+		++F[A[i] % 177013];
 	}
-	
+	for (int i = 0; i < 177013; i++) {
+		if (F[i] > 0) {
+			for (int j = 1; j <= F[i]; j++) cout << i << ' ';
+		}
+	}
 }
 
 int main() {

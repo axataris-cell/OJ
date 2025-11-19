@@ -10,16 +10,26 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-ll a[105] = {};
+int A[2*100005] = {};
+map<int, int> mp;
 
 void testcase() {
-	ll n; cin >> n;
-	for (int i = 1; i <= 100; i++) {
-		a[i] = i*i;
+	int n; cin >> n;
+	int mx = 0;
+	int b = 0;
+	int cnt = 0;
+	for (int i = 0; i < n; i++) {
+		cin >> A[i];
+		++mp[A[i]];
 	}
-	
+	for (auto x : mp) {
+		++cnt;
+		if (mp[x.first] > mx) {
+			mx = max(mx, mp[x.first]);
+			b = x.first;
+		}
+	}
+	cout << cnt << ' ' << b;
 }
 
 int main() {

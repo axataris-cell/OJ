@@ -10,16 +10,20 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-ll a[105] = {};
+const int MAXN = 1e6;
+unordered_map<int, bool> p;
 
 void testcase() {
-	ll n; cin >> n;
-	for (int i = 1; i <= 100; i++) {
-		a[i] = i*i;
+	for (int i = 2; i <= MAXN; i++) p[i] = true;
+	for (int i = 2; i * i <= MAXN; i++) {
+		if (p[i]) {
+			for (int j = i*i; j <= MAXN; j += i) p[j] = false;
+		}
 	}
 	
+	// ----------- Print Tests -------------
+	
+	for (int i = 2; i <= 1e6; i++) cout << i << ' ' << ((p[i]) ? "YES" : "NO") << el;
 }
 
 int main() {

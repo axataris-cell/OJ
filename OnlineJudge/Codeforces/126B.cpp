@@ -9,17 +9,30 @@ void file() {
 	freopen("", "r", stdin);
 	freopen("", "w", stdout);
 }
-
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-ll a[105] = {};
+const int MAXN = 1e6 + 5;
+int Z[MAXN];
+int F[MAXN];
 
 void testcase() {
-	ll n; cin >> n;
-	for (int i = 1; i <= 100; i++) {
-		a[i] = i*i;
+	string s; cin >> s;
+	F[0] = 0;
+	Z[0] = 0;
+	
+	// Tien To
+	for (int i = 1; i < s.length(); i++) {
+		int j = F[i - 1];
+		
+		while (j > 0 && s[j] != s[i]) j = F[j - 1];
+		if (s[j] == s[i]) ++j;
+		
+		F[i] = j;
 	}
 	
+	// Ham Z
+	int L = R = 0;
+	for (int i = 1; i < s.length(); i++) {
+		if (i <= R) 
+	}
 }
 
 int main() {

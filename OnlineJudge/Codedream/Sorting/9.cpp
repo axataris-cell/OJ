@@ -10,15 +10,7 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-ll k[100005] = {}; //So cach
-ll f[100005] = {}; //So dong xu can doi
-ll a[105] = {};
-
 void testcase() {
-	ll n; cin >> n;
-	for (int i = 1; i <= 100; i++) {
-		a[i] = i*i;
-	}
 	
 }
 
