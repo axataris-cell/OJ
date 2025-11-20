@@ -10,16 +10,15 @@ void file() {
 	freopen("", "w", stdout);
 }
 const int MAXN = 1e6 + 5;
-int Z[MAXN];
 int F[MAXN];
 
 void testcase() {
 	string s; cin >> s;
+	int n = s.length();
 	F[0] = 0;
-	Z[0] = 0;
 	
 	// Tien To
-	for (int i = 1; i < s.length(); i++) {
+	for (int i = 1; i < n; i++) {
 		int j = F[i - 1];
 		
 		while (j > 0 && s[j] != s[i]) j = F[j - 1];
@@ -28,10 +27,13 @@ void testcase() {
 		F[i] = j;
 	}
 	
-	// Ham Z
-	int L = R = 0;
-	for (int i = 1; i < s.length(); i++) {
-		if (i <= R) 
+	// Check
+	int j = F[n - 1];
+	bool check = false;
+	for (int i = 1; i < n - 1; i++) {
+		if (F[i] = j) {
+			check = true; break;
+		}
 	}
 }
 
