@@ -30,11 +30,20 @@ void testcase() {
 	// Check
 	int j = F[n - 1];
 	bool check = false;
-	for (int i = 1; i < n - 1; i++) {
-		if (F[i] = j) {
-			check = true; break;
+	if (j != 0) {
+		for (int i = 1; i < n - 1; i++) {
+			if (F[i] == j) {
+				check = true;
+				break;
+			}
+		}
+		if (!check && F[j - 1] != 0) {
+		    check = true;
+		    j = F[j - 1];
 		}
 	}
+	
+	cout << ((check) ? s.substr(0, j) : "Just a legend");
 }
 
 int main() {
