@@ -10,11 +10,11 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-stack<pair<ll, ll>> st;
-
 void testcase() {
 	int n; cin >> n;
+	stack<pair<ll, ll>> st; // height - count
 	ll ans = 0;
+	
 	for (int i = 0; i < n; i++) {
 		ll h; cin >> h;
 		ll cnt = 1;
@@ -31,9 +31,7 @@ void testcase() {
             cnt += top.second;
 
             if (!st.empty()) ans++;
-        }
-        
-        else { 
+        } else { 
             if (!st.empty()) ans++;
         }
 
