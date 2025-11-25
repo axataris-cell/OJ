@@ -1,0 +1,11 @@
+Đây là một bài toán liên quan tới xâu (thực ra nó không liên quan lắm nhưng mà cũng gọi là liên quan)
+
+# --------------------------------------------------------------------------------------------------------------------------------#
+LCS - Longest common string
+Nội dung: Cho xâu a và xâu b, tìm xâu con chung lớn nhất của a và b
+Định nghĩa xâu con chung: xâu c được gọi là xâu con của a nếu như ta có thể xóa một số kí tự của xâu a đi và đạt được xâu c.
+
+Bài này chúng ta có ý tưởng đơn giản là dp
+Gọi f[i][j] là xâu con chung lớn nhất của xâu 1.....i và xâu 1......j (2 xâu con của xâu a và b)
+Chính vì cách gọi này nên chúng ta sẽ để cho f[0][j] và f[i][0] đều có giá trị bằng 0, bởi xâu con của một xâu rỗng và một xâu a sẽ luôn là một xâu rỗng. Và đây cũng chính là giá trị khởi tạo của dp này
+

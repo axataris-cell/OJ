@@ -10,6 +10,8 @@ void file() {
 	freopen("", "w", stdout);
 }
 
+// Bai toan: Tim xau c sao cho xau a va xau b deu la cac xau con cua c (xau c chua ca a va b)
+
 int f[2006][2006] = {};
 
 void testcase() {

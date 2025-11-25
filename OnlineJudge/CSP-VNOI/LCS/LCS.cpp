@@ -10,6 +10,7 @@ void file() {
 	freopen("", "w", stdout);
 }
 
+// Longest Common String / Segment
 int f[3001][3001] = {};
 
 void testcase() {
