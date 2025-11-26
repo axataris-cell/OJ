@@ -47,6 +47,16 @@ void testcase() {
             j--;
         }
     }
+    while (i > 0) {
+    	c.push_back(a[i - 1]); --i;
+	}
+	while (j > 0) {
+		c.push_back(b[j - 1]); --j; 
+	}
+    
+    reverse(c.begin(), c.end());
+    
+    cout << c;
 }
 
 int main() {
