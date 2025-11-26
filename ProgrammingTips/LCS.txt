@@ -8,4 +8,15 @@ Nội dung: Cho xâu a và xâu b, tìm xâu con chung lớn nhất của a và 
 Bài này chúng ta có ý tưởng đơn giản là dp
 Gọi f[i][j] là xâu con chung lớn nhất của xâu 1.....i và xâu 1......j (2 xâu con của xâu a và b)
 Chính vì cách gọi này nên chúng ta sẽ để cho f[0][j] và f[i][0] đều có giá trị bằng 0, bởi xâu con của một xâu rỗng và một xâu a sẽ luôn là một xâu rỗng. Và đây cũng chính là giá trị khởi tạo của dp này
+Chúng ta sẽ điền hết mảng  dp hai chiều f[i][j] với các giá trị và bắt đầu từ f[0][0].
+Nếu như kí tự a[i] = b[j] thì chúng ta có thể lấy xâu con chung dài nhất của 1......i-1 tới 1........j-1 và ghép thêm kí tự i j vào, tức là f[i][j] = f[i - 1][j - 1] + 1.
+Nếu như kí tự a[i] != b[j] thì chúng ta sẽ truy hồi lại xâu con chung gần nhất. Tức chúng ta sẽ lùi lại cả con trỏ i và con trỏ j cho tới khi đạt được 2 kí tự a[i] và b[j] bằng nhau. Công thức là: f[i][j] = min(f[i-1][j], f[i][j-1]) + 1.
+Khi chúng ta truy tới f[i-1][j] thì nó lại chia ra 2 trường hợp y hệt với f[i][j]. Giả sử hai kí tự bằng nhau thì lại truy tới f[i-2][j-1] hoặc nếu hai kí tự khác nhau thì ta lại truy tới f[i-2][j] hoặc f[i-1][j-1] Nói chung nó là nó sẽ tìm ra con đường tối ưu nhất trong cái bảng đấy và trả lại kết quả tại f[i][j].
 
+# --------------------------------------------------------------------------------------------------------------------------------#
+SCS - Shortest common supersequence
+Nội dung: Cho xâu a và xâu b, tìm xâu con chung c ngắn nhất sao cho cả xâu a và xâu b là các xâu con của xâu c.
+
+Ý tưởng 1: Sử dụng LCS ta có thể suy ra SCS. Tưởng tượng xâu a và b là một biểu đồ Venn thì ta có thể thấy LCS là giao của 2 tập hợp a và b và SCS là hợp của 2 tập hợp a và b. Từ đó ta có công thức là a hợp b = |a| + |b| - a giao b. Tức là để có thể tìm được xâu c thì chúng ta trước hết tìm LCS của xâu a và xâu b, thêm vào đó những kí tự độc nhất trong a và b (truy ngược lại) thì có thể tìm ra SCS của xâu a và b.
+
+Ý tưởng 2: (Lê Minh Hoàng) 
