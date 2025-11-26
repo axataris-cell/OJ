@@ -3,6 +3,8 @@
 #define ld long double
 #define el '\n'
 
+using pii = pair<int, int>
+using pll = pair<long long, long long>
 using namespace std;
 
 void file() {
