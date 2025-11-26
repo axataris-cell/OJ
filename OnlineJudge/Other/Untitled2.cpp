@@ -4,6 +4,8 @@
 #define el '\n'
 
 using namespace std;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
 
 void file() {
 	freopen("", "r", stdin);
@@ -11,19 +13,15 @@ void file() {
 }
 
 void testcase() {
-	int cnt = 0;
-//	for (int i = 1; i <= 5; i++) {
-//		for (int j = 1; j <= 5; j++) {
-//			cout << "c1[s[" << cnt << "]] = \"" << i << j << "\";" << ' ';
-//			++cnt;
-//		}
-//	}
-	for (int i = 1; i <= 5; i++) {
-		for (int j = 1; j <= 5; j++) {
-			cout << "c2[\"" << i << j << "\"] = s[" << cnt << "]; ";
-			++cnt;
-		}
+	string x, y;
+	int a = 'a'; int b = 'z';
+	for (int i = 0; i <= 1e2; i++) {
+		x.push_back(rand() % (b - a + 1) + a);
 	}
+	for (int i = 0; i <= 1e2; i++) {
+		y.push_back(rand() % (b - a + 1) + a);
+	}
+	cout << x << el << y;
 }
 
 int main() {
