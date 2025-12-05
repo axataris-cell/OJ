@@ -12,23 +12,12 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-bool isPrime(ll x) {
-    if (x < 2) return false;
-    if (x % 2 == 0) return x == 2;
-    for (long long i = 3; i * i <= x; i += 2)
-        if (x % i == 0) return false;
-    return true;
-}
-
 void testcase() {
-	int n; cin >> n;
-	while (n > 0) {
-		if (!isPrime(n)) {
-			cout << "NO"; return;
-		}
-		n /= 10;
-	}
-	cout << "YES";
+	int A[3];
+	cin >> A[0] >> A[1] >> A[2];
+	sort(A, A + 3);
+	if (A[2] - A[0] >= 10) cout << "check again";
+	else cout << "final "<< A[1];
 }
 
 int main() {
