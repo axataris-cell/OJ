@@ -17,7 +17,25 @@ void testcase() {
 	vector<pii> a(n);
 	for (int i = 0; i < n; i++) cin >> a[i].first >> a[i].second;
 	
+	sort(a.begin(), a.end(), [](pii x, pii y) {
+		return x.first*x.second > y.first*y.second;
+	});
 	
+	ld res = 0;
+	
+	for (int i = 0; i < n; i++) {
+		res = max(a[i].first * a[i].second / 2.0L, res);
+	}
+	for (int i = 0; i < n - 1; i++) {
+		int x = min(a[i].first, a[i].second);
+		int y = min(a[i + 1].first, a[i + 1].second);
+		int z = max(a[i].first, a[i].second);
+		int t = max(a[i + 1].first, a[i + 1].second);
+		
+		res = max(res, (ld)min(z, t) * min(x, y));
+	}
+	
+	cout << setprecision(1) << fixed << res;
 }
 
 int main() {
