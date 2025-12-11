@@ -20,7 +20,7 @@ void testcase() {
 	int m = t.length();
 	
 	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= n; j++) {
+		for (int j = 1; j <= m; j++) {
 			if (s[i - 1] == t[j - 1]) F[i][j] = F[i - 1][j - 1] + 1;
 			else {
 				F[i][j] = max(F[i - 1][j], F[i][j - 1]);
@@ -44,18 +44,25 @@ void testcase() {
 	}
 	reverse(res.begin(), res.end());
 	
-	int c = s + '#' + t;
+	cout << res << el;
+	
+	string c = s + '#' + t;
 	vector<int> z(c.length(), 0);
 	
+	// Z
 	int L = 0, R = 0;
 	for (int i = 0; i < c.length(); i++) {
 		if (i <= R) z[i] = min(z[i - L], R - i + 1);
 		
-		while (c[z[i]] == c[z[i] + L] && z[i] + L < c.length()) ++z[i];
+		while (c[z[i]] == c[z[i] + i] && z[i] + i < c.length()) ++z[i];
 		
-		
-		
+		if (i + z[i] - 1 > R) {
+			L = i;
+			R = i + z[i] - 1;
+		}
 	}
+	
+	
 }
 
 int main() {
