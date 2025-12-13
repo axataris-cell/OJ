@@ -12,11 +12,17 @@ void file() {
 	freopen("", "w", stdout);
 }
 
+bool comp(int a, int b) {
+    return (a % 10) < (b % 10); // so sánh theo chữ số cuối
+}
+
+
 void testcase() {
-	int n; cin >> n;
-	cin.ignore();
-	string s; getline(cin, s);
-	cout << n << ' ' << s;
+	vector<int> v = {12, 33, 25};
+	do {
+		for (auto x : v) cout << x << ' ';
+		cout << el;
+	} while (next_permutation(v.begin(), v.end(), comp));
 }
 
 int main() {
@@ -25,8 +31,8 @@ int main() {
 	cout.tie(NULL);
 
 	//file();
-	
-	int t = 1;
+
+	ll t = 1; //cin >> t;
 	while (t--) testcase();
 
 	return 0;
