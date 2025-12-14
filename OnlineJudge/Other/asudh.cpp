@@ -16,7 +16,18 @@ void file() {
 }
 
 void testcase() {
-
+	int n; cin >> n;
+	string res = ""; int tot = 0;
+	while (n - tot > 9) {
+		res.push_back('9');
+		tot += 9;
+	}
+	if (n - tot > 0) {
+		char x = (char)(n - tot + '0');
+		res.push_back(x);
+	}
+	reverse(res.begin(), res.end());
+	cout << res;
 }
 
 int main() {

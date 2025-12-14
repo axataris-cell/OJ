@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-static int f[1005][1005];
-static int pos_left[26][1000005];
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -14,61 +11,73 @@ int main() {
     int m = a.size();
     int n = b.size();
 
-    // tiền xử lý pos_left
-    for (int cc = 0; cc < 26; cc++) {
-        int last = -1;
-        for (int j = 0; j < n; j++) {
-            if (b[j] == 'A' + cc) last = j;
-            pos_left[cc][j] = last;
-        }
-    }
+    /* =========================
+       1. Lưu vị trí xuất hiện
+       ========================= */
+    vector<int> occ[256];
+    for (int i = 0; i < n; i++)
+        occ[(unsigned char)b[i]].push_back(i);
 
-    // f[m][0] = n-1, f[m][k>0] = -1
-    f[m][0] = (n > 0 ? n - 1 : -1);
-    for (int k = 1; k <= m; k++) f[m][k] = -1;
+    /* =========================
+       2. DP
+       dp[k] = vị trí j lớn nhất
+       ========================= */
+    vector<int> dp(m + 1, -1), ndp(m + 1, -1);
+    dp[0] = n;
 
-    // dp
+    // truy vết
+    vector<vector<int>> take(m, vector<int>(m + 1, 0));
+    vector<vector<int>> from(m, vector<int>(m + 1, -1));
+
+    /* =========================
+       3. DP
+       ========================= */
     for (int i = m - 1; i >= 0; i--) {
-        f[i][0] = (n > 0 ? n - 1 : -1);
+        ndp = dp;
 
-        for (int k = 1; k <= m - i; k++) {
+        auto &v = occ[(unsigned char)a[i]];
 
-            int best = f[i+1][k];
+        for (int k = 1; k <= m; k++) {
+            if (dp[k - 1] == -1 || v.empty()) continue;
 
-            int t = f[i+1][k-1];
-            if (t >= 0) {
-                int pos = pos_left[a[i] - 'A'][t];
-                if (pos >= 0) best = max(best, pos);
+            int t = dp[k - 1];
+
+            auto it = lower_bound(v.begin(), v.end(), t);
+            if (it == v.begin()) continue;
+            --it;
+
+            int j = *it;
+            if (j > ndp[k]) {
+                ndp[k] = j;
+                take[i][k] = 1;
+                from[i][k] = k - 1;
             }
-
-            f[i][k] = best;
         }
+        swap(dp, ndp);
     }
 
-    // độ dài L
+    /* =========================
+       4. Lấy độ dài LCS
+       ========================= */
     int L = 0;
-    for (int k = m; k >= 0; k--) {
-        if (f[0][k] >= 0) {
+    for (int k = m; k >= 0; k--)
+        if (dp[k] != -1) {
             L = k;
             break;
         }
-    }
 
-    // truy vết
-    string ans;
-    ans.reserve(L);
-
-    int i = 0, k = L;
-    while (k > 0 && i < m) {
-        if (f[i][k] == f[i+1][k]) {
-            i++;
-            continue;
+    /* =========================
+       5. Truy vết
+       ========================= */
+    string res;
+    int k = L;
+    for (int i = 0; i < m && k > 0; i++) {
+        if (take[i][k]) {
+            res.push_back(a[i]);
+            k = from[i][k];
         }
-
-        ans.push_back(a[i]);
-        i++;
-        k--;
     }
 
-    cout << ans;
+    cout << res << '\n';
+    return 0;
 }

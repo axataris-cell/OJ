@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
-#define umap unordered_map
-#define uset unordered_set
-#define pqueue priority_queue
+#include <conio.h>
 #define ll long long
 #define ld long double
 #define el '\n'
@@ -16,7 +14,9 @@ void file() {
 }
 
 void testcase() {
-
+	int n[3] = {0, 1, 2};
+	int *k[3] = n[3];
+	cout << k[1] << ' ' << *k[1] << el;
 }
 
 int main() {

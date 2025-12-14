@@ -16,7 +16,16 @@ void file() {
 }
 
 void testcase() {
-
+	umap<int, int> mp;
+	int n; cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+		++mp[a[i]];
+	}
+	for (auto x : a) {
+		cout << x << ' ' << mp[x] << el;
+	}
 }
 
 int main() {
