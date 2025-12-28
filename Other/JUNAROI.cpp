@@ -15,42 +15,43 @@ void file() {
 	freopen("", "w", stdout);
 }
 
-int dp[1005][10005];
-
 void testcase() {
-	int n, m;
-	cin >> n >> m;
+	int n; cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) cin >> a[i];
 	
-	vector<int> w(n + 1), v(n + 1);
-	for (int i = 1; i <= n; i++) {
-		cin >> w[i] >> v[i];
-	}
+	vector<int> lis;
+	vector<int> pos;
+	vector<int> prev(n, -1);
 	
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j <= m; j++) {
-			dp[i][j] = dp[i - 1][j];
-			if (j >= w[i]) {
-				dp[i][j] = max(dp[i][j], dp[i - 1][j - w[i]] + v[i]);
-			}
+	for (int i = 0; i < n; i++) {
+		int idx = lower_bound(lis.begin(), lis.end(), a[i]) - lis.begin();
+		
+		if (idx == lis.size()) {
+			lis.push_back(a[i]);
+			pos.push_back(i);
+		} else {
+			lis[idx] = a[i];
+			pos[idx] = i;
+		}
+		
+		if (idx > 0) {
+			prev[i] = pos[idx - 1];
 		}
 	}
 	
-	int j = m;
+	cout << lis.size() << el;
+	
 	vector<int> res;
-	for (int i = n; i >= 1; i--) {
-		if (dp[i][j] != dp[i - 1][j]) {
-			res.push_back(i);
-			j -= w[i];
-		}
+	int l = pos.back();
+	while (l != -1) {
+		res.push_back(l);
+		l = prev[l];
 	}
 	
 	reverse(res.begin(), res.end());
 	
-	cout << dp[n][m] << el;
-	cout << res.size() << el;
-	for (auto x : res) {
-		cout << x << ' ';
-	}
+	for (auto x : res) cout << a[x] << ' ';
 }
 
 int main() {
