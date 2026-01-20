@@ -8,11 +8,21 @@ if not exist ".git" (
     git init
 )
 
-REM Add all files
-git add .
+REM Ask for commit message
+set /p COMMIT_MSG=Enter a fancy commit message: 
 
-REM Commit with default message
-git commit -m "Axataris's Code"
+REM If empty, cancel
+if "%COMMIT_MSG%"=="" (
+    echo Commit message cannot be empty!
+    pause
+    exit /b
+)
+
+REM Add all files
+git add -A
+
+REM Commit with user message
+git commit -m "%COMMIT_MSG%"
 
 REM Add remote only if not already added
 git remote | find "origin" >nul
