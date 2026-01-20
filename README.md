@@ -2,9 +2,9 @@
 Cloud storage for my C++ solutions and competitive programming resources.
 
 ## Chú ý!!!
-![Gái đẹp](https://i.pinimg.com/736x/59/2a/81/592a8168d06bf69e66afc896cfc7acc8.jpg)
+![Gái đẹp](https://i.pinimg.com/736x/93/7a/f2/937af278f6b91e6a72b5e934d8886edc.jpg)
 
-> Ỉa 1 lần bạn sẽ bị cười
+Ỉa 1 lần bạn sẽ bị cười
 
 Ỉa 10 lần bạn sẽ bị đặt tên là Ỉa
 
