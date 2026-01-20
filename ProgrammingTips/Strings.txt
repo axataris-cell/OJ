@@ -1,0 +1,71 @@
+BA THUẬT XỬ LÍ XÂU HAY DÙNG
+
+#-------------------------------------------------------------------------#
+
+Hàm Z
+
+Cho một xâu s. Định nghĩa Z[i] là độ dài substring lớn nhất bắt đầu từ i trong s sao cho substring đó khớp với tiền tố của s với độ dài tương tự.
+
+Ý tưởng: Giữ một cửa sổ với hai giá trị L, R là khoảng xa nhất mà ta đã biết là chắc chắn trùng với tiền tố trong S.
+
+Khi xét tới i. Nếu i thuộc đoạn L, R thì chúng ta sẽ có công thức Z[i] = min(R - i + 1, z[i - L])
+
+Giải thích: Nếu ta đã có string 0....(R-L) trong s bằng với string L.....R trong s thì đương nhiên chúng ta cũng có string
+0.....(i - L) trong xâu s bằng với i....R (khi i <= R).
+Vậy nên chúng ta có Z[i] = Z[i - L].
+Tuy nhiên, chúng ta phải giới hạn cái Z[i - L] này lại bởi nếu khung cửa sổ TẠI I bằng với giá trị Z[i - L] vượt quá giới hạn R mà ta đã biết chắc trùng với một đoạn substring gần tiền tố, thì ta không thể chắc chắn.
+Nên quan trọng là Z[i - L] phải <= R - i + 1. nếu nó vượt qua thì chúng ta sẽ chỉ chắc chắn tới R-i+1 thôi nên gán Z[i] luôn cho R-i+1.
+
+Tiếp đó, chúng ta sẽ mở rộng cái cửa sổ tại i khi mà kí tự tiếp theo của substring đang xét vẫn trùng với kí tự tiếp theo của tiền tố.
+Tức là while (i + z[i] < n && s[i + z[i]] = s[z[i]]) ++z[i];
+
+Cuối cùng thì nếu cái cửa sổ của i đã vượt qua cả R thì chúng ta cập nhật L và R cho i và i + z[i] - 1.
+
+Code mẫu ở trong file ZFunction
+
+#-------------------------------------------------------------------------#
+
+Hàm Tiền Tố
+
+Cho một string s. Định nghĩa S[i] là độ dài lớn nhất sao cho tồn tại một substring vừa là tiền tố vừa là hậu tố của string s[0].....s[i]
+
+Ý tưởng: 
+
+Nhận xét 1: Nếu giá trị tiền tố của kí tự trước (kí tự i - 1) là một giá trị != 0 thì chúng ta có thể mở rộng cái đó thêm đúng 1 đơn vị bằng cách xét sự trùng nhau của giá trị i và giá trị tiếp theo trong tiền tố
+
+VD: aaaa
+thì chúng ta có Prefix là 0 1 2 3.
+=> if (s[j] = s[i]) ++j với j = F[i - 1]
+
+Nhận xét 2: Thế nếu như khi muốn mở rộng mà kí tự của chúng không trùng nhau thì sao?
+Giả sử có xâu aabaabaabaac (Suffix: 0 1 0 1 2 3 4 5 6 7 8 0)
+
+Chẳng hạn như chúng ta xét đến giá trị c (tức là i = 11 (0-based)). Ta đã biết rằng giá trị prefix của thằng đằng trước là 8 rồi, và nó đã so sánh tới kí tự 'a' tại vị trí 7.
+Nhưng chúng ta lại thấy kí tự 'b' và kí tự 'c' khi mở rộng lại không khớp nhau.
+Khi này, chúng ta sẽ tận dụng tiền tố của những giá trị trước hơn nữa.
+
+Ta đã biết rằng, F[10] = 8. Tức là hậu tố tính đến vị trí kí tự thứ 10 trùng đến tận 8 kí tự so với tiền tố. Khi đó nếu chúng ta bớt mấy kí tự đầu của cái xâu kí tự con giống nhau đó thì nó cũng result ra một xâu kí tự giống nhau.
+tức 'aabaabaa' (0 1 2 3 4 5 6 7) == 'aabaabaa' ( 3 4 5 6 7 8 9 10)
+thì 'abaabaa' (1 2 3 4 5 6 7) == 'abaabaa' (4 5 6 7 8 9 10)
+Để có thể tính giá trị tiền tố tại vị trí 11 'c' thì chúng ta phải biết xem cái thứ nó bám vào có phải đã là 1 tiền tố hay không.
+Giả sử ta muốn biết 'abaabaa' tại (4 5 6 7 8 9 10) có là tiền tố hay không, thì ta lại xét xem 'abaabaa' (1 2 3 4 5 6 7) có phải tiền tố hay không. Nhận thấy chúng ta đã biết được giá trị hàm tiền tố dài nhất tại vị trí số 7 nên để cái string đó thỏa mãn vừa là hậu tố, tiền tố thì độ dài của nó phải bằng F[7], tức là ta phải cắt xén đi vài kí tự đầu sao cho nó bằng F[7]. Rồi chúng ta lặp lại điều này Cho đến khi độ dài nó về không (1 kí tự).
+
+Từ đó có thể rút ra công thức tổng quát.
+=> while (j > 0 && s[j] != s[i]) j = F[j - 1]; 
+
+Sau tất cả thì hãy đừng quên gắn giá trị của thằng j cho tiền tố tại i
+=> F[i] = j
+
+Code mẫu ở trong file Suffix
+
+#-------------------------------------------------------------------------#
+
+Thuật toán KMP (Knuth - Morris - Pratt)
+
+Cho xâu s và xâu t. Đếm số lần xuất hiện của xâu s trong xâu t.
+
+Cách 1: Sử dụng Hàm Z.
+Ta dựng một xâu c có cấu trúc là s + '#' + t.
+Dựng hàm Z của xâu c. Sau đó xét các giá trị trong hàm z từ vị trí bắt đầu của xâu t trong xâu c trở đi. Mỗi khi giá trị của nó bằng với độ dài xâu s thì đó là 1 lần xuất hiện xâu s.
+
+Cách 2: Sử dụng Hàm Tiền Tố 

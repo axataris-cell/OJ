@@ -1,0 +1,37 @@
+Nói về stack thì chúng ta có 2 cách sử dụng chính (chắc thí)
+1. Monotonic Stack
+2. Stack Optimization
+
+============================ MONOTONIC STACK ============================
+Bài 1:
+Cho một hàng người gồm n người. Hai người A và B có thể nhìn thấy nhau nếu họ đứng ngay cạnh nhau hoặc nếu không có người nào giữa họ cao hơn người A hoặc người B.
+Tính số cặp người có thể nhìn thấy nhau?
+
+Ý tưởng:
+Đầu tiên, chúng ta gộp lại tất cả các người có chiều cao liên tiếp với nhau để tính.
+VD 1 6 6 6 4 8 4 4 2
+thì chúng ta sẽ gộp thành những pair để đút vào trong stack:
+{1, 1}, {6, 3}, {4, 1}, {8, 1}, {4, 2}, {2, 1}.
+Chúng ta sẽ tạo một cái stack<pair int int> với quy luật là chiều cao trong stack luôn giảm dần. (Monotonic Stack) Và do chúng ta cần tính số cặp người có thể nhìn thấy nhau nên mỗi lần pop() một phần tử thì chúng ta sẽ phải công thêm vào kết quả 1 lượng bằng số người có chiều cao giống hết liên tiếp đó. (Vì sau khi pop chúng ta kiểu gì cũng sẽ thêm một người vào stack cho nên người đó có thể nhìn thấy tất cả mọi người trong stack bị pop.
+Vì vậy nên kể cả khi pop() để giữ cho stack luôn monotonous hay pop() khi tăng số lượng phần tử giống nhau liên tiếp thì chúng ta sẽ đều cộng thêm giá trị đằng sau.
+Và lưu ý là cũng phải kiểm tra xem còn có người nào nữa cao hơn. đứng ở đáy của stack không rồi cộng thêm 1 (nhìn thấy cả người đó nữa).
+
+Code mẫu: Stack1.cpp
+
+Bài 2: Largest Rectangular Area in Histogram
+Cho một mảng A được thể hiện dưới dạng biểu đồ cột.
+Tính diện tích hình chữ nhật lớn nhất có thể lắp vào trong biểu đồ cột đó.
+Đề và Lời giải: https://www.geeksforgeeks.org/dsa/largest-rectangular-area-in-a-histogram-using-stack/
+
+Ý tưởng gốc: Chúng ta sẽ tính max các diện tích có thể lấy được tại tất cả các độ cao rồi cout ra. Tuy nhiên cách này vô cùng kém hiệu quả với độ phức tạp lên tới O(n*A(max)).
+
+Ý tưởng Optimized 1:
+Chúng ta sẽ precompute cái vị trí của thằng nhỏ hơn đầu tiên bên trái nó và thằng nhỏ hơn đầu tiên bên phải để rồi lấy 2 cái đấy trừ cho nhau ta sẽ tính được diện tích lớn nhất của hình chữ nhật với độ cao là A[i].
+Để có thể tính cái nhỏ hơn bên trái và bên phải thì sử dụng monotonic stack. Khá đơn giản.
+
+Code mẫu: LargestRectangleInHistogram.cpp
+
+Ý tưởng Optimized 2:
+
+
+Code mẫu: LargestRectangleInHistogram_Optimized.cpp

@@ -1,0 +1,25 @@
+Nốt các BFS DFS...
+
+quy hoạch động DAG
+Shortest Path DAG: https://wiki.vnoi.info/vnoi-magazine/2023/shortest-path-dag
+https://www.youtube.com/watch?v=noAoAWoSyF0
+
+DSA = Data Structure Algorithm
+Bipartite Graph = Đồ thị hai phía.
+
+DSU - Kruskal (MST) / Prim (8)
+LCA (11  + Mảng hiệu trên cây) = Lowest Common Ancestor // chưa có code AC
+
+SSSP algorithm
+Johnson's Algorithm
+SPFA
+
+Cây DFS
+Gabow, Kosaraju < Tarjan - Liên Thông Mạnh - là một họ thuật toán DFS (13) (14)
+2 phiên bản: Tarjan SCC trong đồ thị có hướng
+Tarjan trong đồ thị vô hướng (tìm articulation point)
+(SCC - Strongly Connected Component: được định nghĩa là một tập hợp các đinh trong đồ thị có hướng mà luôn tồn tại đường đi giữa hai đỉnh bất kỳ)
+
+Euler Tour
+
+https://wiki.vnoi.info/algo/graph-theory/shortest-path

@@ -1,0 +1,38 @@
+Cách nhận biết một số bài sử dụng DP để giải (Dynamic Programming)
+*Thề luôn đéo ai đọc cái này mà hiểu được*
+
+1. Bài đấy có phần tử sau dựa vào những phần tử nhỏ tạo thành.
+VD: Với tìm đường đi có tổng lớn nhất (mã QBMAX trên SPOJ) bạn thấy rằng. Cái lớn nhất tại ô i j sẽ do lựa chọn của 1 trong 3 ô trước tạo thành. 
+và dp sẽ có dạng như kiểu dp[i][j] = ... và các phần tử sau cùng cũng có thể tách ra tiếp(?)
+
+2. Bài toán là: tối ưu, đếm tổ hợp (cách chọn), vv...
+
+3. Tại mỗi bước lại có 2 lựa chọn (?)
+
+4. Chịu tự nghĩ
+
+Những dạng dp thường gặp (thực ra t chưa gặp vài dạng bao h)
+
+f[i] = P(f[i - 1], f[i - k])... // Tuyến tính 1 hàm 
+f[i][j] = P(f[i-1][j], f[i][j-1], ...) // Bảng giá trị
+
+f[i][w] = max(f[i-1][w], f[i-1][w-weight[i]]+value[i]) // Bài toán dp nổi tiếng Knapsack (Tìm min sao cho max biểu thức)
+
+
+Một số bài dp đơn giản?
+1. Cho số n là độ dài của một dãy nhị phân (VD: 01010100101000010). Tính số cách tạo ra 1 dãy nhị phân độ dài n sao cho không tồn tại hai số 1 nào đứng cạnh nhau.
+
+2. Cho số n là độ dài của một dãy nhị phân. Cho một số nguyên dương k. Tìm số cách tạo ra 1 dãy nhị phân sao cho tất cả những số '1' trong dãy đều đứng trong một nhóm có độ lớn là k, hoặc là bội của k
+VD: n = 4, k = 2 thì 1100, 0110, 0011, 1111, 0000 thỏa mãn. Số 0001 hay 0111 đều không thỏa mãn.
+
+3. Cho một số nguyên dương n. Một vùng không gian rộng 2*n. Tìm số cách sắp xếp những viên gạch rộng 1*2 vào trong vùng không gian này.
+
+4. Cho một bảng có độ lớn m hàng và n cột, và m*n giá trị điền vào bảng. Xét ô i, j trong bảng, chúng ta có thể di chuyển sang ô i, j + 1 || i + 1, j + 1 || i - 1, j + 1.
+Gọi tổng của một đường đi là tổng của tất cả các giá trị có trong những ô mà chúng ta đã đi qua. Tìm tổng lớn nhất có thể trong bảng với cách di chuyển trên.
+
+5. (KNAPSACK - Bài toán cái túi) Có n đồ vật, và mỗi vật có giá trị w(i), v(i) đi kèm, lần lượt là khối lượng w và giá trị v.
+Tính tổng giá trị lớn nhất khi mà chúng ta lấy một số đồ vật, với tổng khối lượng không được vượt quá một số k nguyên dương cho trước.
+
+6. Cho n bậc thang tìm số cách leo lên, mỗi lần được leo 1 hoặc 2 bước.
+
+7. Bài toán đổi tiền: Tìm số đồng xu ít nhất để đổi được giá trị x.

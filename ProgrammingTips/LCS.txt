@@ -1,0 +1,41 @@
+Đây là một bài toán liên quan tới xâu (thực ra nó không liên quan lắm nhưng mà cũng gọi là liên quan)
+
+# --------------------------------------------------------------------------------------------------------------------------------#
+LCS - Longest common sequence
+Nội dung: Cho xâu a và xâu b, tìm xâu con chung lớn nhất của a và b
+Định nghĩa xâu con chung: xâu c được gọi là xâu con của a nếu như ta có thể xóa một số kí tự của xâu a đi và đạt được xâu c.
+
+Bài này chúng ta có ý tưởng đơn giản là dp
+Gọi f[i][j] là xâu con chung lớn nhất của xâu 1.....i và xâu 1......j (2 xâu con của xâu a và b)
+Chính vì cách gọi này nên chúng ta sẽ để cho f[0][j] và f[i][0] đều có giá trị bằng 0, bởi xâu con của một xâu rỗng và một xâu a sẽ luôn là một xâu rỗng. Và đây cũng chính là giá trị khởi tạo của dp này
+Chúng ta sẽ điền hết mảng  dp hai chiều f[i][j] với các giá trị và bắt đầu từ f[0][0].
+Nếu như kí tự a[i] = b[j] thì chúng ta có thể lấy xâu con chung dài nhất của 1......i-1 tới 1........j-1 và ghép thêm kí tự i j vào, tức là f[i][j] = f[i - 1][j - 1] + 1.
+Nếu như kí tự a[i] != b[j] thì chúng ta sẽ truy hồi lại xâu con chung gần nhất. Tức chúng ta sẽ lùi lại cả con trỏ i và con trỏ j cho tới khi đạt được 2 kí tự a[i] và b[j] bằng nhau. Công thức là: f[i][j] = min(f[i-1][j], f[i][j-1]) + 1.
+Khi chúng ta truy tới f[i-1][j] thì nó lại chia ra 2 trường hợp y hệt với f[i][j]. Giả sử hai kí tự bằng nhau thì lại truy tới f[i-2][j-1] hoặc nếu hai kí tự khác nhau thì ta lại truy tới f[i-2][j] hoặc f[i-1][j-1] Nói chung nó là nó sẽ tìm ra con đường tối ưu nhất trong cái bảng đấy và trả lại kết quả tại f[i][j].
+
+Sau khi đã tìm được độ dài xâu con chung lớn nhất tại mọi vị trí thì có thể truy ngược lại xâu con chung của a và b bằng cách xét từ cuối a và cuối b cho tới khi i hoặc j đạt giá trị không.
+Chi tiết: Nếu a[i] trùng với a[j] thì chúng ta thêm và xâu c của ta kí tự a[i] và --i, --j;
+Nếu a[i] không trùng với a[j] thì chúng ta xét hai cái f[i-1][j] và f[i][j - 1] tương đương với xét xem là việc lùi i hay lùi j sẽ đạt max hơn.
+Nếu f[i-1][j] > f[i][j - 1] thì chúng ta lại lùi i xuống và ngược lại.
+
+Cuối cùng phải đảo cái xâu đấy bằng reverse() do chúng ta đã khởi tạo chúng từ cuối lên đầu.
+
+Code mẫu: LCS.cpp
+
+Tối ưu hóa (lên 10^6 kí tự) 
+
+# --------------------------------------------------------------------------------------------------------------------------------#
+SCS - Shortest common supersequence
+Nội dung: Cho xâu a và xâu b, tìm xâu con chung c ngắn nhất sao cho cả xâu a và xâu b là các xâu con của xâu c.
+
+Ý tưởng 1: Sử dụng LCS ta có thể suy ra SCS. Tưởng tượng xâu a và b là một biểu đồ Venn thì ta có thể thấy LCS là giao của 2 tập hợp a và b và SCS là hợp của 2 tập hợp a và b. Từ đó ta có công thức là a hợp b = |a| + |b| - a giao b. Tức là để có thể tìm được xâu c thì chúng ta trước hết tìm LCS của xâu a và xâu b, thêm vào đó những kí tự độc nhất trong a và b (truy ngược lại) thì có thể tìm ra SCS của xâu a và b.
+
+Việc tạo ra xâu kết quả thì y hệt với việc tạo ra xâu kết quả của LCS chỉ là khi hai kí tự không trùng nhau thì chúng ta thêm một bước cộng thêm kí tự khác nhau chúng ta đã bỏ qua trong LCS vào SCS. Và thêm một công đoạn vét cạn nốt tất cả các kí tự còn sót lại trong a b nếu i > 0 hoặc j > 0.
+
+Code mẫu: SCS.cpp
+
+Ý tưởng 2: (Lê Minh Hoàng)  Đây là ý tưởng thuần SCS (không sử dụng LCS). Về mặt cấu trúc thì y hệt LCS chỉ khác một số logic thôi. Khi bằng nhau thì đương nhiên F[i][j] vẫn bằng F[i-1][j-1] + 1. Nhưng khi khác nhau thì chúng ta sẽ lấy giá trị nhỏ hơn trong 2 cái F[i - 1][j] và F[i][j - 1] rồi cộng 1 vào (cộng 1 kí tự độc nhất của a hoặc b). Vì chúng ta đang cần tìm độ dài nhỏ nhất.
+
+Việc tạo ra xâu kết quả thì y hệt bên ý tưởng 1 chỉ khác cái là nếu F[i-1][j] > F[i][j-1] thì chúng ta --j thôi (Tại đang cân độ dài nhỏ nhất mà)
+
+Code mẫu SCS2.cpp
