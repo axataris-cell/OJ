@@ -1,28 +1,60 @@
 # OJ
-Cloud storage for my C++ codes
+Cloud storage for my C++ solutions and competitive programming resources.
+
+---
 
 ## Khẩu quyết
-![image](https://i.pinimg.com/736x/59/2a/81/592a8168d06bf69e66afc896cfc7acc8.jpg)
+![Khẩu quyết](https://i.pinimg.com/736x/59/2a/81/592a8168d06bf69e66afc896cfc7acc8.jpg)
 
-Lọ lọ lọ lọ lọ
+> Lọ lọ lọ lọ lọ
+
+---
 
 ## Mục tiêu
-Lọ x67
+- Lọ x67
 
-## Công dụng file
+---
 
-*clearfile.bat*: Khi nhấp chuột vào sẽ xóa sạch các file đuôi .exe, các file rỗng không tên ".INP" và ".OUT"
+## Công dụng các file
 
-*gitpull.bat*: Tạo pull request từ git về (thu file về từ git)
+- **`clearfile.bat`**  
+  Xóa toàn bộ:
+  - Các file `.exe`
+  - Các file rỗng không tên: `.INP`, `.OUT`
 
-*gitpush.bat*: Tạo push request tới git (đẩy file lên git)
+- **`gitpull.bat`**  
+  Pull code từ Git về máy (đồng bộ repository)
 
-*template.cpp*: Template C++
+- **`gitpush.bat`**  
+  Push code từ máy lên GitHub
 
-## Công dụng thư mục
+- **`template.cpp`**  
+  Template C++ dùng cho Competitive Programming
 
-*OnlineJudge*: Các bài làm nộp lên các OnlineJudge khác nhau
+---
 
-*Other*: File lẻ tẻ linh tinh có thể xóa cũng được
+## Công dụng các thư mục
 
-*ProgrammingTips*: Gồm hai thư mục là Documents (các tài liệu học) và ExampleCode (Các code ví dụ). Ngoài ra còn có một số ghi chú.
+- **`OnlineJudge/`**  
+  Chứa các bài đã nộp lên các Online Judge khác nhau
+
+- **`ProgrammingTips/`**  
+  Tài liệu và ghi chú học tập:
+  - `Documents/`: Tài liệu lý thuyết
+  - `ExampleCode/`: Code ví dụ minh họa
+  - Một số ghi chú khác
+
+- **`Other/`**  
+  Các file linh tinh, không quan trọng (có thể xóa)
+
+---
+
+## Môi trường
+- Ngôn ngữ: C++
+- Mục đích: Competitive Programming / Online Judge
+
+---
+
+## Ghi chú
+Repository này được sử dụng để:
+- Lọ chéo, lọ phải, lọ vuông góc, lọ đồng quy, lọ đối đỉnh, ...
