@@ -2,6 +2,8 @@
 Cloud storage for my C++ codes
 
 ## Khẩu quyết
+![image](https://i.pinimg.com/736x/41/45/6a/41456a73253ed674367bc7f799180552.jpg)
+
 Lọ lọ lọ lọ lọ
 
 ## Mục tiêu
