@@ -7,11 +7,12 @@
 #define ld long double
 #define el '\n'
 
+#define FILENAME ""
+
 using namespace std;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
 
-#define FILENAME ""
 void file() {
 	if (FILE *f = fopen(FILENAME".INP", "r")) {
 		fclose(f);
