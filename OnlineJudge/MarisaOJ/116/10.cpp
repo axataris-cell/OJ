@@ -83,8 +83,6 @@ void testcase() {
     }
 
     cout << fixed << setprecision(6) << maxEdge / 2.0L;
-    cerr << el;
-    cerr << "1 2 3 4 alo alo mot hai ba bon online judge anh bạn nhìn thấy cái này k";
 }
 
 
