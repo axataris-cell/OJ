@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+#include <chrono>
+#define umap unordered_map
+#define uset unordered_set
+#define pqueue priority_queue
+#define ll long long
+#define ld long double
+#define el '\n'
+
+#define FILENAME ""
+
+using namespace std;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
+
+void file() {
+	if (FILE *f = fopen(FILENAME".INP", "r")) {
+		fclose(f);
+		freopen(FILENAME".INP", "r", stdin);
+		freopen(FILENAME".OUT", "w", stdout);
+	}
+}
+
+void debug_time(const string& label = "") {
+    static auto start = chrono::steady_clock::now();
+    auto now = chrono::steady_clock::now();
+    double ms = chrono::duration<double, milli>(now - start).count();
+    cerr << "[TIME] " << label << ": " << ms << " ms\n";
+}
+
+const int MAXN = 1e5 + 5;
+
+vector<int> g[MAXN], depth(MAXN, 0);
+bool vis[MAXN];
+
+void dfs(int s) {
+	vis[s] = true;
+	for (int v : g[s]) {
+		if (!vis[v]) {
+			depth[v] = depth[s] + 1;
+			dfs(v);
+		}
+	}
+} 
+
+void testcase() {
+	int n, k; cin >> n >> k;
+	for (int i = 1; i <= n - 1; i++) {
+		int a, b; cin >> a >> b;
+		g[a].push_back(b);
+		g[b].push_back(a);
+	}
+	dfs(1);
+	sort(depth.begin() + 1, depth.begin() + n + 1, greater<int>());
+	int res = 0;
+	for (int i = 1; i <= k; i++) {
+		cerr << depth[i] << ' ';
+		res += depth[i];
+	}
+	cerr << el;
+	cout << res;
+}
+
+int32_t main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr); file();
+
+	debug_time();
+
+	ll t = 1; // cin >> t;
+	while (t--) testcase();
+
+	return 0;
+}
