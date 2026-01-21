@@ -66,7 +66,7 @@ void testcase() {
         }
     }
 
-    sort(edges.begin(), edges.end(), [](const edge &a, const edge &b) {
+    sort(edges.begin(), edges.end(), [](edge a, edge b) {
         return a.d < b.d;
     });
 
