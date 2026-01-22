@@ -3,6 +3,7 @@
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
+#define int long long
 #define ll long long
 #define ld long double
 #define el '\n'
@@ -29,52 +30,53 @@ void debug_time(const string& label = "") {
 }
 
 const int MAXN = 1e5 + 5;
+vector<pii> g[MAXN];
+vector<int> dist(MAXN, LLONG_MAX), par(MAXN, -1);
 
-vector<int> g[MAXN], deg(MAXN, 0), topo;
-vector<set<int>> adj(MAXN);
-
-void testcase() {
-	int n, m; cin >> n >> m;
-	for (int i = 1; i <= m; i++) {
-		int k, a, b;
-		cin >> k >> a >> b;
-		if (k == 1) {
-			g[a].push_back(b);
-			++deg[b];
-		} else if (k == 0) {
-			adj[a].insert(b);
-			adj[b].insert(a);
-		}
-	}
+void dijkstra(int s) {
+	pqueue<pii, vector<pii>, greater<pii>> pq; // weight first
 	
-	queue<int> q;
+	pq.emplace(0, s);
+	dist[s] = 0;
 	
-	for (int i = 1; i <= n; i++) {
-		if (deg[i] == 0) q.push(i);
-	}
-	
-	while (!q.empty()) {
-		int u = q.front(); q.pop();
-		topo.push_back(u);
-		for (int v : g[u]) {
-			if (--deg[v] == 0) q.push(v);
-		}
-		for (int v : adj[u]) {
-			g[u].push_back(v);
-			adj[v].erase(u);
-		}
-	}
-	
-	if (topo.size() < n) {
-		cout << "NO";
-	} else {
-		cout << "YES" << el;
-		for (int i = 1; i <= n; i++) {
-			for (auto u : g[i]) {
-				cout << i << ' ' << u << el;
+	while (pq.size()) {
+		auto x = pq.top(); pq.pop();
+		int d = x.first, u = x.second;
+		
+		if (d > dist[u]) continue;
+		
+		for (auto y : g[u]) {
+			int v = y.first;
+			int w = y.second;
+			if (dist[u] + w < dist[v]) {
+				dist[v] = dist[u] + w;
+				par[v] = u;
+				pq.emplace(dist[v], v);
 			}
 		}
 	}
+}
+
+void testcase() {
+	int n, m; cin >> n >> m;
+	int s, t, x, y;
+	cin >> s >> t >> x >> y;
+	for (int i = 1; i <= m; i++) {
+		int a, b, w; cin >> a >> b >> w;
+		g[a].push_back({b, w});
+		g[b].push_back({a, w});
+	}
+	dijkstra(s);
+	
+	vector<int> path;
+	int k = t;
+	while (k != -1) {
+		path.push_back(k);
+		k = par[k];
+	}
+	reverse(path.begin(), path.end());
+	
+	
 }
 
 int32_t main() {
