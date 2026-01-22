@@ -1,92 +1,78 @@
 #include <bits/stdc++.h>
-#include <chrono>
-#define umap unordered_map
-#define uset unordered_set
-#define pqueue priority_queue
-#define int long long
-#define ll long long
-#define ld long double
-#define el '\n'
-
-#define FILENAME ""
-
+typedef long long ll;
 using namespace std;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
 
-void file() {
-	if (FILE *f = fopen(FILENAME".INP", "r")) {
-		fclose(f);
-		freopen(FILENAME".INP", "r", stdin);
-		freopen(FILENAME".OUT", "w", stdout);
-	}
-}
+vector<pair<ll, ll>> graph[100001];
+ll du[100001], dv[100001], ds[100001], dp[2][100001], ans;
+bool visited[100001];
 
-void debug_time(const string& label = "") {
-    static auto start = chrono::steady_clock::now();
-    auto now = chrono::steady_clock::now();
-    double ms = chrono::duration<double, milli>(now - start).count();
-    cerr << "[TIME] " << label << ": " << ms << " ms\n";
-}
+void dijkstra1(ll start, ll arr[]) {
+	fill(visited, visited + 100001, false);
 
-const int MAXN = 1e5 + 5;
-vector<pii> g[MAXN];
-vector<int> dist(MAXN, LLONG_MAX), par(MAXN, -1);
+	priority_queue<pair<ll, ll>> pq;
+	pq.push({0, start});
+	while (!pq.empty()) {
+		ll c, node;
+		tie(c, node) = pq.top();
+		pq.pop();
 
-void dijkstra(int s) {
-	pqueue<pii, vector<pii>, greater<pii>> pq; // weight first
-	
-	pq.emplace(0, s);
-	dist[s] = 0;
-	
-	while (pq.size()) {
-		auto x = pq.top(); pq.pop();
-		int d = x.first, u = x.second;
-		
-		if (d > dist[u]) continue;
-		
-		for (auto y : g[u]) {
-			int v = y.first;
-			int w = y.second;
-			if (dist[u] + w < dist[v]) {
-				dist[v] = dist[u] + w;
-				par[v] = u;
-				pq.emplace(dist[v], v);
-			}
+		if (!visited[node]) {
+			arr[node] = -c;
+			visited[node] = true;
+			for (auto &i : graph[node]) pq.push({c - i.second, i.first});
 		}
 	}
 }
 
-void testcase() {
-	int n, m; cin >> n >> m;
-	int s, t, x, y;
-	cin >> s >> t >> x >> y;
-	for (int i = 1; i <= m; i++) {
-		int a, b, w; cin >> a >> b >> w;
-		g[a].push_back({b, w});
-		g[b].push_back({a, w});
+void dijkstra2(ll start, ll end) {
+	fill(dp[0], dp[0] + 100001, LLONG_MAX / 2);
+	fill(dp[1], dp[1] + 100001, LLONG_MAX / 2);
+	fill(visited, visited + 100001, false);
+
+	priority_queue<pair<ll, pair<ll, ll>>> pq;
+	pq.push({0, {start, 0}});
+	while (!pq.empty()) {
+		ll c, node, par;
+		pair<ll, ll> p;
+		tie(c, p) = pq.top();
+		tie(node, par) = p;
+		pq.pop();
+
+		if (!visited[node]) {
+			visited[node] = true;
+			ds[node] = -c;
+			dp[0][node] = min(du[node], dp[0][par]);
+			dp[1][node] = min(dp[0][node] + dv[node], dp[1][par]);
+			for (auto i : graph[node]) pq.push({c - i.second, {i.first, node}});
+		} else if (-c == ds[node]) {
+			dp[0][node] = min(dp[0][node], dp[0][par]);
+			dp[1][node] = min({dp[1][node], dp[0][node] + dv[node], dp[1][par]});
+		}
 	}
-	dijkstra(s);
-	
-	vector<int> path;
-	int k = t;
-	while (k != -1) {
-		path.push_back(k);
-		k = par[k];
-	}
-	reverse(path.begin(), path.end());
-	
-	
+
+	ans = min(ans, dp[1][end]);
 }
 
-int32_t main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr); file();
+int main() {
+	iostream::sync_with_stdio(false);
+	cin.tie(0);
+	ll n, m, s, t, u, v;
+	cin >> n >> m >> s >> t >> u >> v;
+	for (int i = 0; i < m; i++) {
+		ll a, b, c;
+		cin >> a >> b >> c;
+		graph[a].push_back({b, c});
+		graph[b].push_back({a, c});
+	}
 
-	debug_time();
+	dijkstra1(u, du);
+	dijkstra1(v, dv);
 
-	ll t = 1; // cin >> t;
-	while (t--) testcase();
+	ans = du[v];
 
+	dijkstra2(s, t);
+	dijkstra2(t, s);
+
+	cout << ans << '\n';
 	return 0;
 }
