@@ -1,16 +1,15 @@
 struct DSU{
-    vector<int> parent, sz, sum;
+    vector<int> par, sz;
 
-    DSU(int n) : parent(n), sz(n), sum(n) {};
+    DSU(int n) : par(n), sz(n) {};
 
     void make_set(int v) {
-        parent[v] = v;
+        par[v] = v;
         sz[v] = 1;
-        sum[v] = a[v];
     }
 
     int find_set(int v) {
-        return v == parent[v] ? v : parent[v] = find_set(parent[v]);
+        return v == par[v] ? v : par[v] = find_set(par[v]);
     }
 
     void join_sets(int a, int b) {
@@ -18,9 +17,8 @@ struct DSU{
         b = find_set(b);
         if (a != b) {
             if (sz[a] < sz[b]) swap(a,b);
-            parent[b] = a;
+            par[b] = a;
             sz[a] += sz[b];
-            sum[a] += sum[b];
         }
     }
 };
