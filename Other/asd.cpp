@@ -1,28 +1,59 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#include <chrono>
+#define umap unordered_map
+#define uset unordered_set
+#define pqueue priority_queue
+#define ll long long
+#define ld long double
+#define el '\n'
+
+#define FILENAME ""
+
 using namespace std;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
 
-int n;
-long long W;
-long long w[1002];
-long long v[1002];
-long long dp[1002][100002];
+void file() {
+	if (FILE *f = fopen(FILENAME".INP", "r")) {
+		fclose(f);
+		freopen(FILENAME".INP", "r", stdin);
+		freopen(FILENAME".OUT", "w", stdout);
+	}
+}
 
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
 
-    cin >> n >> W;
-    for(int i = 1; i <= n; ++i) cin >> w[i] >> v[i];
+int n,k;
+string s;
 
-    for(int i = 1; i <= n; ++i) dp[i][0] = 0;
-    for(int x = 0; x <= W; ++x) dp[0][x] = 0;
-
-    for(int i = 1; i <= n; ++i){
-        for(int x = 1; x <= W; ++x){
-            if (w[i] > x) dp[i][x] = dp[i - 1][x];
-            else dp[i][x] = max(dp[i - 1][x - w[i]] + v[i], dp[i - 1][x]);
+void backtrack(int pos, int cnt) {
+    if (cnt > k) return;
+    if (cnt + (n - pos) < k) return;
+    
+    if (pos == n) {
+        if (cnt == k) {
+            for (char c : s) cout << c << ' ';
+            cout << '\n';
         }
+        return;
     }
 
-    cout << dp[n][W];
+    s[pos] = '0';
+    backtrack(pos + 1, cnt);
+
+    if (cnt < k) {
+        s[pos] = '1';
+        backtrack(pos + 1, cnt + 1);
+    }
+}
+  
+int32_t main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr); 
+	cout.tie(0);
+
+    cin >> n >> k;
+    s.resize(n);
+    backtrack(0, 0);
+    
+    return 0;
 }

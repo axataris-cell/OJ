@@ -21,16 +21,25 @@ void file() {
 	}
 }
 
+void debug_time(const string& label = "") {
+    static auto start = chrono::steady_clock::now();
+    auto now = chrono::steady_clock::now();
+    double ms = chrono::duration<double, milli>(now - start).count();
+    cerr << "[TIME] " << label << ": " << ms << " ms\n";
+}
+
 void testcase() {
-	
+
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
+	debug_time();
+
 	ll t = 1; // cin >> t;
 	while (t--) testcase();
-	
+
 	return 0;
 }
