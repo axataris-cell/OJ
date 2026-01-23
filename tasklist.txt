@@ -1,15 +1,15 @@
 Trong tháng 1 lọ hết sạch bài trong này
-Tổng số bài: 24 / 71 Bài
+Tổng số bài: 29 / 71 Bài
 
-BFS / DFS: https://marisaoj.com/module/20 - 12 / 17 Bài
+BFS / DFS: https://marisaoj.com/module/20 - 15 / 17 Bài
 TREE: https://marisaoj.com/module/22 -        7 / 7 Bài (OK)
 DSU/MST: https://marisaoj.com/module/23 - 0 / 14 Bài
-DAG: https://marisaoj.com/module/51 -          5 / 7 Bài
-SSSP: https://marisaoj.com/module/28 -          0 /19 Bài
+DAG: https://marisaoj.com/module/51 -          7 / 7 Bài (OK)
+PATH: https://marisaoj.com/module/28 -          0 /19 Bài
 DALUONG: https://marisaoj.com/module/30 0 / 5 Bài
 BFS 01: https://marisaoj.com/module/29         0 / 2 Bài
 
-Tháng 2 nếu có thể thì lọ hết LCA & Euler Tour:
+Tháng 1 hoặc 2 nếu có thể thì lọ hết LCA & Euler Tour:
 Tổng số bài: 0 / 19 Bài
 
 LCA: https://marisaoj.com/module/32 - 0 / 9 Bài

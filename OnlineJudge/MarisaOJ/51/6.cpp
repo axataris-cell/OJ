@@ -28,8 +28,53 @@ void debug_time(const string& label = "") {
     cerr << "[TIME] " << label << ": " << ms << " ms\n";
 }
 
+const int MAXN = 1e5 + 5;
+
+vector<int> g[MAXN], deg(MAXN, 0), topo;
+vector<set<int>> adj(MAXN);
+
 void testcase() {
+	int n, m; cin >> n >> m;
+	for (int i = 1; i <= m; i++) {
+		int k, a, b;
+		cin >> k >> a >> b;
+		if (k == 1) {
+			g[a].push_back(b);
+			++deg[b];
+		} else if (k == 0) {
+			adj[a].insert(b);
+			adj[b].insert(a);
+		}
+	}
 	
+	queue<int> q;
+	
+	for (int i = 1; i <= n; i++) {
+		if (deg[i] == 0) q.push(i);
+	}
+	
+	while (!q.empty()) {
+		int u = q.front(); q.pop();
+		topo.push_back(u);
+		for (int v : g[u]) {
+			if (--deg[v] == 0) q.push(v);
+		}
+		for (int v : adj[u]) {
+			g[u].push_back(v);
+			adj[v].erase(u);
+		}
+	}
+	
+	if (topo.size() < n) {
+		cout << "NO";
+	} else {
+		cout << "YES" << el;
+		for (int i = 1; i <= n; i++) {
+			for (auto u : g[i]) {
+				cout << i << ' ' << u << el;
+			}
+		}
+	}
 }
 
 int32_t main() {
