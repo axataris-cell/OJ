@@ -12,7 +12,7 @@ if not exist ".git" (
 
 REM Get date & time via PowerShell (DD.MM.YYYY HH:MM)
 for /f "delims=" %%I in (
-  'powershell -NoProfile -Command "Get-Date -Format \"dd.MM.yyyy HH:mm\""' 
+  'powershell -NoProfile -Command "Get-Date -Format \"dd.MM.yyyy HH.mm\""' 
 ) do set DATE_TIME=%%I
 
 REM Fallback if PowerShell failed
