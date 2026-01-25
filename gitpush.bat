@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 
 echo ============================
 echo   Git Auto Push Script
@@ -10,21 +10,31 @@ if not exist ".git" (
     git init
 )
 
-REM Get date & time via PowerShell
+REM Get date & time via PowerShell (DD.MM.YYYY HH:MM)
 for /f "delims=" %%I in (
-  'powershell -NoProfile -Command "Get-Date -Format \"dd:MM:yyyy HH:mm\""' 
-) do set COMMIT_MSG=%%I
+  'powershell -NoProfile -Command "Get-Date -Format \"dd.MM.yyyy HH:mm\""' 
+) do set DATE_TIME=%%I
 
-REM Fallback if PowerShell failed (very important)
-if "%COMMIT_MSG%"=="" (
-    set COMMIT_MSG=%DATE% %TIME:~0,5%
+REM Fallback if PowerShell failed
+if "!DATE_TIME!"=="" (
+    set DATE_TIME=%DATE% %TIME:~0,5%
+)
+
+REM Ask for optional commit message
+set /p USER_MSG=Enter commit message (optional): 
+
+REM Build commit message
+if "!USER_MSG!"=="" (
+    set COMMIT_MSG=!DATE_TIME!
+) else (
+    set COMMIT_MSG=!DATE_TIME! - !USER_MSG!
 )
 
 REM Add all files
 git add -A
 
-REM Commit (force non-empty message)
-git commit -m "%COMMIT_MSG%" || goto :end
+REM Commit (skip if nothing to commit)
+git commit -m "!COMMIT_MSG!" || goto :end
 
 REM Add remote if missing
 git remote | find "origin" >nul
