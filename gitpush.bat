@@ -8,7 +8,7 @@ if not exist ".git" (
     git init
 )
 
-REM Get date & time
+REM Get date & time (YYYY-MM-DD HH:MM)
 for /f "delims=" %%I in (
   'powershell -NoProfile -Command "Get-Date -Format ''yyyy-MM-dd HH:mm''"'
 ) do set DATE_TIME=%%I
@@ -16,13 +16,12 @@ for /f "delims=" %%I in (
 REM Ask for commit message (optional)
 set /p USER_MSG=Enter commit message (optional): 
 
-REM Build final commit message
-if "%USER_MSG%"=="" (
-    set COMMIT_MSG=%DATE_TIME%
+REM Build commit message
+if "!USER_MSG!"=="" (
+    set COMMIT_MSG=!DATE_TIME!
 ) else (
-    set COMMIT_MSG=%DATE_TIME% - %USER_MSG%
+    set COMMIT_MSG=!DATE_TIME! - !USER_MSG!
 )
-
 
 REM Add all files
 git add -A
