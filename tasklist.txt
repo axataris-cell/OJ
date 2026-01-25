@@ -1,9 +1,9 @@
 Trong tháng 1 lọ hết sạch bài trong này
-Tổng số bài: 34 / 71 Bài
+Tổng số bài: 36 / 71 Bài
 
 BFS / DFS: https://marisaoj.com/module/20 - 15 / 17 Bài
 TREE: https://marisaoj.com/module/22 -        7 / 7 Bài (OK)
-DSU/MST: https://marisaoj.com/module/23 - 4 / 14 Bài
+DSU/MST: https://marisaoj.com/module/23 - 6 / 14 Bài
 DAG: https://marisaoj.com/module/51 -          7 / 7 Bài (OK)
 PATH: https://marisaoj.com/module/28 -          1 /19 Bài
 DALUONG: https://marisaoj.com/module/30 0 / 5 Bài
