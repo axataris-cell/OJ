@@ -3,7 +3,6 @@ echo ============================
 echo   Git Auto Push Script
 echo ============================
 
-REM Initialize git (only if not already a repo)
 if not exist ".git" (
     git init
 )
@@ -16,26 +15,21 @@ for /f "delims=" %%I in (
 REM Ask for commit message (optional)
 set /p USER_MSG=Enter commit message (optional): 
 
-REM Build commit message
-if "!USER_MSG!"=="" (
-    set COMMIT_MSG=!DATE_TIME!
+REM Build commit message (NO delayed expansion)
+if "%USER_MSG%"=="" (
+    set COMMIT_MSG=%DATE_TIME%
 ) else (
-    set COMMIT_MSG=!DATE_TIME! - !USER_MSG!
+    set COMMIT_MSG=%DATE_TIME% - %USER_MSG%
 )
 
-REM Add all files
 git add -A
-
-REM Commit
 git commit -m "%COMMIT_MSG%"
 
-REM Add remote only if not already added
 git remote | find "origin" >nul
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     git remote add origin https://github.com/axataris-cell/OJ.git
 )
 
-REM Push to main branch
 git push -u origin main
 
 echo ============================
