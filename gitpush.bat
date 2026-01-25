@@ -1,37 +1,41 @@
 @echo off
+setlocal
+
 echo ============================
 echo   Git Auto Push Script
 echo ============================
 
+REM Initialize git if needed
 if not exist ".git" (
     git init
 )
 
-REM Get date & time (YYYY-MM-DD HH:MM)
+REM Get date & time via PowerShell
 for /f "delims=" %%I in (
-  'powershell -NoProfile -Command "Get-Date -Format ''yyyy-MM-dd HH:mm''"'
-) do set DATE_TIME=%%I
+  'powershell -NoProfile -Command "Get-Date -Format \"dd:MM:yyyy HH:mm\""' 
+) do set COMMIT_MSG=%%I
 
-REM Ask for commit message (optional)
-set /p USER_MSG=Enter commit message (optional): 
-
-REM Build commit message (NO delayed expansion)
-if "%USER_MSG%"=="" (
-    set COMMIT_MSG=%DATE_TIME%
-) else (
-    set COMMIT_MSG=%DATE_TIME% - %USER_MSG%
+REM Fallback if PowerShell failed (very important)
+if "%COMMIT_MSG%"=="" (
+    set COMMIT_MSG=%DATE% %TIME:~0,5%
 )
 
+REM Add all files
 git add -A
-git commit -m "%COMMIT_MSG%"
 
+REM Commit (force non-empty message)
+git commit -m "%COMMIT_MSG%" || goto :end
+
+REM Add remote if missing
 git remote | find "origin" >nul
 if errorlevel 1 (
     git remote add origin https://github.com/axataris-cell/OJ.git
 )
 
+REM Push
 git push -u origin main
 
+:end
 echo ============================
 echo   Push complete!
 echo ============================
