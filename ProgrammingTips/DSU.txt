@@ -1,0 +1,4 @@
+Một số dấu hiệu nhận biết các bài DSU:
++ Bài đồ thị liên quan tới TPLT.
++ Không có xóa cạnh (trừ khi có thể reverse query)
++ Không yêu cầu duyệt chi tiết cấu trúc bên trong 1 tập hợp. (Chỉ yêu cầu thông tin tổng quát từ 1 tập)

@@ -21,8 +21,40 @@ void file() {
 	}
 }
 
-void testcase() {
+const int MAXN = 1e5 + 5;
 
+int n, q, a[MAXN], par[MAXN], h[MAXN];
+vector<int> g[MAXN];
+
+void dfs(int u, int pre){
+    for (int v : g[u]) if (v != pre){
+        h[v] = h[u] + 1;
+        par[v] = u;
+        dfs(v, u);
+    }
+}
+void testcase() {
+    cin >> n >> q;
+    for (int i = 1, u, v; i <= n - 1; ++i){
+        cin >> u >> v;
+        g[u].push_back(v), g[v].push_back(u);
+    }
+    dfs(1, 0);
+    while(q--){
+        int u, v, val;
+        cin >> u >> v >> val;
+        vector<int> nodes;
+        while(h[v] > h[u]){
+            if (a[v] == 0) a[v] = val;
+            nodes.push_back(v);
+            v = par[v];
+        }
+        if (a[u] == 0) a[u] = val;
+        for (int v : nodes){
+            par[v] = par[u];
+        }
+    }
+    for (int i = 1; i <= n; ++i) cout << a[i] << ' ';
 }
 
 int32_t main() {
