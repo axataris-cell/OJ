@@ -8,20 +8,22 @@ if not exist ".git" (
     git init
 )
 
-REM Ask for commit message
-set /p COMMIT_MSG=Enter a fancy commit message: 
+REM Get date & time
+for /f %%I in ('powershell -NoProfile -Command "Get-Date -Format ''yyyy-MM-dd HH:mm''"') do set DATE_TIME=%%I
 
-REM If empty, cancel
-if "%COMMIT_MSG%"=="" (
-    echo Commit message cannot be empty!
-    pause
-    exit /b
+REM Ask for commit message (optional)
+set /p USER_MSG=Enter commit message (optional): 
+
+if "%USER_MSG%"=="" (
+    set COMMIT_MSG=%DATE_TIME%
+) else (
+    set COMMIT_MSG=%DATE_TIME% - %USER_MSG%
 )
 
 REM Add all files
 git add -A
 
-REM Commit with user message
+REM Commit
 git commit -m "%COMMIT_MSG%"
 
 REM Add remote only if not already added
