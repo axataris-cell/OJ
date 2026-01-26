@@ -1,2 +1,1 @@
-| 🚀 **[START](https://example.com)** |
-|:----------------------------------:|
+<a href="https://example.com"><b>CLICK ME</b></a>
