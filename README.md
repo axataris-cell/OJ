@@ -1,4 +1,5 @@
-<details>
-  <summary>Click to expand</summary>
-  Hidden content here
-</details>
+<code>inline code</code>
+<pre>block code</pre>
+<kbd>Ctrl</kbd>
+<samp>output</samp>
+<var>x</var>
