@@ -1,11 +1,11 @@
 Trong tháng 1 lọ hết sạch bài trong này
-Tổng số bài: 36 / 71 Bài
+Tổng số bài: 40 / 71 Bài
 
 BFS / DFS: https://marisaoj.com/module/20 - 15 / 17 Bài
 TREE: https://marisaoj.com/module/22 -        7 / 7 Bài (OK)
-DSU/MST: https://marisaoj.com/module/23 - 6 / 14 Bài
+DSU/MST: https://marisaoj.com/module/23 - 7 / 14 Bài
 DAG: https://marisaoj.com/module/51 -          7 / 7 Bài (OK)
-PATH: https://marisaoj.com/module/28 -          1 /19 Bài
+PATH: https://marisaoj.com/module/28 -          4 /19 Bài
 DALUONG: https://marisaoj.com/module/30 0 / 5 Bài
 BFS 01: https://marisaoj.com/module/29         0 / 2 Bài
 
@@ -15,8 +15,6 @@ Tổng số bài: 0 / 19 Bài
 LCA: https://marisaoj.com/module/32 - 0 / 9 Bài
 ETOUR: https://marisaoj.com/module/31 - 0 / 10 Bài
 
-Nốt các BFS DFS...
-
 quy hoạch động DAG
 Shortest Path DAG: https://wiki.vnoi.info/vnoi-magazine/2023/shortest-path-dag
 https://www.youtube.com/watch?v=noAoAWoSyF0
@@ -25,8 +23,9 @@ DSA = Data Structure Algorithm
 Bipartite Graph = Đồ thị hai phía.
 
 DSU - Kruskal (MST) / Prim (8)
-LCA (11  + Mảng hiệu trên cây) = Lowest Common Ancestor // chưa có code AC
+LCA (11  + Mảng hiệu trên cây) = Lowest Common Ancestor
 
+https://wiki.vnoi.info/algo/graph-theory/shortest-path
 SSSP algorithm
 Johnson's Algorithm
 SPFA
@@ -37,12 +36,10 @@ Gabow, Kosaraju < Tarjan - Liên Thông Mạnh - là một họ thuật toán DF
 Tarjan trong đồ thị vô hướng (tìm articulation point)
 (SCC - Strongly Connected Component: được định nghĩa là một tập hợp các đinh trong đồ thị có hướng mà luôn tồn tại đường đi giữa hai đỉnh bất kỳ)
 
-Euler Tour
+Euler Tour (Đường đi đi qua tất cả các cạnh trong một đồ thị) / Hamilton 
 
 Cartesian Tree
 
 Lubenica
 
 Luồng, Luồng cực đại
-
-https://wiki.vnoi.info/algo/graph-theory/shortest-path
