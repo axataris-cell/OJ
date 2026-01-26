@@ -3,29 +3,30 @@
 
 using namespace std;
 
-const string NAME = "hieu1";     // problem name
+const string NAME = "BFS";     // problem name
 const string TestType = "Themis";  // "CMS", "Themis"
 
-const int NTEST = 10;           // number of tests
+const int NTEST = 100;           // number of tests
 const string xau ="0123456789abcdefghijklmnopqrstuvxy";
 
 mt19937_64 rd;
 
-int generate(int lo, int hi){
+int gen(int lo, int hi){
     assert(lo <= hi);
     return rd() % (hi - lo + 1) + lo;
 }
 
 void makeTest(ofstream &input, int testId) {
 	// Creating input
-    int n, m, l, r;
-    n = generate(1, 100);
-    m = generate(1, 100);
+    int n, m, l, r, s;
+    n = gen(1, 1e5);
+    m = gen(1, 1e5);
+    s = gen(1, n);
     input << n << " " << m << el;
     
     for (int i = 1; i <= m; i++){
-        l = rand(1, n);
-        r = rand(l, n);
+        l = gen(1, n);
+        r = gen(l, n);
         input << l << " " << r << el;
     }
     
@@ -40,7 +41,7 @@ int main(){
     rd.seed(chrono::system_clock::now().time_since_epoch().count());
     for(int i = 0; i < NTEST; i++){
         string id = to_string(i);          // id of current test
-       // cerr << _ << ' '  << endl;
+       // cerr << i << ' '  << endl;
         cout << "Making test: " << id << el;
         string input, output, program = NAME;
 
