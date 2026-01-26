@@ -1,1 +1,4 @@
-<a href="https://example.com"><b>CLICK ME</b></a>
+<details>
+  <summary>Click to expand</summary>
+  Hidden content here
+</details>
