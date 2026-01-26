@@ -1,5 +1,4 @@
-<code>inline code</code>
-<pre>block code</pre>
-<kbd>Ctrl</kbd>
-<samp>output</samp>
-<var>x</var>
+<abbr title="HyperText Markup Language">HTML</abbr>
+<cite>Source</cite>
+<q>Quote</q>
+<blockquote>Quote</blockquote>
