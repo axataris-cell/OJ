@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define FILENAME "B"
+
+void file() {
+	if (FILE *f = fopen(FILENAME".INP", "r")) {
+		fclose(f);
+		freopen(FILENAME".INP", "r", stdin);
+		freopen(FILENAME".OUT", "w", stdout);
+	}
+}
+
 const int MAXN = 100005;
 vector<int> adj[MAXN];
 bool visited[MAXN];
@@ -26,6 +36,8 @@ void dfs(int start) {
 
 
 int main() {
+	file();
+	
     int n, m;
     cin >> n >> m;
 
