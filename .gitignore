@@ -1,4 +1,4 @@
 *.exe
-.INP
-.OUT
-*/Test*/
+*.INP
+*.OUT
+Test/
