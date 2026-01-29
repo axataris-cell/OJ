@@ -38,6 +38,10 @@ void makeTest(ofstream &input, int testId) {
 
 int main(){
     rd.seed(chrono::system_clock::now().time_since_epoch().count());
+    
+    system(("MKDIR Test").c_str());
+    system(("MKDIR Test\\" + NAME).c_str());
+    
     for(int i = 0; i < NTEST; i++){
         string id = to_string(i);          // id of current test
        // cerr << _ << ' '  << endl;
@@ -48,9 +52,8 @@ int main(){
             input  = NAME + id + ".in",
             output = NAME + id + ".out";
         else
-            system(("MKDIR " + NAME + "\\Test" + id).c_str()),
-            input  = NAME + "\\Test" + id + '\\' + NAME + ".INP",
-            output = NAME + "\\Test" + id + '\\' + NAME + ".OUT";
+            input  = "Test\\" + NAME + "\\" + NAME + "_" + id + ".INP";
+            output = "Test\\" + NAME + "\\" + NAME + "_" + id + ".OUT";
 
         ofstream inputFile(input.c_str()); // pointer input
 

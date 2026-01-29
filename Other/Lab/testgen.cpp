@@ -20,7 +20,7 @@ void makeTest(ofstream &input, int testId) {
 	// Creating input
     int n, m, l, r;
     n = gen(1, 1e9);
-    m = gen(1, 1e5);
+    m = gen(1, 100005);
     input << n << " " << m << el;
     
     for (int i = 1; i <= m; i++){
@@ -38,19 +38,27 @@ void makeTest(ofstream &input, int testId) {
 
 int main(){
     rd.seed(chrono::system_clock::now().time_since_epoch().count());
+    
+    system("MKDIR Test");
+    system(("MKDIR Test\\" + NAME).c_str());
+    
     for(int i = 0; i < NTEST; i++){
         string id = to_string(i);          // id of current test
        // cerr << _ << ' '  << endl;
         cout << "Making test: " << id << el;
         string input, output, program = NAME;
 
-        if (TestType == "CMS")
+        if (TestType == "CMS") {
             input  = NAME + id + ".in",
             output = NAME + id + ".out";
-        else
-            system(("MKDIR " + NAME + "\\Test" + id).c_str()),
-            input  = NAME + "\\Test" + id + '\\' + NAME + ".INP",
-            output = NAME + "\\Test" + id + '\\' + NAME + ".OUT";
+		}
+        else {
+            string testDir = "Test\\" + NAME + "\\Test" + id;
+            system(("MKDIR " + testDir).c_str());
+            
+            input  = testDir + "\\" + NAME + ".INP";
+            output = testDir + "\\" + NAME + ".OUT";
+		}
 
         ofstream inputFile(input.c_str()); // pointer input
 
