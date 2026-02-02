@@ -15,7 +15,6 @@ int f[3001][3001] = {};
 
 void testcase() {
 	string a, b; cin >> a >> b;
-	string c = "";
 	
 	for (int i = 1; i <= a.length(); i++) {
 		for (int j = 1; j <= b.length(); j++) {
