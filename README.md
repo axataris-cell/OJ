@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Other\Image\ico1.jpg">
+  <img src="Other\Image\ico1.jpg" style="image-size: 52px;">
 </p>
 
 <p align="center">
