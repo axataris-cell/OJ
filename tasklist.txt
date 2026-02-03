@@ -45,3 +45,5 @@ Lubenica
 Luồng, Luồng cực đại
 
 Heavy Light Decomposition
+
+Những cái này thì... phải học xong segment tree / fenwick tree hẵng tìm hiểu
