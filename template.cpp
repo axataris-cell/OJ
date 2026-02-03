@@ -1,11 +1,14 @@
 #include <bits/stdc++.h>
 #include <chrono>
+
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
 #define ll long long
 #define ld long double
 #define el '\n'
+#define INF 1e9
+#define LINF 1e18
 
 #define FILENAME ""
 
@@ -29,8 +32,8 @@ int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	ll t = 1; // cin >> t;
+	ll t = 1; //cin >> t;
 	while (t--) testcase();
-	
+
 	return 0;
 }
