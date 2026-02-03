@@ -72,8 +72,7 @@ void decompose(int u, int h) {
     head[u] = h;
     pos[u] = ++cur_pos;
 
-    if (heavy[u])
-        decompose(heavy[u], h);
+    if (heavy[u]) decompose(heavy[u], h);
 
     for (int v : adj[u]) {
         if (v != parent[u] && v != heavy[u]) {
