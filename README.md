@@ -1,5 +1,5 @@
 <img
-  src="https://i.pinimg.com/736x/ae/9a/e7/ae9ae74b142d2911e7595484ae772c8a.jpgL"
+  src="https://i.pinimg.com/736x/ae/9a/e7/ae9ae74b142d2911e7595484ae772c8a.jpg"
   style="
     transform: rotate(90deg);
     transform-origin: center;
