@@ -51,7 +51,7 @@ void testcase() {
     vector<pair<int,int>> comps;
 
     for (int i = 1; i <= n; i++) {
-        if (color[i] != -1) continue;
+        if (color[i] != -1) continue; //**
 
         queue<int> q;
         q.push(i);
@@ -81,7 +81,7 @@ void testcase() {
         comps.push_back({cnt0, cnt1});
     }
 
-    vector<bool> dp(n + 1, false);
+    vector<bool> dp(n + 1, false); //A
     dp[0] = true;
 
     for (auto [a, b] : comps) {

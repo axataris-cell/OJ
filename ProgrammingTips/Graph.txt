@@ -1,0 +1,60 @@
+Như muối bỏ biển
+
+Sơ qua về lý thuyết đồ thị: https://arxiv.org/pdf/2308.04512
+Web vẽ đồ thị: https://graphonline.top/en/
+
+Trong tháng 1, 2 lọ hết sạch bài trong này 
+Tổng số bài: 44 / 90 Bài
+
+BFS / DFS: https://marisaoj.com/module/20 - 17 / 17 Bài (OK)
+TREE: https://marisaoj.com/module/22 -        7 / 7 Bài (OK)
+DSU/MST: https://marisaoj.com/module/23 -   11 / 14 Bài
+DAG: https://marisaoj.com/module/51 -          7 / 7 Bài (OK)
+PATH: https://marisaoj.com/module/28 -          4 /19 Bài
+DALUONG: https://marisaoj.com/module/30     0 / 5 Bài
+BFS 01: https://marisaoj.com/module/29         0 / 2 Bài
+LCA: https://marisaoj.com/module/32 - 	   0 / 9 Bài
+ETOUR: https://marisaoj.com/module/31 -    0 / 10 Bài
+
+quy hoạch động DAG
+Shortest Path DAG: https://wiki.vnoi.info/vnoi-magazine/2023/shortest-path-dag
+https://www.youtube.com/watch?v=noAoAWoSyF0
+
+DSA = Data Structure Algorithm
+
+https://wiki.vnoi.info/algo/graph-theory/shortest-path
+SSSP algorithm
+Johnson's Algorithm
+SPFA
+
+Cây DFS
+
+Gabow, Kosaraju < Tarjan - Liên Thông Mạnh - là một họ thuật toán DFS (13) (14)
+2 phiên bản: Tarjan SCC trong đồ thị có hướng
+Tarjan trong đồ thị vô hướng (tìm articulation point)
+(SCC - Strongly Connected Component: được định nghĩa là một tập hợp các đinh trong đồ thị có hướng mà luôn tồn tại đường đi giữa hai đỉnh bất kỳ)
+
+Euler Tour (Đường đi đi qua tất cả các cạnh trong một đồ thị) / Hamilton 
+
+Cartesian Tree
+
+Lubenica
+
+Luồng, Luồng cực đại
+
+Heavy Light Decomposition
+
+2-SAT: https://drive.google.com/file/d/15UbO4GWo1G6cUBDnV6uWk0KxjuEdurCG/view
+
+Chú ý: Khi làm một số bài đồ thị thay vì chỉ dựng 1 đồ thị thì chúng ta phải dựng một đồ thị nhiều lớp, với mỗi lớp một tính chất khác nhau và có các cạnh (cầu thang) nối từ lớp này sang lớp khác. Nhưng lớp đồ thị này có thể dùng để phân tách các điều kiện khác nhau của bài toán.
+
+Khi làm một số bài đồ thị chúng ta phải thêm một đỉnh 0 (gọi là siêu nguồn 0) để đơn giản hóa logic hoặc quy về một bài toán chuẩn.
+1. Có nhiều nguồn bắt đầu -> gom về cùng 1 siêu nguồn (kiểu từ multi-source shortest path thì có thể quy về single-source)
+2. Có nhiều đích -> gom về cùng 1 siêu đích
+3. Xử lý điều kiện khởi tạo DP trên đồ thị (khi DP DAG chẳng hạn)
+4. Gom TPLT (Topological sort, DAG DP, SCC DAG)
+
+VD: Trong bài 9 của Unicorn Edu thì chúng ta phải thêm một siêu nguồn 0 với trọng số cạnh bằng 0 để chạy Bellman duy nhất 1 lần thay vì phải chạy nhiều lần cho nhiều thành phần liên thông của đồ thị. Hoặc VD như trong bài 592 Marisa chúng ta phải thêm một siêu nguồn 0 để tách MST ra xử lý riêng.
+
+
+Những cái này thì... phải học xong segment tree / fenwick tree hẵng tìm hiểu

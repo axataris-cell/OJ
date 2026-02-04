@@ -2,3 +2,12 @@ Một số dấu hiệu nhận biết các bài DSU:
 + Bài đồ thị liên quan tới TPLT.
 + Không có xóa cạnh (trừ khi có thể reverse query)
 + Không yêu cầu duyệt chi tiết cấu trúc bên trong 1 tập hợp. (Chỉ yêu cầu thông tin tổng quát từ 1 tập)
+
+DSU Bipartite: Khi mà bài toán không chỉ hỏi về tính liên thông mà còn hỏi về tính chất 0, 1, VD:
+“u và v cùng nhóm / khác nhóm”
+“u và v cùng màu / khác màu”
+“u và v bạn / thù”
+“u và v giống / khác”
+“mỗi cạnh gán giá trị 0/1”
+“parity, even/odd, true/false”
+- Các quan hệ được thêm dần, không cho xóa.

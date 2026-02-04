@@ -1,11 +1,14 @@
 #include <bits/stdc++.h>
 #include <chrono>
+
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
 #define ll long long
 #define ld long double
 #define el '\n'
+#define INF 1e9
+#define LINF 1e18
 
 #define FILENAME ""
 
@@ -21,14 +24,11 @@ void file() {
 	}
 }
 
-const int MAXN = 1e3 + 5;
-
-int g[MAXN][MAXN];
-
 struct DSU {
 	vector<int> par, sz;
 	
-	DSU(int n) : par(n), sz(n) {};
+	DSU(int n) : par(n), sz(n) {
+	};
 	
 	void make(int u) {
 		par[u] = u;
@@ -36,65 +36,68 @@ struct DSU {
 	}
 	
 	int find(int u) {
-		return (u == par[u]) ? u : par[u] = find(par[u]);
+		return u == par[u] ? u : par[u] = find(par[u]);
 	}
 	
-	bool unite(int u, int v) {
+	void unite(int u, int v) {
 		u = find(u);
 		v = find(v);
-		if (u == v) return false;
+		if (u == v) return;
 		if (sz[u] < sz[v]) swap(u, v);
 		
 		par[v] = u;
-		sz[u] += v;
-		
-		return true;
+		sz[u] += sz[v];
 	}
 };
 
 struct edge {
 	int u, v;
 	int w;
+	int id;
 };
 
 vector<edge> edges;
 
 void testcase() {
-	int n; cin >> n;
-	for (int i = 1; i <= n; i++) {
-		int x; cin >> x;
-		edges.push_back({0, i, x});
+	int n, m; cin >> n >> m;
+	for (int i = 1; i <= m; i++) {
+		int u, v, w; cin >> u >> v >> w;
+		edges.push_back({u, v, w, i});
 	}
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= n; j++) cin >> g[i][j];
-	}
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= n; j++) {
-			if (j <= i) continue;
-			edges.push_back({i, j, g[i][j]});
-		}
-	}
+	vector<bool> ans(m + 1, 0);
+	
 	sort(edges.begin(), edges.end(), [](edge x, edge y) {
 		return x.w < y.w;
 	});
 	
 	DSU dsu(n + 1);
-	for (int i = 0; i <= n; i++) dsu.make(i);
+	for (int i = 1; i <= n; i++) dsu.make(i);
 	
-	int res = 0;	
-	for (edge e : edges) {
-		if (dsu.unite(e.u, e.v)) {
-			res += e.w;
+	int i = 0;
+	
+	while (i < m) {
+		int w0 = edges[i].w;
+		int j = i;
+		while (j < m && edges[j].w == w0) ++j;
+		for (int k = i; k < j; k++) {
+			auto [u, v, z, idx] = edges[k];
+			if (dsu.find(u) != dsu.find(v)) ans[idx] = 1;
 		}
+		for (int k = i; k < j; k++) {
+			auto [u, v, z, idx] = edges[k];
+			dsu.unite(u, v);
+		}
+		i = j;
 	}
-	cout << res;
+	
+	for (int i = 1; i <= m; i++) cout << ans[i];
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	ll t = 1; // cin >> t;
+	int t = 1; //cin >> t;
 	while (t--) testcase();
 
 	return 0;
