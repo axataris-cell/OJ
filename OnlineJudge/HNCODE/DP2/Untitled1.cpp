@@ -21,46 +21,19 @@ void file() {
 	}
 }
 
-void debug_time(const string& label = "") {
-    static auto start = chrono::steady_clock::now();
-    auto now = chrono::steady_clock::now();
-    double ms = chrono::duration<double, milli>(now - start).count();
-    cerr << "[TIME] " << label << ": " << ms << " ms\n";
-}
-
-int bryg[15];
-
-int n;
-
-void dequy(int q) {
-	if (q == 0) {
-		for (int i = 1; i <= n; i++) {
-			cout << bryg[i];
-		}
-		cout << el;
-		return;
-	}
-	
-	
-	
-	for (int i = 0; i <= 1; i++) {
-		bryg[q] = i;
-		dequy(q - 1);
-	}
-	
-	return; 
-}
-
 void testcase() {
-	cin >> n;
-	dequy(n);
+	int n; cin >> n;
+	vector<int> a(n);
+	for (auto &x : a) cin >> x;
+	sort(a.begin(), a.end(), [](int x, int y) {
+		
+	});
+
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
-
-	debug_time();
 
 	ll t = 1; // cin >> t;
 	while (t--) testcase();
