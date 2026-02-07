@@ -4,7 +4,7 @@ Sơ qua về lý thuyết đồ thị: https://arxiv.org/pdf/2308.04512
 Web vẽ đồ thị: https://graphonline.top/en/
 
 Trong tháng 1, 2 lọ hết sạch bài trong này 
-Tổng số bài: 52 / 90 Bài
+Tổng số bài: 56 / 90 Bài
 
 BFS / DFS: https://marisaoj.com/module/20 - 17 / 17 Bài (OK)
 TREE: https://marisaoj.com/module/22 -        7 / 7 Bài (OK)
@@ -13,7 +13,7 @@ DAG: https://marisaoj.com/module/51 -          7 / 7 Bài (OK)
 PATH: https://marisaoj.com/module/28 -          4 /19 Bài
 DALUONG: https://marisaoj.com/module/30     0 / 5 Bài
 BFS 01: https://marisaoj.com/module/29         0 / 2 Bài
-LCA: https://marisaoj.com/module/32 - 	   5 / 9 Bài
+LCA: https://marisaoj.com/module/32 - 	   9 / 9 Bài
 ETOUR: https://marisaoj.com/module/31 -    0 / 10 Bài
 
 quy hoạch động DAG
