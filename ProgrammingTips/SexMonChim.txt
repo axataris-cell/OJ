@@ -1,0 +1,9 @@
+Các tác dụng Sếch mòn chim và biến thể.
++ tìm các số có chỉ số i < j và a[i] > a[j] hoặc a[i] < a[j]...
++ RMQ, RSQ
+
+Biến thể: 
++ Li Chao tree
++ Sparse segment tree
++ Persistent segment tree
++ vv
