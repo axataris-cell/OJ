@@ -5,8 +5,8 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+#define INF 1e9
+#define LINF 1e18
 
 #define FILENAME ""
 
@@ -22,8 +22,30 @@ void file() {
 	}
 }
 
+#define int long long
+
 void testcase() {
+	int n; cin >> n;
+	vector<int> a(n + 1);
+	for (int i = 1; i <= n; i++) cin >> a[i];
 	
+	vector<int> dp(n + 1, 1);
+	
+	dp[0] = 0;
+	dp[1] = 1;
+	
+	int res = 1;
+	
+	for (int i = 2; i <= n; i++) {
+		for (int j = 1; j < i; j++) {
+			if (a[i] > a[j]) {
+				dp[i] = max(dp[i], dp[j] + 1);
+			}
+		}
+		res = max(res, dp[i]);
+	}
+	
+	cout << res;
 }
 
 int32_t main() {

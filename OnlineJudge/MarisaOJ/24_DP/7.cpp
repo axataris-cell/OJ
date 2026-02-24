@@ -5,8 +5,8 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+#define INF 1e9
+#define LINF 1e18
 
 #define FILENAME ""
 
@@ -22,8 +22,25 @@ void file() {
 	}
 }
 
+const int MAXN = 2 * 1e5 + 7;
+const int MOD = 1e9 + 7;
+int f[MAXN];
+int pf[MAXN];
+
 void testcase() {
-	
+    int n, k;
+    cin >> n >> k;
+
+    for (int i = 1; i <= k; i++){
+        pf[i] = pf[i-1] + 1;
+        f[i] = 1;
+    }
+
+    for (int i = k+1; i <= n; i++){
+        f[i]= (1 + pf[i - k] % MOD) % MOD;
+        pf[i] = (pf[i-1] % MOD + f[i] % MOD) % MOD;
+    }
+    cout << pf[n] + 1;
 }
 
 int32_t main() {

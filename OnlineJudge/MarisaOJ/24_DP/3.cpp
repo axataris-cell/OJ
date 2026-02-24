@@ -22,8 +22,29 @@ void file() {
 	}
 }
 
+#define int long long
+
+const int MOD = 1e9 + 7;
+
 void testcase() {
-	
+    int n, k;
+    cin >> n >> k;
+
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    vector<ll> dp(k + 1, 0);
+    dp[0] = 1;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = k; j >= 1; j--) {
+            dp[j] = (dp[j] + dp[j - 1] * a[i] % MOD) % MOD;
+        }
+    }
+
+    cout << dp[k] << el;
 }
 
 int32_t main() {

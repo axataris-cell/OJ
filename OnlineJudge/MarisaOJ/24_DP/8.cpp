@@ -5,8 +5,8 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+#define INF 1e9
+#define LINF 1e18
 
 #define FILENAME ""
 
