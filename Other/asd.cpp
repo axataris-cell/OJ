@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <chrono>
+
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
@@ -7,7 +8,7 @@
 #define ld long double
 #define el '\n'
 
-#define FILENAME ""
+#define FILENAME "GTD"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -21,39 +22,35 @@ void file() {
 	}
 }
 
+const int MAXN = 2e5 + 5;
 
-int n,k;
-string s;
+vector<int> a(MAXN, 0);
 
-void backtrack(int pos, int cnt) {
-    if (cnt > k) return;
-    if (cnt + (n - pos) < k) return;
-    
-    if (pos == n) {
-        if (cnt == k) {
-            for (char c : s) cout << c << ' ';
-            cout << '\n';
-        }
-        return;
-    }
-
-    s[pos] = '0';
-    backtrack(pos + 1, cnt);
-
-    if (cnt < k) {
-        s[pos] = '1';
-        backtrack(pos + 1, cnt + 1);
-    }
+void testcase() {
+	int n, q; cin >> n >> q;
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
+	}
+	while (q--) {
+		int l, r; cin >> l >> r;
+		ll total = 0;
+		map<int, int> mp;
+		for (int i = l; i <= r; i++) {
+			++mp[a[i]];
+		}
+		for (auto x : mp) {
+			total += x.second * x.second * x.first * 1LL;
+		}
+		cout << total << el;
+	}
 }
-  
+
 int32_t main() {
 	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr); 
-	cout.tie(0);
+	cin.tie(nullptr); file();
 
-    cin >> n >> k;
-    s.resize(n);
-    backtrack(0, 0);
-    
-    return 0;
+	ll t = 1; //cin >> t;
+	while (t--) testcase();
+
+	return 0;
 }
