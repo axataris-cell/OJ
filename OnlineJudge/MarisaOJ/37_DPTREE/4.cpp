@@ -21,31 +21,41 @@ void file() {
 		freopen(FILENAME".OUT", "w", stdout);
 	}
 }
-const int MOD = 1e9 + 7;
+
+const int MAXN = 1e5 + 5;
+
+int n, k;
+int dp[105][MAXN];
+
+vector<int> g[MAXN];
+int res = 0;
+
+void dfs(int u, int p)
+{
+	for (int v : g[u]) {
+		if (v == p) continue;
+		dfs(v, u);
+		
+		for (int i = 0; i < k; i++) {
+			res += dp[i][u] * dp[k - i - 1][v];
+		}
+		for (int i = 1; i <= k; i++) {
+			dp[i][u] += dp[i - 1][v];
+		}
+	}
+}
+
 void testcase() {
-    string s;
-    cin >> s;
-
-    string t = "marisa";
-    int n = s.length();
-    int m = t.length();
-
-    vector<vector<ll>> dp(n + 1, vector<ll>(m + 1, 0));
-
-    for (int i = 0; i <= n; i++) {
-        dp[i][0] = 1;
-    }
-
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            dp[i][j] = dp[i - 1][j];
-            if (s[i - 1] == t[j - 1]) {
-                dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % MOD;
-            }
-        }
-    }
-
-    cout << dp[n][m];
+	cin >> n >> k;
+	for (int i = 1; i < n; i++) {
+		int a, b; cin >> a >> b;
+		g[a].push_back(b);
+		g[b].push_back(a);
+	}
+	for (int i = 1; i <= n; i++) dp[0][i] = 1;
+	dfs(1, 1);
+	
+	cout << res;
 }
 
 int32_t main() {
