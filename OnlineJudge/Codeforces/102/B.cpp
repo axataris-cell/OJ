@@ -22,41 +22,23 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
-
-vector<vector<int>> seg(MAXN + 1, vector<int>());
+string sumDigit(string s) {
+	int res = 0;
+	int n = s.length();
+	for (int i = 0; i < n; i++) {
+		res += s[i] - '0';
+	}
+	return to_string(res);
+}
 
 void testcase() {
-	int n; cin >> n;
-	int mx = 0;
-	for (int i = 1; i <= n; i++) {
-		int l, r; cin >> l >> r;
-		mx = max(mx, r);
-		seg[r].push_back(l);
+	string n; cin >> n;
+	int cnt = 0;
+	while (n.length() != 1) {
+		++cnt;
+		n = sumDigit(n);
 	}
-
-	vector<int> dp(mx + 1, 0), mxdp(mx + 1, 0);
-	
-	int res = 0;
-	
-	for (int r = 1; r <= mx; r++) {
-		mxdp[r] = mxdp[r - 1];
-
-		for (auto l : seg[r]) {
-			int c = r - l + 1;
-			dp[r] = max(dp[r], mxdp[l - 1] + c);
-			mxdp[r] = max(mxdp[r], dp[r]);
-		}
-		
-		res = max(res, dp[r]);
-	}
-	
-	for (int i = 1; i <= mx; i++) {
-		cerr << dp[i] << ' ';
-	}
-	cerr << el;
-	
-	cout << res;
+	cout << cnt;
 }
 
 int32_t main() {

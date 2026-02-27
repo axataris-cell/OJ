@@ -22,41 +22,37 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
+#define INF 2e9
 
-vector<vector<int>> seg(MAXN + 1, vector<int>());
+const int MAXN = 1e2 + 5;
+
+bool adj[MAXN][MAXN];
+vector<int> v(MAXN, 0);
 
 void testcase() {
-	int n; cin >> n;
-	int mx = 0;
+	int n, m; cin >> n >> m;
+	for (int i = 1; i <= n; i++) cin >> v[i];
+	for (int i = 1; i <= m; i++) {
+		int a, b; cin >> a >> b;
+		adj[a][b] = true;
+		adj[b][a] = true;
+	}
+	int res = INF;
 	for (int i = 1; i <= n; i++) {
-		int l, r; cin >> l >> r;
-		mx = max(mx, r);
-		seg[r].push_back(l);
-	}
-
-	vector<int> dp(mx + 1, 0), mxdp(mx + 1, 0);
-	
-	int res = 0;
-	
-	for (int r = 1; r <= mx; r++) {
-		mxdp[r] = mxdp[r - 1];
-
-		for (auto l : seg[r]) {
-			int c = r - l + 1;
-			dp[r] = max(dp[r], mxdp[l - 1] + c);
-			mxdp[r] = max(mxdp[r], dp[r]);
+		for (int j = 1; j < i; j++) {
+			for (int k = 1; k < j; k++) {
+				if (adj[i][j] && adj[i][k] && adj[j][k]) {
+					res = min(res, v[i] + v[j] + v[k]);
+				}
+			}
 		}
-		
-		res = max(res, dp[r]);
 	}
 	
-	for (int i = 1; i <= mx; i++) {
-		cerr << dp[i] << ' ';
+	if (res == INF) {
+		cout << -1 << el;
+	} else {
+		cout << res;
 	}
-	cerr << el;
-	
-	cout << res;
 }
 
 int32_t main() {

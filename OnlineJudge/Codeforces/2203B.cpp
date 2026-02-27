@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
-#include <chrono>
-
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
 #define ll long long
 #define ld long double
 #define el '\n'
+#define INF 2e9
+#define LINF 4e18
 
 #define FILENAME ""
 
@@ -22,48 +22,42 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
-
-vector<vector<int>> seg(MAXN + 1, vector<int>());
-
 void testcase() {
-	int n; cin >> n;
-	int mx = 0;
-	for (int i = 1; i <= n; i++) {
-		int l, r; cin >> l >> r;
-		mx = max(mx, r);
-		seg[r].push_back(l);
+	string s; cin >> s;
+	int n = s.length();
+	
+	map<int, int> mp;
+	
+	int S = 0;
+	for (int i = n - 1; i >= 0; i--) {
+		S += s[i] - '0';
+		if (i != 0) mp[s[i] - '0']++;
 	}
-
-	vector<int> dp(mx + 1, 0), mxdp(mx + 1, 0);
+	int first = s[0] - '0';
 	
 	int res = 0;
 	
-	for (int r = 1; r <= mx; r++) {
-		mxdp[r] = mxdp[r - 1];
-
-		for (auto l : seg[r]) {
-			int c = r - l + 1;
-			dp[r] = max(dp[r], mxdp[l - 1] + c);
-			mxdp[r] = max(mxdp[r], dp[r]);
+	for (int i = 9; i >= 0; i--) {
+		if (i == first - 1 && S >= 10) {
+			++res;
+			S -= first - 1;
 		}
-		
-		res = max(res, dp[r]);
+		while (S >= 10 && mp[i] > 0) {
+			++res;
+			S -= i;
+			mp[i]--;
+		}
+		if (S < 10) break;
 	}
 	
-	for (int i = 1; i <= mx; i++) {
-		cerr << dp[i] << ' ';
-	}
-	cerr << el;
-	
-	cout << res;
+	cout << res << el;
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	ll t = 1; //cin >> t;
+	int t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;

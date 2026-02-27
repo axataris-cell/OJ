@@ -22,41 +22,39 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
+//67 Decomposition
 
-vector<vector<int>> seg(MAXN + 1, vector<int>());
+const int MAXN 2e5 + 5;
+
+vector<int> g[MAXN];
+vector<int> sz(MAXN, 0)
+vector<int> h(MAXN, 0), head(MAXN, 0), heavy(MAXN, 0);
+
+void dfs(int u, int p) {
+	int best = 0;
+	for (int v : g[u]) {
+		if (v == p) continue;
+		h[v] = h[u] + 1;
+		dfs(v, u);
+		if (best < sz[v]) {
+			best = sz[v];
+			heavy[u] = v;
+		}
+	}
+}
 
 void testcase() {
 	int n; cin >> n;
-	int mx = 0;
-	for (int i = 1; i <= n; i++) {
-		int l, r; cin >> l >> r;
-		mx = max(mx, r);
-		seg[r].push_back(l);
-	}
-
-	vector<int> dp(mx + 1, 0), mxdp(mx + 1, 0);
-	
-	int res = 0;
-	
-	for (int r = 1; r <= mx; r++) {
-		mxdp[r] = mxdp[r - 1];
-
-		for (auto l : seg[r]) {
-			int c = r - l + 1;
-			dp[r] = max(dp[r], mxdp[l - 1] + c);
-			mxdp[r] = max(mxdp[r], dp[r]);
-		}
-		
-		res = max(res, dp[r]);
+	for (int i = 1; i < n; i++) {
+		int a, b; cin >> a >> b;
+		g[a].push_back(b);
+		g[b].push_back(a);
 	}
 	
-	for (int i = 1; i <= mx; i++) {
-		cerr << dp[i] << ' ';
-	}
-	cerr << el;
+	dfs(1, 1);
+	decompose(1, 1);
 	
-	cout << res;
+	
 }
 
 int32_t main() {

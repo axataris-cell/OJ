@@ -28,7 +28,7 @@ void testcase() {
 	for (int i = 1; i <= n; i++) {
 		cin >> r[i].first >> r[i].second;
 	}
-	vector<pii> s;
+	pqueue<pii, vector<pii>, greater<pii>> pq;
 	int res = 0;
 	for (int i = 0; i < n; i++) {
 		int x1 = r[i].first;
@@ -36,27 +36,24 @@ void testcase() {
 		int x2 = r[i + 1].first;
 		int y2 = r[i + 1].second;
 		
-		if (x1 == x2 && y1 == y2) {
-			if (x2 == y2 && y2 == 0) {
-				res = 1;
-			}
-			else continue;
-		}
-		
 		int on1 = max(x1, y1);
 		int on2 = min(x2, y2);
 		
-		if (on2 >= on1) s.push_back({on1, on2});
+		if (on2 >= on1) {
+			pq.emplace(on1, on2);
+		}
 	}
-	int l = s.size();
-	for (int i = 0; i < l - 1; i++) {
-		
+	while (pq.size()) {
+		pii u = pq.top(); pq.pop();
+		if (pq.size() && pq.top().first == u.second) {
+			int newa = pq.top().second;
+			pq.pop();
+			pq.emplace(u.first, newa);
+		} else {
+			res += u.second - u.first + 1;
+		}
 	}
-	for (auto x : s) cerr << "DEBUG: " << x.first << ' ' << x.second << el;
-	for (int i = 0; i < l - 1; i++) {
-		res += s[i].second - s[i].first;
-	}
-	
+
 	cout << res;
 }
 

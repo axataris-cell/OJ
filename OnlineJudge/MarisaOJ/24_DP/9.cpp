@@ -22,39 +22,29 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
-
-vector<vector<int>> seg(MAXN + 1, vector<int>());
-
 void testcase() {
 	int n; cin >> n;
-	int mx = 0;
-	for (int i = 1; i <= n; i++) {
-		int l, r; cin >> l >> r;
-		mx = max(mx, r);
-		seg[r].push_back(l);
+	vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+	
+	for (int j = 0; j <= n; j++) {
+		dp[j][1] = j;
 	}
-
-	vector<int> dp(mx + 1, 0), mxdp(mx + 1, 0);
+	
+	for (int num = 2; num <= n; num++) {
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j < i; j++) {
+				for (int num2 = 1; num2 < num; num2++) {
+					dp[i][num] = max(dp[i][num], dp[j][num2] * dp[i - j][num - num2]);
+				}
+			}
+		}
+	}
 	
 	int res = 0;
 	
-	for (int r = 1; r <= mx; r++) {
-		mxdp[r] = mxdp[r - 1];
-
-		for (auto l : seg[r]) {
-			int c = r - l + 1;
-			dp[r] = max(dp[r], mxdp[l - 1] + c);
-			mxdp[r] = max(mxdp[r], dp[r]);
-		}
-		
-		res = max(res, dp[r]);
+	for (int i = 2; i <= n; i++) {
+		res = max(res, dp[n][i]);
 	}
-	
-	for (int i = 1; i <= mx; i++) {
-		cerr << dp[i] << ' ';
-	}
-	cerr << el;
 	
 	cout << res;
 }

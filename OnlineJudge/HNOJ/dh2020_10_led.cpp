@@ -8,7 +8,7 @@
 #define ld long double
 #define el '\n'
 
-#define FILENAME ""
+#define FILENAME "led"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -21,42 +21,49 @@ void file() {
 		freopen(FILENAME".OUT", "w", stdout);
 	}
 }
+#define int long long 
 
-const int MAXN = 1e5 + 5;
-
-vector<vector<int>> seg(MAXN + 1, vector<int>());
-
+vector<int> q1(10, 0);
+vector<int> q2(10, 0);
 void testcase() {
-	int n; cin >> n;
-	int mx = 0;
-	for (int i = 1; i <= n; i++) {
-		int l, r; cin >> l >> r;
-		mx = max(mx, r);
-		seg[r].push_back(l);
-	}
-
-	vector<int> dp(mx + 1, 0), mxdp(mx + 1, 0);
+	q1[0] = 6;
+	q1[1] = 2;
+	q1[2] = 5;
+	q1[3] = 5;
+	q1[4] = 4;
+	q1[5] = 5;
+	q1[6] = 6;
+	q1[7] = 3;
+	q1[8] = 7;
+	q1[9] = 6;
 	
-	int res = 0;
+	q2[0] = 2;
+	q2[1] = 6;
+	q2[2] = 2;
+	q2[3] = 3;
+	q2[4] = 3;
+	q2[5] = 4;
+	q2[6] = 2;
+	q2[7] = 3;
+	q2[8] = 1;
+	q2[9] = 1;
 	
-	for (int r = 1; r <= mx; r++) {
-		mxdp[r] = mxdp[r - 1];
-
-		for (auto l : seg[r]) {
-			int c = r - l + 1;
-			dp[r] = max(dp[r], mxdp[l - 1] + c);
-			mxdp[r] = max(mxdp[r], dp[r]);
+	int t; cin >> t;
+	string s; cin >> s;
+	int n = s.length();
+	if (t == 1) {
+		int res = 0;
+		for (int i = 0; i < n; i++) {
+			res += q1[s[i] - '0'];
 		}
-		
-		res = max(res, dp[r]);
+		cout << res;
+	} else {
+		int res = 1;
+		for (int i = 0; i < n; i++) {
+			res *= q2[s[i] - '0'];
+		}
+		cout << res - 1;
 	}
-	
-	for (int i = 1; i <= mx; i++) {
-		cerr << dp[i] << ' ';
-	}
-	cerr << el;
-	
-	cout << res;
 }
 
 int32_t main() {
