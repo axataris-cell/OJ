@@ -22,6 +22,7 @@ void file() {
 	}
 }
 
+<<<<<<< HEAD
 #define int long long
 
 const int MOD = 1e9 + 7;
@@ -44,6 +45,56 @@ void testcase() {
 	}
 	
 	cout << dp[n][l] % MOD;
+=======
+void testcase() {
+	string s; cin >> s;
+	int n = s.length();
+	
+	vector<int> pos[(int)('z') + 1];
+	for (int i = 0; i < n; i++) {
+		pos[s[i]].push_back(i);
+	}
+	int res = 0;
+	for (int i = 0; i < pos['m'].size(); i++) {
+		auto bi = upper_bound(pos['a'].begin(), pos['a'].end(), pos['m'][i]);
+		cerr <<  'i' << i << ' ';
+		if (bi == pos['a'].end()) {
+			cout << res; return;
+		}
+		for (int j = bi - pos['a'].begin(); j < pos['a'].size(); j++) {
+			auto bj = upper_bound(pos['r'].begin(), pos['r'].end(), pos['a'][j]);
+			cerr << 'j' << j << ' ';
+			if (bj == pos['r'].end()) {
+				cout << res; return;
+			}
+			for (int k = bj - pos['r'].begin(); k < pos['r'].size(); k++) {
+				auto bk = upper_bound(pos['i'].begin(), pos['i'].end(), pos['r'][k]);
+				cerr << 'k' << k << ' ';
+				if (bk == pos['i'].end()) {
+					cout << res; return;
+				}
+				for (int l = bk - pos['i'].begin(); l < pos['i'].size(); l++) {
+					auto bl = upper_bound(pos['s'].begin(), pos['s'].end(), pos['i'][l]);
+					cerr << 'l' << l << ' ';
+					if (bl == pos['s'].end()) {
+						cout << res; return;
+					}
+					for (int m = bl - pos['s'].begin(); m < pos['s'].size(); m++) {
+						auto bm = upper_bound(pos['a'].begin(), pos['a'].end(), pos['s'][m]);
+						cerr << 'm' << m << ' ';
+						if (bm == pos['a'].end()) {
+							cout << res; return;
+						}
+						res += pos['a'].size() - (bm - pos['a'].begin());
+					}
+				}
+			}
+		}
+		cerr << el;
+	}
+	cerr << "end" << el;
+	cout << res;
+>>>>>>> 85a321061430a213a29540ef419bae15569118f2
 }
 
 int32_t main() {
