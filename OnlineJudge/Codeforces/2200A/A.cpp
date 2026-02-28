@@ -22,48 +22,25 @@ void file() {
 	}
 }
 
-#define int long long
-
-const int MAXN = 1e5 + 5;
-const int MOD = 1e9 + 7;
-
-vector<int> g[MAXN];
-vector<int> dp(MAXN, 1);
-
-int res = 0;
-
-void dfs(int u, int p) {
-	for (int v : g[u]) {
-		if (v == p) {
-			continue;
-		}
-		dfs(v, u);
-		dp[u] *= dp[v] + 1; dp[u] %= MOD;
-	}
-}
-
 void testcase() {
 	int n; cin >> n;
-	for (int i = 1; i < n; i++) {
-		int a, b; cin >> a >> b;
-		g[a].push_back(b);
-		g[b].push_back(a);
+	vector<int> a(n);
+	map<int, int> mp;
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+		mp[a[i]]++;
 	}
 	
-	dfs(1, 1);
+	int mx = *max_element(a.begin(), a.end());
 	
-	for (int i = 1; i <= n; i++) {
-		res += dp[i];
-		res %= MOD;
-	}
-	cout << res % MOD;
+	cout << mp[mx] << el;
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	int t = 1; //cin >> t;
+	int t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;

@@ -22,28 +22,24 @@ void file() {
 	}
 }
 
-#define int long long
-
 const int MAXN = 1e5 + 5;
-const int MOD = 1e9 + 7;
 
 vector<int> g[MAXN];
-vector<int> dp(MAXN, 1);
-
-int res = 0;
+vector<pii> range(MAXN);
 
 void dfs(int u, int p) {
 	for (int v : g[u]) {
-		if (v == p) {
-			continue;
-		}
+		if (v == p) continue;
+		
 		dfs(v, u);
-		dp[u] *= dp[v] + 1; dp[u] %= MOD;
 	}
 }
 
 void testcase() {
 	int n; cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cin >> range[i].first >> range[i].second;
+	}
 	for (int i = 1; i < n; i++) {
 		int a, b; cin >> a >> b;
 		g[a].push_back(b);
@@ -52,11 +48,7 @@ void testcase() {
 	
 	dfs(1, 1);
 	
-	for (int i = 1; i <= n; i++) {
-		res += dp[i];
-		res %= MOD;
-	}
-	cout << res % MOD;
+	cout << res;
 }
 
 int32_t main() {

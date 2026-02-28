@@ -22,48 +22,47 @@ void file() {
 	}
 }
 
-#define int long long
-
-const int MAXN = 1e5 + 5;
-const int MOD = 1e9 + 7;
-
-vector<int> g[MAXN];
-vector<int> dp(MAXN, 1);
-
-int res = 0;
-
-void dfs(int u, int p) {
-	for (int v : g[u]) {
-		if (v == p) {
-			continue;
-		}
-		dfs(v, u);
-		dp[u] *= dp[v] + 1; dp[u] %= MOD;
-	}
-}
-
 void testcase() {
 	int n; cin >> n;
-	for (int i = 1; i < n; i++) {
-		int a, b; cin >> a >> b;
-		g[a].push_back(b);
-		g[b].push_back(a);
-	}
-	
-	dfs(1, 1);
+	vector<int> a(n + 1), f(n + 1, 0);
+	vector<bool> ok(n + 1, 0);
+	map<int, int> mp;
 	
 	for (int i = 1; i <= n; i++) {
-		res += dp[i];
-		res %= MOD;
+		cin >> a[i];
+		f[i] = f[i - 1] + a[i];
 	}
-	cout << res % MOD;
+	
+	for (int i = 1; i <= n; i++) {
+		if (a[i] < f[i - 1]) continue;
+		if (a[i] == f[i - 1]) {
+			ok[i] = true;
+		}
+		int target = a[i] - f[i - 1];
+		int l = i + 1, r = n;
+		while (l <= r) {
+			int mid = (l + r) / 2;
+			if (f[mid] - f[i] == target) {
+				ok[mid] = 1;
+			} else if (f[mid] - f[i] < target) {
+				l = mid + 1;
+			} else if (f[mid] - f[i] > target) {
+				r = mid - 1;
+			}
+		}
+	}
+	int res = 0;
+	for (int i = 1; i <= n; i++) {
+		if (ok[i]) ++res;
+	}
+	cout << res << el;
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	int t = 1; //cin >> t;
+	int t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;

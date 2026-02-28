@@ -22,48 +22,36 @@ void file() {
 	}
 }
 
-#define int long long
-
-const int MAXN = 1e5 + 5;
-const int MOD = 1e9 + 7;
-
-vector<int> g[MAXN];
-vector<int> dp(MAXN, 1);
-
-int res = 0;
-
-void dfs(int u, int p) {
-	for (int v : g[u]) {
-		if (v == p) {
-			continue;
-		}
-		dfs(v, u);
-		dp[u] *= dp[v] + 1; dp[u] %= MOD;
-	}
-}
-
 void testcase() {
 	int n; cin >> n;
-	for (int i = 1; i < n; i++) {
-		int a, b; cin >> a >> b;
-		g[a].push_back(b);
-		g[b].push_back(a);
+	string s; cin >> s;
+
+	while (s.size() > 1) {
+		bool changed = false;
+		for (int i = 1; i < s.size(); i++) {
+			while (i < s.size() && s[i] == s[i - 1]) {
+				changed = true;
+				s.erase(i - 1, 2);
+			}
+		}
+		if (!changed) break;
 	}
 	
-	dfs(1, 1);
-	
-	for (int i = 1; i <= n; i++) {
-		res += dp[i];
-		res %= MOD;
-	}
-	cout << res % MOD;
+	if (s.size()) cout << "NO" << el;
+	else cout << "YES" << el;
 }
+
+/*
+1
+12
+siixxsevvenn
+*/
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	int t = 1; //cin >> t;
+	int t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;
