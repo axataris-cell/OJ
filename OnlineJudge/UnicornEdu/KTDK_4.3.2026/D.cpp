@@ -23,62 +23,31 @@ void file() {
 	}
 }
 
-string a;
-string ans = "0";
-string res = "";
+vector<int> xaihi;
 
-bool valid(string s) {
-	for (int i = 1; i < s.length(); i++) {
-		if (s[i] <= s[i - 1]) return false;
+void preprocess(int k, int prev, int cur) {
+	if (k > 9) return;
+	xaihi.push_back(cur);
+	for (int i = prev + 1; i <= 9; i++) {
+		preprocess(k + 1, i, cur * 10 + i);
 	}
-	return true;
-}
-
-void dfs(int c, int idx) {
-	res.push_back(c + '0');
-	if (!valid(res) || res.size() > a.size() || stoi(res) > stoi(a)) {
-		res.pop_back();
-		return;	
-	}
-	if (idx == a.length() - 1) {
-		if (res.size() && stoi(ans) < stoi(res) && valid(res)) ans = res;
-		res.pop_back();
-		return;
-	}
-	for (int i = c + 1; i <= 9; i++) {
-		dfs(i, idx + 1);
-	}
-	res.pop_back();
 }
 
 void testcase() {
-	cin >> a;
-	ans = "0";
-	res = "";
-	
-	if (a.size() == 1 || valid(a)) {
-		cout << a << el;
-		return;
-	}
-	
-	dfs(a[0] - '0', 0);
-	
-	int cur = 9;
-	string in = "";
-	int inp = a.size() - 1;
-	while (inp > 0) {
-		in.push_back(cur + '0');
-		--inp; --cur;
-	}
-	in.push_back(a[0] - 1);
-	reverse(in.begin(), in.end());
-	
-	cout << max(stoi(in), stoi(ans)) << el;
+	int a; cin >> a;
+	auto it = upper_bound(xaihi.begin(), xaihi.end(), a) - 1 - xaihi.begin();
+	cout << xaihi[it] << el;
 }
-	
+
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
+	
+	xaihi.push_back(0);
+	for (int i = 1; i <= 9; i++) {
+		preprocess(1, i, i);
+	}
+	sort(xaihi.begin(), xaihi.end());
 
 	int t = 1; cin >> t;
 	while (t--) testcase();

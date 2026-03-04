@@ -22,19 +22,22 @@ void file() {
 		freopen(FILENAME".OUT", "w", stdout);
 	}
 }
-
+ll n;
+unordered_map<ll,ll> m;
 void testcase() {
-	ll n; cin >> n;
-	ll res = 0;
-	ll m = 0;
-	for (ll i = n / 2; i <= n - 1; i++) {
-		if ( __gcd(i, n) + i >= res) {
-			res = __gcd(i, n) + i;
-			m = i;
-		}
+	cin >> n;
+	for (int i = 1; i <= sqrt(n); i++) {
+		if (n % i) continue;
+		ll maxm = n - 2;
+		maxm -= (maxm % i);
+		m[maxm + i] = max(m[maxm + i], maxm);
+		ll g = n / i;
+		maxm = n - 2;
+		maxm -= (maxm % g);
+		m[maxm + g] = max(m[maxm + g], maxm);
 	}
-	
-	cout << m;
+	while (!m[n]) n--;
+	cout << m[n];
 }
 
 int32_t main() {

@@ -23,6 +23,8 @@ void file() {
 	}
 }
 
+#define int long long
+
 void testcase() {
 	int k = 1;
 	int n; cin >> n;
