@@ -22,40 +22,25 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, q;
-
-vector<int> a(MAXN, 0);
-vector<int> ST(4 * MAXN, 0);
-
-void build(int id, int l, int r) {
-	
-}
-
-void update(int id, int l, int r, int pos, int val) {
-	
-}
-
-int query(int id, int l, int r, int x, int y, int k) {
-	
-}
-
 void testcase() {
-	cin >> n >> q;
+	int n, m; cin >> n >> m;
+	vector<int> a(n + 1);
 	for (int i = 1; i <= n; i++) cin >> a[i];
 	
-	build(1, 1, n);
+	sort(a.begin() + 1, a.begin() + n + 1);
 	
-	while (q--) {
-		int t; cin >> t;
-		if (t == 1) {
-			int i, v; cin >> i >> v;
-			update(1, 1, n, i, v);
-		} else if (t == 2) {
-			int l, r, k; cin >> l >> r >> k;
-			cout << query(1, 1, n, l, r, k) << el;
-		}
+	vector<int> dp(n + 1), f(n + 1);
+	for (int i = 1; i <= n; i++) {
+		f[i] = f[i - 1] + a[i];
+	}
+	for (int i = 1; i <= n; i++) {
+		cerr << a[i] << ' ';
+	}
+	cerr << el;
+	for (int i = 1; i <= n; i++) {
+		dp[i] = f[i];
+		if (i - m > 0) dp[i] += dp[i - m];
+		cout << dp[i] << ' ';
 	}
 }
 

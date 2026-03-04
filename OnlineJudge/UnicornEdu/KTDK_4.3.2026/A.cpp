@@ -5,8 +5,9 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+
+constexpr int INF = 2e9;
+constexpr ll LINF = 4e18;
 
 #define FILENAME ""
 
@@ -22,41 +23,18 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, q;
-
-vector<int> a(MAXN, 0);
-vector<int> ST(4 * MAXN, 0);
-
-void build(int id, int l, int r) {
-	
-}
-
-void update(int id, int l, int r, int pos, int val) {
-	
-}
-
-int query(int id, int l, int r, int x, int y, int k) {
-	
-}
-
 void testcase() {
-	cin >> n >> q;
-	for (int i = 1; i <= n; i++) cin >> a[i];
-	
-	build(1, 1, n);
-	
-	while (q--) {
-		int t; cin >> t;
-		if (t == 1) {
-			int i, v; cin >> i >> v;
-			update(1, 1, n, i, v);
-		} else if (t == 2) {
-			int l, r, k; cin >> l >> r >> k;
-			cout << query(1, 1, n, l, r, k) << el;
+	ll n; cin >> n;
+	ll res = 0;
+	ll m = 0;
+	for (ll i = n / 2; i <= n - 1; i++) {
+		if ( __gcd(i, n) + i >= res) {
+			res = __gcd(i, n) + i;
+			m = i;
 		}
 	}
+	
+	cout << m;
 }
 
 int32_t main() {

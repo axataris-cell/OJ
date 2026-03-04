@@ -5,8 +5,9 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+
+constexpr int INF = 2e9;
+constexpr ll LINF = 4e18;
 
 #define FILENAME ""
 
@@ -22,41 +23,30 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
+int n;
+string in;
+vector<int> mp(10, 0);
 
-int n, q;
-
-vector<int> a(MAXN, 0);
-vector<int> ST(4 * MAXN, 0);
-
-void build(int id, int l, int r) {
-	
-}
-
-void update(int id, int l, int r, int pos, int val) {
-	
-}
-
-int query(int id, int l, int r, int x, int y, int k) {
-	
+bool valid(int s) {
+	while (s > 0) {
+		int m = s % 10;
+		if (mp[m]) return false;
+		s /= 10;
+	}
+	return true;
 }
 
 void testcase() {
-	cin >> n >> q;
-	for (int i = 1; i <= n; i++) cin >> a[i];
-	
-	build(1, 1, n);
-	
-	while (q--) {
-		int t; cin >> t;
-		if (t == 1) {
-			int i, v; cin >> i >> v;
-			update(1, 1, n, i, v);
-		} else if (t == 2) {
-			int l, r, k; cin >> l >> r >> k;
-			cout << query(1, 1, n, l, r, k) << el;
-		}
+	cin >> n;
+	cin >> in;
+	for (int i = 0; i < (int)in.length(); i++) {
+		++mp[in[i] - '0'];
 	}
+	int res = 0;
+	for (int i = 1; i <= n; i++) {
+		if (valid(i)) ++res;
+	}
+	cout << res;
 }
 
 int32_t main() {

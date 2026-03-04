@@ -54,7 +54,7 @@ void testcase() {
     }
 
     if (initially_sorted) {
-        cout << "Bob" << endl;
+        cout << "Bob" << el;
         return;
     }
 
@@ -62,7 +62,7 @@ void testcase() {
     for (int i = 0; i < n; ++i) {
         if (a[i] == 1) {
             if (seen_non_one) {
-                cout << "Alice" << endl;
+                cout << "Alice" << el;
                 return;
             }
         } else {
@@ -75,7 +75,7 @@ void testcase() {
         if (a[i] > 1) {
             int p = get_prime_power_base(a[i]);
             if (p == -1) {
-                cout << "Alice" << endl;
+                cout << "Alice" << el;
                 return;
             }
             prime_bases.push_back(p);
@@ -84,7 +84,7 @@ void testcase() {
 
     for (int i = 0; i < (int)prime_bases.size() - 1; ++i) {
         if (prime_bases[i] > prime_bases[i + 1]) {
-            cout << "Alice" << endl;
+            cout << "Alice" << el;
             return;
         }
     }

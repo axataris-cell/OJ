@@ -24,14 +24,27 @@ void file() {
 }
 
 void testcase() {
+	int n; cin >> n;
+	int x; cin >> x;
+	vector<int> a(n + 1, 0);
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
+	}
 	
+	int res = 0;
+	for (int i = 0; i < n; i++) {
+		res = max(res, a[i + 1] - a[i]);
+	}
+	res = max(res, 2 * (x - a[n]));
+	
+	cout << res << el;
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	int t = 1; //cin >> t;
+	int t; cin >> t;
 	while (t--) testcase();
 
 	return 0;

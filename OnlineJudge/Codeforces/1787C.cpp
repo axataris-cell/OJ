@@ -24,14 +24,26 @@ void file() {
 }
 
 void testcase() {
+	int n; cin >> n;
 	
+	vector<int> g[n + 1];
+	
+	for (int i = 1; i < n; i++) {
+		int a, b; cin >> a >> b;
+		g[a].push_back(b);
+		g[b].push_back(a);
+	}
+	string s; cin >> s;
+	for (int i = 0; i < s; i++) {
+		
+	}
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	int t = 1; //cin >> t;
+	int t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;

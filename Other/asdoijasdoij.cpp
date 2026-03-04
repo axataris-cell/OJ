@@ -22,48 +22,38 @@ void file() {
 	}
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, q;
-
-vector<int> a(MAXN, 0);
-vector<int> ST(4 * MAXN, 0);
-
-void build(int id, int l, int r) {
-	
-}
-
-void update(int id, int l, int r, int pos, int val) {
-	
-}
-
-int query(int id, int l, int r, int x, int y, int k) {
-	
-}
+/*
+1
+8
+4 3 3 1 10 4 9 9
+*/
 
 void testcase() {
-	cin >> n >> q;
-	for (int i = 1; i <= n; i++) cin >> a[i];
-	
-	build(1, 1, n);
-	
-	while (q--) {
-		int t; cin >> t;
-		if (t == 1) {
-			int i, v; cin >> i >> v;
-			update(1, 1, n, i, v);
-		} else if (t == 2) {
-			int l, r, k; cin >> l >> r >> k;
-			cout << query(1, 1, n, l, r, k) << el;
-		}
+	int n; cin >> n;
+	vector<int> a(n + 1);
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
 	}
+	
+	vector<bool> dp(n + 2, 0);
+	dp[0] = dp[n + 1] = 1;
+	
+	for (int i = 1; i <= n; i++) {
+		if (i - a[i] > 0 && dp[i - a[i] - 1]) dp[i] = true;
+		if (i + a[i] <= n && dp[i - 1]) dp[i + a[i]] = true;
+	}
+	
+	for (int i = 1; i <= n; i++) cerr << dp[i] << ' ';
+	cerr << el;
+	
+	cout << ((dp[n]) ? "YES" : "NO") << el;
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr); file();
 
-	int t = 1; //cin >> t;
+	int t = 1; cin >> t;
 	while (t--) testcase();
 
 	return 0;
