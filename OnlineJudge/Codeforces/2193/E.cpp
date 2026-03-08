@@ -23,23 +23,29 @@ void file() {
 	}
 }
 const int MAXN = 3e5 + 5;
-int p[MAXN];
 
-void sieve() {
-	for (int i = 2; i < MAXN; i++) p[i] = i;
-	for (int i = 2; i * i < MAXN; i++) {
-		if (p[i]) {
-			for (int j = i * i; j < MAXN; j += i) {
-				p[j] = i;
-			}
-		}
-	}
-}
+/*
+1
+8
+3 2 2 3 7 3 6 7
+*/
+
+#define int long long
 
 void testcase() {
 	int n; cin >> n;
-	vector<int> a(n + 1);
+	vector<int> a(n + 1), dp(n + 1, INF);
 	for (int i = 1; i <= n; i++) cin >> a[i];
+	for (int i = 1; i <= n; i++) dp[a[i]] = 1;
+	
+	for (int i = 1; i <= n; i++) {
+		for (int j = i; j <= n; j += i) {
+			dp[j] = min(dp[j], dp[i] + dp[j / i]);
+		}
+	}
+	
+	for (int i = 1; i <= n; i++) cout << ((dp[i] == INF) ? -1 : dp[i]) << ' ';
+	cout << el;
 }
 
 int32_t main() {
