@@ -29,22 +29,56 @@ void file() {
 13 37
 */
 
+/*
+1
+1 2 10
+10
+*/
+
 //after x amount of lights, we js need to increase the other m - x monster
 
 void testcase() {
 	int n, m, l; cin >> n >> m >> l;
-	vector<bool> light(l + 1, 0);
-	vector<int> a(m + 1, 0);
+	vector<int> light(n + 1, 0);
 	for (int i = 1; i <= n; i++) {
-		int x; cin >> x;
-		light[x] = 1;
+		cin >> light[i];
 	}
-	int lastlight = -1;
-
-	vector<int> prefmx(l + 1, -INF);
-	for (int i = 1; i <= l; i++) {
-		
+	
+	int mx = 0;
+	int cnt = 0;
+	int res = 0;
+	int fill = 0;
+	for (int i = 1; i <= n; i++) {
+		int time = light[i] - light[i - 1] - 1;
+		int mod = time % (m - cnt);
+		int gain = time / (m - cnt);
+		cerr << "DEBUG: " << i << ' ' << "VAL " << time << ' ' << mod << ' ' << gain << el; 
+		res = max(res, mx + time);
+		mx += gain;
+		if (mod) ++mx;
+		if (mod + fill == m - cnt) {
+			++mx;
+			mod = 0;
+			fill = 0;
+		}
+		fill = ((m - cnt) - mod) % (m - cnt);
+		if (mod == 1) {
+			--fill;
+			--mx;
+		}
+		res = max(res, mx);
+		cerr << res << ' ' << fill << ' ' << mx << el;
+		++cnt;
+		if (cnt == m) {
+			cnt = 0;
+			mx = 0;
+			fill = 0;
+		}
+//		cerr << mx << ' ' << cnt << ' ' << res << ' ' << fill << el;
 	}
+	res = max(res, mx + l - light[n]);
+	
+	cout << res << el;
 }
 
 int32_t main() {

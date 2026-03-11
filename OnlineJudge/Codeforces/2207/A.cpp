@@ -27,42 +27,28 @@ void testcase() {
 	int n; cin >> n;
 	string s; cin >> s;
 	
-	vector<bool> vis(n + 1, 0);
-	
-	for (int i = 1; i <= n - 2; i++) {
-		int cnt0 = 0, cnt1 = 0;
-		for (int j = i; j <= i + 2; j++) {
-			if (s[j - 1] == '0') ++cnt0;
-			else ++cnt1;
+	string t = s;
+	for (int i = 1; i < n - 1; i++) {
+		if (t[i - 1] == t[i + 1] && t[i - 1] == '1') {
+			t[i] = '1';
 		}
-		if (cnt0 >= 2) continue;
-		if (cnt0 == 1 && (s[i] == '0' || vis[i])) {
-			vis[i] = vis[i + 1] = vis[i + 2] = true;
-		}
-		if (cnt0 == 0) vis[i] = vis[i + 1] = vis[i + 2] = true;
 	}
-	vector<int> seg;
-	int cnt = 0;
-	for (int i = 1; i <= n; i++) {
-		if (!vis[i]) {
-			if (cnt != 0) seg.push_back(cnt);
-			cnt = 0;
-		} else ++cnt;
-	}
-	if (cnt != 0) seg.push_back(cnt);
 	
-	for (int i = 1; i <= n; i++) cout << vis[i] << ' ';
-	cout << el;
-	for (auto x : seg) cout << x << ' ';
-	cout << el;
-
-//	int mn = 0, mx = 0;
-//	for (auto x : seg) {
-//		mx += x;
-//		mn += (x + 1) / 2;
-//	}
-//	
-//	cout << mn << ' ' << mx << el;
+	string g = t;
+	for (int i = 1; i < n - 1; i++) {
+		if (g[i - 1] == g[i + 1] && g[i - 1] == '1') {
+			g[i] = '0';
+		}
+	}
+	
+	int res = 0;
+	int res2 = 0;
+	for (int i = 0; i < n; i++) {
+		if (t[i] == '1') ++res;
+		if (g[i] == '1') ++res2;
+	}
+	
+	cout << res2 << ' ' << res << el;
 }
 
 int32_t main() {
