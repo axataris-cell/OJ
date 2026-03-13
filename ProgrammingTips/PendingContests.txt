@@ -20,9 +20,9 @@ Div3 && Div4:
 https://codeforces.com/contest/2137 5 / 7
 https://codeforces.com/contest/2126 4 / 7
 https://codeforces.com/contest/2121 4 / 7
-https://codeforces.com/contest/2117 6 / 7
-https://codeforces.com/contest/2114 3 / 7
-https://codeforces.com/contest/2132
+https://codeforces.com/contest/2117 6 / 8
+https://codeforces.com/contest/2114 5 / 7
+https://codeforces.com/contest/2132 4 / 8
 https://codeforces.com/contest/2131
 https://codeforces.com/contest/2148
 https://codeforces.com/contest/2171

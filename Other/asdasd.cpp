@@ -23,8 +23,9 @@ void file() {
 	}
 }
 const int MAXN = 1e3 + 4;
-vector<int> w(MAXN + 1), v(MAXN + 1), f(MAXN + 1, 0);
-vector<int> ST(4 * MAXN, 0);
+vector<int> w(MAXN + 1), f(MAXN + 1, 0);
+vector<ld> v(MAXN + 1);
+vector<ld> ST(4 * MAXN, 0);
 
 void build(int id, int l, int r) {
 	if (l == r) {
@@ -39,8 +40,8 @@ void build(int id, int l, int r) {
 	ST[id] = min(ST[id << 1], ST[id << 1 | 1]);
 }
 
-int query(int id, int l, int r, int x, int y) {
-	if (y < l || x > r) return INF;
+ld query(int id, int l, int r, int x, int y) {
+	if (y < l || x > r) return LINF;
 	if (x <= l && r <= y) {
 		return ST[id];
 	}
@@ -50,7 +51,9 @@ int query(int id, int l, int r, int x, int y) {
 }
 
 void testcase() {
-	int n, p, l; cin >> n >> p >> l;
+	int n, p;
+	ld l;
+	cin >> n >> p >> l;
 	for (int i = 1; i <= n; i++) {
 		cin >> w[i] >> v[i];
 		f[i] = f[i - 1] + w[i];
@@ -58,17 +61,33 @@ void testcase() {
 	
 	build(1, 1, n);
 	
-	vector<int> dp(n + 1); // lưu tổng v[i] nhỏ nhất nếu chọn i là đầu xe
+	vector<ld> dp(n + 1, LINF); // lưu tổng tg nhỏ nhất nếu chọn i là đầu xe
+	dp[0] = 0;
+	
+	vector<int> par(n + 1, 0);
+	
 	for (int i = 1; i <= n; i++) {
-		dp[i] = v[i];
+		for (int j = i; j >= 1; j--) {
+			if (f[i] - f[j - 1] > p) break;
+			ld mn = query(1, 1, n, j, i);
+			
+			if (dp[j - 1] + l / mn < dp[i]) {
+				dp[i] = dp[j - 1] + l / mn;
+				par[i] = j - 1;
+			}
+		}
 	}
 	
-	for (int i = 2; i <= n; i++) {
-		auto it = ...; // f[l - 1] >= f[r] - p.
-		// dp[i] = dp[it] + query(1, 1, n, it, i).
+	int cur = n;
+	vector<int> path;
+	while (cur != 0) {
+		path.push_back(par[cur] + 1);
+		cur = par[cur];
 	}
+	reverse(path.begin(), path.end());
 	
-	cout << dp[n] * l;
+	cout << fixed << setprecision(2) << dp[n] << el;
+	for (auto x : path) cout << x << ' ';
 }
 
 int32_t main() {
