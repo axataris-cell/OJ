@@ -5,8 +5,9 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+
+constexpr int INF = 2e9;
+constexpr ll LINF = 4e18;
 
 #define FILENAME ""
 
@@ -21,23 +22,72 @@ void file() {
 		freopen(FILENAME".OUT", "w", stdout);
 	}
 }
+const int MAXN = 1e3 + 4;
+vector<int> w(MAXN + 1), f(MAXN + 1, 0);
+vector<ld> v(MAXN + 1);
+vector<ld> ST(4 * MAXN, 0);
 
-int count(int n) {
-	string s = to_string(n);
-	int cnt = 0;
-	for (int i = 0; i < s.length(); i += 2) {
-		if (s[i] == '0') ++cnt;
+void build(int id, int l, int r) {
+	if (l == r) {
+		ST[id] = v[l];
+		return;
 	}
-	return cnt;
+	
+	int mid = (l + r) / 2;
+	build(id << 1, l, mid);
+	build(id << 1 | 1, mid + 1, r);
+	
+	ST[id] = min(ST[id << 1], ST[id << 1 | 1]);
+}
+
+ld query(int id, int l, int r, int x, int y) {
+	if (y < l || x > r) return LINF;
+	if (x <= l && r <= y) {
+		return ST[id];
+	}
+	
+	int mid = (l + r) / 2;
+	return min(query(id << 1, l, mid, x, y), query(id << 1 | 1, mid + 1, r, x, y));
 }
 
 void testcase() {
-	int a, b; cin >> a >> b;
-	int res = 0;
-	for (int i = a; i <= b; i++) {
-		res += count(i);
+	int n, p;
+	ld l;
+	cin >> n >> p >> l;
+	for (int i = 1; i <= n; i++) {
+		cin >> w[i] >> v[i];
+		f[i] = f[i - 1] + w[i];
+	} 
+	
+	build(1, 1, n);
+	
+	vector<ld> dp(n + 1, LINF); // lưu tổng tg nhỏ nhất nếu chọn i là đầu xe
+	dp[0] = 0;
+	
+	vector<int> par(n + 1, 0);
+	
+	for (int i = 1; i <= n; i++) {
+		for (int j = i; j >= 1; j--) {
+			if (f[i] - f[j - 1] > p) break;
+			ld mn = query(1, 1, n, j, i);
+			
+			if (dp[j - 1] + l / mn < dp[i]) {
+				dp[i] = dp[j - 1] + l / mn;
+				par[i] = j - 1;
+			}
+		}
 	}
-	cout << res;
+	
+	int cur = n;
+	vector<int> path;
+	while (cur != 0) {
+		path.push_back(par[cur] + 1);
+		cur = par[cur];
+	}
+	reverse(path.begin(), path.end());
+	
+	cout << fixed << setprecision(2) << dp[n] << el;
+	for (auto x : path) cout << x << ' ';
 }
 
 int32_t main() {
