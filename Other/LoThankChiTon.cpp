@@ -147,6 +147,21 @@ int query(int u, int v) {
 	return res;
 }
 
+/*
+11
+5 7 9 10 0 -9 4 23 67 -5 -2
+1 2
+2 3
+2 4
+3 5
+3 6
+4 7
+7 8
+8 9
+8 10
+8 11
+*/
+
 void testcase() {
     cin >> n;
     for (int i = 1; i <= n; i++) {
