@@ -5,8 +5,9 @@
 #define ll long long
 #define ld long double
 #define el '\n'
-#define INF 2e9
-#define LINF 4e18
+
+constexpr int INF = 2e9;
+constexpr ll LINF = 4e18;
 
 #define FILENAME ""
 
@@ -21,23 +22,53 @@ void file() {
 		freopen(FILENAME".OUT", "w", stdout);
 	}
 }
+const int MAXN = 1e3 + 4;
+vector<int> w(MAXN + 1), v(MAXN + 1), f(MAXN + 1, 0);
+vector<int> ST(4 * MAXN, 0);
 
-int count(int n) {
-	string s = to_string(n);
-	int cnt = 0;
-	for (int i = 0; i < s.length(); i += 2) {
-		if (s[i] == '0') ++cnt;
+void build(int id, int l, int r) {
+	if (l == r) {
+		ST[id] = v[l];
+		return;
 	}
-	return cnt;
+	
+	int mid = (l + r) / 2;
+	build(id << 1, l, mid);
+	build(id << 1 | 1, mid + 1, r);
+	
+	ST[id] = min(ST[id << 1], ST[id << 1 | 1]);
+}
+
+int query(int id, int l, int r, int x, int y) {
+	if (y < l || x > r) return INF;
+	if (x <= l && r <= y) {
+		return ST[id];
+	}
+	
+	int mid = (l + r) / 2;
+	return min(query(id << 1, l, mid, x, y), query(id << 1 | 1, mid + 1, r, x, y));
 }
 
 void testcase() {
-	int a, b; cin >> a >> b;
-	int res = 0;
-	for (int i = a; i <= b; i++) {
-		res += count(i);
+	int n, p, l; cin >> n >> p >> l;
+	for (int i = 1; i <= n; i++) {
+		cin >> w[i] >> v[i];
+		f[i] = f[i - 1] + w[i];
+	} 
+	
+	build(1, 1, n);
+	
+	vector<int> dp(n + 1); // lưu tổng v[i] nhỏ nhất nếu chọn i là đầu xe
+	for (int i = 1; i <= n; i++) {
+		dp[i] = v[i];
 	}
-	cout << res;
+	
+	for (int i = 2; i <= n; i++) {
+		auto it = ...; // f[l - 1] >= f[r] - p.
+		// dp[i] = dp[it] + query(1, 1, n, it, i).
+	}
+	
+	cout << dp[n] * l;
 }
 
 int32_t main() {
