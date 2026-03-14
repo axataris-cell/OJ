@@ -6,6 +6,9 @@
 #define ld long double
 #define el '\n'
 
+// Author: Axataris
+// Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE
+
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 

@@ -2,3 +2,4 @@
 *.INP
 *.OUT
 Test/
+.vscode/
