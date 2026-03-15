@@ -20,11 +20,7 @@ Div3 && Div4:
 https://codeforces.com/contest/2137 5 / 7
 https://codeforces.com/contest/2126 4 / 7
 https://codeforces.com/contest/2121 4 / 7
-<<<<<<< HEAD
-https://codeforces.com/contest/2117 6 / 7
-=======
 https://codeforces.com/contest/2117 6 / 8
->>>>>>> 1187988ce8d0c44a50bf022c777fe77e73d6613e
 https://codeforces.com/contest/2114 5 / 7
 https://codeforces.com/contest/2132 4 / 8
 https://codeforces.com/contest/2131

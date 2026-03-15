@@ -4,6 +4,7 @@ Các tác dụng Sếch mòn chim và biến thể.
 
 Biến thể: 
 + Li Chao tree
-+ Sparse segment tree
++ Sparse segment tree, sparse fenwick
 + Persistent segment tree
++ Segment fenwick 2D
 + vv
