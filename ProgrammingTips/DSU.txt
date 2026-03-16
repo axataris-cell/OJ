@@ -11,3 +11,5 @@ DSU Bipartite: Khi mà bài toán không chỉ hỏi về tính liên thông mà
 “mỗi cạnh gán giá trị 0/1”
 “parity, even/odd, true/false”
 - Các quan hệ được thêm dần, không cho xóa.
+
+DSU Rollback: https://wiki.vnoi.info/algo/data-structures/dsu-rollback

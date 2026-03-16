@@ -8,7 +8,7 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-16 07:07
+// Created: 2026-03-16 21:35
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
@@ -27,59 +27,72 @@ void file() {
     }
 }
 
-const int MAXN = 2e5 + 5;
+const int MAXN = 1e5 + 5;
 
-vector<int> arr(MAXN, 0);
+struct Node {
+    int mx1, mx2;
+
+    Node() {
+        mx1 = 0;
+        mx2 = 0;
+    }
+
+    Node operator + (const Node &other) const {
+        Node res;
+
+        vector<int> temp;
+        temp.push_back(this->mx1);
+        temp.push_back(this->mx2);
+        temp.push_back(other.mx1);
+        temp.push_back(other.mx2);
+
+        sort(temp.begin(), temp.end(), greater<int>());
+
+        res.mx1 = temp[0];
+        res.mx2 = temp[1];
+
+        return res;
+    }
+};
+
 vector<int> a(MAXN, 0);
-vector<int> ST(4 * MAXN, 0);
+vector<Node> ST(4 * MAXN, Node());
 
 void build(int id, int l, int r) {
     if (l == r) {
-        ST[id] = a[l];
+        ST[id].mx1 = a[l];
         return;
     }
-    int mid = (l + r) / 2;
-
+    int mid = (l + r)/2;
     build(id << 1, l, mid);
     build(id << 1 | 1, mid + 1, r);
 
     ST[id] = ST[id << 1] + ST[id << 1 | 1];
 }
 
-void update(int id, int l, int r, int pos, int val) {
-    if (pos < l || pos > r) return;
-    if (l == r) {
-        ST[id] = val;
-        return;
+Node query(int id, int l, int r, int ql, int qr) {
+    if (l > qr || r < ql) return Node();
+    if (ql <= l && r <= qr) {
+        return ST[id];
     }
-    int mid = (l + r) / 2;
-    update(id << 1, l, mid, pos, val);
-    update(id << 1 | 1, mid + 1, r, pos, val);
-
-    ST[id] = ST[id << 1] + ST[id << 1 | 1];
-}
-
-int walk(int id, int l, int r, int k) {
-    if (l == r) return l;
 
     int mid = (l + r) / 2;
 
-    if (ST[id << 1] >= k) return walk(id << 1, l, mid, k);
-    else return walk(id << 1 | 1, mid + 1, r, k - ST[id << 1]);
+    return query(id << 1, l, mid, ql, qr) + query(id << 1 | 1, mid + 1, r, ql, qr);
 }
 
 void testcase() {
-    int n; cin >> n;
+    int n, q; cin >> n >> q;
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
-        a[i] = 1;
+        cin >> a[i];
     }
+
     build(1, 1, n);
-    for (int i = 1; i <= n; i++) {
-        int k; cin >> k;
-        int res = walk(1, 1, n, k);
-        cout << arr[res] << ' ';
-        update(1, 1, n, res, 0);
+
+    while (q--) {
+        int l, r; cin >> l >> r;
+        Node cur = query(1, 1, n, l, r);
+        cout << cur.mx2 << el;
     }
 }
 

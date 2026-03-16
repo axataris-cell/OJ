@@ -8,7 +8,7 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-16 07:07
+// Created: 2026-03-16 18:14
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
@@ -27,24 +27,11 @@ void file() {
     }
 }
 
-const int MAXN = 2e5 + 5;
+#define int long long
 
-vector<int> arr(MAXN, 0);
-vector<int> a(MAXN, 0);
+const int MAXN = 1e5 + 5;
+
 vector<int> ST(4 * MAXN, 0);
-
-void build(int id, int l, int r) {
-    if (l == r) {
-        ST[id] = a[l];
-        return;
-    }
-    int mid = (l + r) / 2;
-
-    build(id << 1, l, mid);
-    build(id << 1 | 1, mid + 1, r);
-
-    ST[id] = ST[id << 1] + ST[id << 1 | 1];
-}
 
 void update(int id, int l, int r, int pos, int val) {
     if (pos < l || pos > r) return;
@@ -52,35 +39,41 @@ void update(int id, int l, int r, int pos, int val) {
         ST[id] = val;
         return;
     }
+
     int mid = (l + r) / 2;
     update(id << 1, l, mid, pos, val);
     update(id << 1 | 1, mid + 1, r, pos, val);
 
-    ST[id] = ST[id << 1] + ST[id << 1 | 1];
+    ST[id] = max(ST[id << 1], ST[id << 1 | 1]);
 }
 
-int walk(int id, int l, int r, int k) {
-    if (l == r) return l;
+int query(int id, int l, int r, int ql, int qr) {
+    if (l > qr || r < ql) return -LINF;
+    if (ql <= l && r <= qr) {
+        return ST[id];
+    }
 
     int mid = (l + r) / 2;
 
-    if (ST[id << 1] >= k) return walk(id << 1, l, mid, k);
-    else return walk(id << 1 | 1, mid + 1, r, k - ST[id << 1]);
+    return max(query(id << 1, l, mid, ql, qr), query(id << 1 | 1, mid + 1, r, ql, qr));
 }
 
 void testcase() {
     int n; cin >> n;
+    int k; cin >> k;
+    vector<int> a(n + 1);
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
-        a[i] = 1;
+        cin >> a[i];
     }
-    build(1, 1, n);
+
+    vector<int> dp(n + 1, 0);
     for (int i = 1; i <= n; i++) {
-        int k; cin >> k;
-        int res = walk(1, 1, n, k);
-        cout << arr[res] << ' ';
-        update(1, 1, n, res, 0);
+        int mx = query(1, 1, n, i - k, i - 1);
+        dp[i] = max(mx + a[i], a[i]);
+        update(1, 1, n, i, dp[i]);
     }
+
+    cout << max(query(1, 1, n, 1, n), 0LL);
 }
 
 int32_t main() {

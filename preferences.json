@@ -1,0 +1,91 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "debug.onTaskErrors": "showErrors",
+    "workbench.editorAssociations": {
+      "*.mp3": "wavPreview.audioPreview",
+      "*.pdf": "cweijan.officeViewer"
+    },
+    "window.zoomLevel": 0,
+    "background.enabled": true,
+    
+    "background.editor": {
+      "useFront": false,
+      "style": {
+        "background-position": "30% 100%",
+        "background-size": "cover",
+        "opacity": 0.12
+      },
+      "styles": [{}, {}, {}],
+      "images": [
+        "https://endfield.wiki.gg/images/Snapshot_Ardelia_5.png?8f9c33",
+      ],
+      "interval": 0,
+      "random": false
+    },
+
+    // "background.fullscreen": {
+    //   "useFront": false,
+    //   "style": {
+    //     "background-position": "30% 100%",
+    //     "background-size": "cover",
+    //     "opacity": 0.12
+    //   },
+    //   "styles": [{}, {}, {}],
+    //   "images": [
+    //     "https://endfield.wiki.gg/images/Snapshot_Ardelia_5.png?8f9c33",
+    //   ],
+    //   "interval": 0,
+    //   "random": false
+    // },
+
+    "background.sidebar": {
+      "useFront": false,
+      "style": {
+        "background-position": "100% 100%",
+        "background-size": "auto",
+        "opacity": 0.12
+      },
+      "styles": [{}, {}, {}],
+      "images": [
+        "https://i.pinimg.com/736x/dd/d7/e7/ddd7e7b6f689157795c7b66326381128.jpg",
+      ],
+      "interval": 0,
+      "random": false
+    },
+
+    "background.auxiliarybar": {
+      "useFront": false,
+      "style": {
+        "background-position": "100% 100%",
+        "background-size": "auto",
+        "opacity": 0.12
+      },
+      "styles": [{}, {}, {}],
+      "images": [
+        "https://i.pinimg.com/1200x/b4/4f/08/b44f08be58daeb24e083b27570746fd9.jpg",
+      ],
+      "interval": 0,
+      "random": false
+    },
+
+    "background.panel": {
+      "useFront": false,
+      "style": {
+        "background-position": "100% 100%",
+        "background-size": "auto",
+        "opacity": 0.12
+      },
+      "styles": [{}, {}, {}],
+      "images": [
+      ],
+      "interval": 0,
+      "random": false
+    },
+
+  "editor.fontSize": 20,
+  "files.autoSave": "onFocusChange",
+  "editor.mouseWheelZoom": true,
+
+  "workbench.colorTheme": "Light Pink",
+  "workbench.colorCustomizations": {"editor.lineHighlightBackground": "#df218a20"}
+}
