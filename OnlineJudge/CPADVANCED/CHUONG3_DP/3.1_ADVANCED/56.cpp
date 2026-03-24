@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:35
+// Created: 2026-03-23 17:02
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "127"
+#define FILENAME "56"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,47 +41,24 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, m, s, t;
-
-vector<int> g[MAXN];
-bool vis[MAXN];
-vector<int> par(MAXN, -1);
-
-bool found = false;
-
-void dfs(int u) {
-    sort(all(g[u]));
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (found) return;
-        if (vis[v]) continue;
-        par[v] = u;
-
-        if (v == t) {
-            found = true;
-            return; 
-        }
-        dfs(v);
-    }
-}
-
 void testcase() {
-    cin >> n >> m >> s >> t;
-    for (int i = 1; i <= m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].push_back(b);
+    int n, m; cin >> n >> m;
+    vector<int> a(n + 2, 0);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    vector<vector<int>> dp(n + 2, vector<int>(m + 1, INF)); // so phan tu it nhat trong day con tong bang j cho den vi tri i
+    vector<int> par(n + 1, -1); // truy vet
+    for (int j = 1; j <= m; j++) {
+        dp[1][j] = 0;
     }
-    dfs(s);
-    int cur = t;
-    vector<int> path;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = par[cur];
+    dp[1][a[1]] = 1;
+    for (int i = 2; i <= n + 1; i++) {
+        for (int j = m; j >= 1; j--) {
+            if (j - a[i] >= 0) dp[i][j] = dp[i][j], dp[i - 1][j - a[i]] + 1;
+        }
     }
-    reverse(all(path));
-    for (auto x : path) cout << x << ' ';
+
+    if (dp[n+1][m] != INF) cout << dp[n + 1][m];
+    else cout << -1;
 }
 
 int32_t main() {

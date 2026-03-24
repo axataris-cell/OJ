@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:35
+// Created: 2026-03-23 16:39
 
-constexpr int INF = 2e9;
+constexpr ll INF = 4e18;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "127"
+#define FILENAME "55"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,47 +41,35 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
+const int MAXN = 30 + 5;
 
-int n, m, s, t;
-
-vector<int> g[MAXN];
-bool vis[MAXN];
-vector<int> par(MAXN, -1);
-
-bool found = false;
-
-void dfs(int u) {
-    sort(all(g[u]));
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (found) return;
-        if (vis[v]) continue;
-        par[v] = u;
-
-        if (v == t) {
-            found = true;
-            return; 
-        }
-        dfs(v);
-    }
-}
+ll dp[31][31];
 
 void testcase() {
-    cin >> n >> m >> s >> t;
-    for (int i = 1; i <= m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].push_back(b);
+    int n, m;
+    for(int n = 0; n <= 30; n++)
+        for(int m = 0; m <= 30; m++) dp[n][m] = INF;
+
+    for(int m = 0; m <= 30; m++) dp[0][m] = 0;
+    for(int m = 0; m <= 30; m++) dp[1][m] = 1;
+    for(int n = 1; n <= 30; n++)
+    {
+        if(n < 64) dp[n][3] = (1ULL << n) - 1;
     }
-    dfs(s);
-    int cur = t;
-    vector<int> path;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = par[cur];
+
+    for(int m = 4; m <= 30; m++)
+    {
+        for(int n = 2; n <= 30; n++)
+        {
+            for(int k = 1; k < n; k++)
+            {
+                dp[n][m] = min(dp[n][m], 2 * dp[k][m] + dp[n-k][m-1]);
+            }
+        }   
     }
-    reverse(all(path));
-    for (auto x : path) cout << x << ' ';
+    while (cin >> n >> m) {
+        cout << dp[n][m] << el;
+    }
 }
 
 int32_t main() {

@@ -35,12 +35,20 @@ bool vis[MAXN];
 
 int ti = 0;
 
-void dfs(int u) {
-    vis[u] = true;
-    res[ti].push_back(u);
-    for (int v : g[u]) {
-        if (vis[v]) continue;
-        dfs(v);
+void bfs(int s) {
+    queue<int> q;
+
+    q.push(s);
+    vis[s] = true;
+
+    while (q.size()) {
+        int u = q.front(); q.pop();
+        res[ti].push_back(u);
+        for (int v : g[u]) {
+            if (vis[v]) continue;
+            vis[v] = true;
+            q.push(v);
+        }
     }
 }
 
@@ -55,7 +63,7 @@ void testcase() {
     for (int i = 1; i <= n; i++) {
         if (!vis[i]) {
             ++ti;
-            dfs(i);
+            bfs(i);
         }
     }
 

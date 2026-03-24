@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:35
+// Created: 2026-03-23 19:02
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "127"
+#define FILENAME "CLASSIFY"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,47 +41,26 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, m, s, t;
-
-vector<int> g[MAXN];
-bool vis[MAXN];
-vector<int> par(MAXN, -1);
-
-bool found = false;
-
-void dfs(int u) {
-    sort(all(g[u]));
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (found) return;
-        if (vis[v]) continue;
-        par[v] = u;
-
-        if (v == t) {
-            found = true;
-            return; 
-        }
-        dfs(v);
-    }
-}
-
 void testcase() {
-    cin >> n >> m >> s >> t;
-    for (int i = 1; i <= m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].push_back(b);
+    int n, m; cin >> n >> m;
+    vector<string> s(2*n + 1);
+    for (int i = 1; i <= 2 * n; i++) cin >> s[i];
+    int res = 0;
+    for (int pos = 0; pos < m; pos++) {
+        bool changed = false;
+        for (int i = 1; i <= n; i++) {
+            for (int j = n + 1; j <= 2 * n; j++) {
+                if (s[i][pos] == s[j][pos]) {
+                    changed = true;
+                    break;
+                }
+            }
+            if (changed) break;
+        }
+        if (!changed) ++res;
     }
-    dfs(s);
-    int cur = t;
-    vector<int> path;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = par[cur];
-    }
-    reverse(all(path));
-    for (auto x : path) cout << x << ' ';
+
+    cout << res;
 }
 
 int32_t main() {

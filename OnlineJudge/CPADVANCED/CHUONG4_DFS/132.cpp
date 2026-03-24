@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:49
+// Created: 2026-03-24 15:51
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "128"
+#define FILENAME "132"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,65 +41,56 @@ void file() {
     }
 }
 
-const int MAXN = 205;
-int s;
+const int MAXN = 1e5 + 5;
+
+bool ok = true;
+
 vector<int> g[MAXN];
-vector<int> par(MAXN, -1);
+vector<int> color(MAXN, 0);
 bool vis[MAXN];
 
-int cyclic = false;
-int start = 0;
+void bfs(int s) {
+    queue<int> q;
 
-void dfs(int u, int pre) {
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (cyclic) return;
-        if (v == pre) continue;
-        if (!vis[v]) {
-            par[v] = u;
-            dfs(v, u);
-        } else {
-            if (v == s) {
-                cyclic = true;
-                start = u;
-                return;
-            } else continue;
+    q.push(s);
+    vis[s] = true;
+    color[s] = 0;
+
+    while (q.size()) {
+        int u = q.front(); q.pop();
+        for (int v : g[u]) {
+            if (!vis[v]) {
+                vis[v] = true;
+                color[v] = color[u] ^ 1;
+                q.push(v);
+            } else {
+                if (color[v] != color[u] ^ 1) {
+                    ok = false;
+                    return;
+                }
+            }
         }
     }
 }
-
 void testcase() {
-    int n; cin >> n;
-    // int m; cin >> m;
-    cin >> s;
-
-    // for (int i = 1; i <= m; i++) {
-    //     int a, b; cin >> a >> b;
-    //     g[a].push_back(b);
-    //     g[b].push_back(a);
-    // }
-    int u, v;
-    while (cin >> u >> v) {
-        g[u].push_back(v);
-        g[v].push_back(u);
+    int n, m; cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
-    dfs(s, s);
+    for (int i = 1; i <= n; i++) {
+        if (!vis[i]) bfs(i);
+    }
 
-    if (!cyclic) {
-        cout << "NO" << el;
+    if (!ok) {
+        cout << "IMPOSSIBLE" << el;
         return;
     }
 
-    vector<int> path;
-    path.pb(s);
-    while (start != -1) {
-        path.pb(start);
-        start = par[start];
+    for (int i = 1; i <= n; i++) {
+        cout << color[i] + 1 << ' ';
     }
-    // reverse(all(path));
-
-    cout << "YES" << el;
-    for (auto x : path) cout << x << ' ';
 }
 
 int32_t main() {

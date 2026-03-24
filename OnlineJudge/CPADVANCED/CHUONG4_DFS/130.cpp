@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:49
+// Created: 2026-03-24 15:24
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "128"
+#define FILENAME "130"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,64 +42,56 @@ void file() {
 }
 
 const int MAXN = 205;
-int s;
+
+int n;
+
 vector<int> g[MAXN];
-vector<int> par(MAXN, -1);
+vector<int> deg(MAXN, 0);
+vector<int> topo;
 bool vis[MAXN];
 
-int cyclic = false;
-int start = 0;
+void bfs() {
+    pqueue<int, vector<int>, greater<int>> q;
 
-void dfs(int u, int pre) {
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (cyclic) return;
-        if (v == pre) continue;
-        if (!vis[v]) {
-            par[v] = u;
-            dfs(v, u);
-        } else {
-            if (v == s) {
-                cyclic = true;
-                start = u;
-                return;
-            } else continue;
+    for (int i = 1; i <= n; i++) {
+        if (deg[i] == 0) {
+            q.push(i);
+        }
+    }
+
+    while (q.size()) {
+        int u = q.top(); q.pop();
+        topo.pb(u);
+        for (int v : g[u]) {
+            if (deg[v] == 0) continue;
+            if (--deg[v] == 0) q.push(v);
         }
     }
 }
 
 void testcase() {
-    int n; cin >> n;
-    // int m; cin >> m;
-    cin >> s;
-
-    // for (int i = 1; i <= m; i++) {
-    //     int a, b; cin >> a >> b;
-    //     g[a].push_back(b);
-    //     g[b].push_back(a);
-    // }
-    int u, v;
-    while (cin >> u >> v) {
-        g[u].push_back(v);
-        g[v].push_back(u);
-    }
-    dfs(s, s);
-
-    if (!cyclic) {
-        cout << "NO" << el;
-        return;
+    cin >> n;
+    cin.ignore();
+    string s;
+    // là ai đã nghĩ ra cái input này ???? 
+    while (getline(cin, s)) {
+        stringstream ss(s);
+        string i;
+        int head = 0;
+        int cnt = 0;
+        while (ss >> i) {
+            ++cnt;
+            if (cnt == 1) head = stoi(i);
+            else {
+                g[head].pb(stoi(i));
+                ++deg[stoi(i)];
+            }
+        }
     }
 
-    vector<int> path;
-    path.pb(s);
-    while (start != -1) {
-        path.pb(start);
-        start = par[start];
-    }
-    // reverse(all(path));
+    bfs();
 
-    cout << "YES" << el;
-    for (auto x : path) cout << x << ' ';
+    for (auto x : topo) cout << x << ' ';
 }
 
 int32_t main() {

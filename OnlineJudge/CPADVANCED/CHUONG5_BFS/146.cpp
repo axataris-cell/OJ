@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:35
+// Created: 2026-03-24 20:08
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "127"
+#define FILENAME "146"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,47 +41,58 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, m, s, t;
+const int MAXN = 2505;
 
 vector<int> g[MAXN];
 bool vis[MAXN];
-vector<int> par(MAXN, -1);
 
-bool found = false;
+int shortest_cycle(int n) {
 
-void dfs(int u) {
-    sort(all(g[u]));
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (found) return;
-        if (vis[v]) continue;
-        par[v] = u;
+    int res = INF;
 
-        if (v == t) {
-            found = true;
-            return; 
+    for (int start = 1; start <= n; start++) {
+
+        vector<int> dist(n + 1, -1);
+        vector<int> par(n + 1, -1);
+
+        queue<int> q;
+
+        q.push(start);
+        dist[start] = 0;
+
+        while (!q.empty()) {
+
+            int u = q.front();
+            q.pop();
+
+            for (int v : g[u]) {
+
+                if (dist[v] == -1) {
+
+                    dist[v] = dist[u] + 1;
+                    par[v] = u;
+                    q.push(v);
+
+                }
+                else if (par[u] != v) {
+
+                    res = min(res, dist[u] + dist[v] + 1);
+                }
+            }
         }
-        dfs(v);
     }
+
+    return res == INF ? -1 : res;
 }
 
 void testcase() {
-    cin >> n >> m >> s >> t;
+    int n, m; cin >> n >> m;
     for (int i = 1; i <= m; i++) {
         int a, b; cin >> a >> b;
-        g[a].push_back(b);
+        g[a].pb(b);
+        g[b].pb(a);
     }
-    dfs(s);
-    int cur = t;
-    vector<int> path;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = par[cur];
-    }
-    reverse(all(path));
-    for (auto x : path) cout << x << ' ';
+    cout << shortest_cycle(n);
 }
 
 int32_t main() {

@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:49
+// Created: 2026-03-24 20:04
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "128"
+#define FILENAME "145"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,64 +41,56 @@ void file() {
     }
 }
 
-const int MAXN = 205;
-int s;
+const int MAXN = 1e5 + 5;
+
 vector<int> g[MAXN];
+vector<int> dist(MAXN, -1);
 vector<int> par(MAXN, -1);
 bool vis[MAXN];
 
-int cyclic = false;
-int start = 0;
+void bfs(int s) {
+    queue<int> q;
 
-void dfs(int u, int pre) {
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (cyclic) return;
-        if (v == pre) continue;
-        if (!vis[v]) {
-            par[v] = u;
-            dfs(v, u);
-        } else {
-            if (v == s) {
-                cyclic = true;
-                start = u;
-                return;
-            } else continue;
+    q.push(s);
+    vis[s] = true;
+    dist[s] = 0;
+
+    while (q.size()) {
+        int u = q.front(); q.pop();
+        for (int v : g[u]) {
+            if (!vis[v]) {
+                vis[v] = true;
+                par[v] = u;
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
         }
     }
 }
 
 void testcase() {
-    int n; cin >> n;
-    // int m; cin >> m;
-    cin >> s;
-
-    // for (int i = 1; i <= m; i++) {
-    //     int a, b; cin >> a >> b;
-    //     g[a].push_back(b);
-    //     g[b].push_back(a);
-    // }
-    int u, v;
-    while (cin >> u >> v) {
-        g[u].push_back(v);
-        g[v].push_back(u);
+    int n, m; cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].pb(b);
+        g[b].pb(a);
     }
-    dfs(s, s);
-
-    if (!cyclic) {
-        cout << "NO" << el;
+    bfs(1);
+    
+    if (dist[n] == -1) {
+        cout << "IMPOSSIBLE" << el;
         return;
     }
 
+    int cur = n;
     vector<int> path;
-    path.pb(s);
-    while (start != -1) {
-        path.pb(start);
-        start = par[start];
+    while (cur != -1) {
+        path.pb(cur);
+        cur = par[cur];
     }
-    // reverse(all(path));
+    reverse(all(path));
 
-    cout << "YES" << el;
+    cout << path.size() << el;
     for (auto x : path) cout << x << ' ';
 }
 

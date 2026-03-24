@@ -43,62 +43,149 @@ void file() {
 
 #define int long long
 
-const int MAXN = 1e5 + 5;
-const int BASE = 113;
-const int MOD = 1e9 + 7;
-int n;
-vector<int> H(MAXN, 0), P(MAXN, 1);
-vector<int> ST(4 * MAXN, 0);
+const ll MOD = 1e9 + 7;
+const ll BASE = 113;
+const int MAXN = 200000 + 5;
 
-void build(int id, int l, int r) {
-    if (l == r) {
-        ST[id] = H[l];
+ll pw[MAXN];
+
+struct Node {
+    int val;
+    int prior;
+    int sz;
+    ll hash;
+    Node *l, *r;
+    
+    Node(int v) {
+        val = v + 67;
+        prior = mt();
+        sz = 1;
+        hash = v;
+        l = r = nullptr;
+    }
+};
+
+int sz(Node* t) {
+    return t ? t->sz : 0;
+}
+
+ll get_hash(Node* t) {
+    return t ? t->hash : 0;
+}
+
+void upd(Node* t) {
+    if (!t) return;
+    
+    t->sz = 1 + sz(t->l) + sz(t->r);
+    
+    ll left_hash = get_hash(t->l);
+    ll right_hash = get_hash(t->r);
+    
+    int ls = sz(t->l);
+    
+    ll res = 0;
+    
+    res = left_hash;
+    res = (res + t->val * pw[ls]) % MOD;
+    res = (res + right_hash * pw[ls + 1]) % MOD;
+    
+    t->hash = res;
+}
+
+void split(Node* t, Node*& l, Node*& r, int k) {
+    if (!t) {
+        l = r = nullptr;
         return;
     }
-    int mid = (l + r) / 2;
-    build(id << 1, l, mid);
-    build(id << 1 | 1, mid + 1, r);
-
-    ST[id] = ST[id << 1] + ST[id << 1 | 1];
-}
-
-void updateST(int id, int l, int r, int ql, int qr) {
-
-}
-
-int queryST(int id, int l, int r, int ql, int qr) {
-
-}
-
-bool check(int l1, int l2, int k) {
-
-}
-
-void update(int pos) {
     
+    if (sz(t->l) >= k) {
+        split(t->l, l, t->l, k);
+        r = t;
+        upd(r);
+    } else {
+        split(t->r, t->r, r, k - sz(t->l) - 1);
+        l = t;
+        upd(l);
+    }
+}
+
+Node* merge(Node* l, Node* r) {
+    if (!l || !r) return l ? l : r;
+    
+    if (l->prior > r->prior) {
+        l->r = merge(l->r, r);
+        upd(l);
+        return l;
+    } else {
+        r->l = merge(l, r->l);
+        upd(r);
+        return r;
+    }
+}
+
+Node* build(string &s) {
+    Node* root = nullptr;
+    for (char c : s) {
+        root = merge(root, new Node(c - '0'));
+    }
+    return root;
+}
+
+ll get_sub_hash(Node*& root, int l, int r) {
+    Node *A, *B, *C;
+    
+    split(root, A, B, l - 1);
+    split(B, B, C, r - l + 1);
+    
+    ll res = get_hash(B);
+    
+    root = merge(A, merge(B, C));
+    
+    return res;
+}
+
+void move_to_front(Node*& root, int i) {
+    Node *A, *B, *C;
+    
+    split(root, A, B, i - 1);
+    split(B, B, C, 1);
+    
+    root = merge(B, merge(A, C));
 }
 
 void testcase() {
-    string s; cin >> s;
+    string s;
+    cin >> s;
+    
+    int n, q;
     n = s.len();
-
-    for (int i = 1; i <= n; i++) {
-        H[i] = (H[i - 1] * BASE % MOD + s[i - 1]) % MOD;
-        P[i] = (P[i - 1] * BASE) % MOD;
-    }
-    build(1, 1, n);
-    int q; cin >> q;
+    cin >> q;
+    
+    pw[0] = 1;
+    for (int i = 1; i < MAXN; i++)
+        pw[i] = (pw[i-1] * BASE) % MOD;
+    
+    Node* root = build(s);
+    
     while (q--) {
-        char op;
-        cin >> op;
-        if (op == '?') {
-            int l1, l2, k; cin >> l1 >> l2 >> k;
-            if (check(l1, l2, k)) {
-                cout << "YES" << el;
-            } else cout << "NO" << el;
+        char type;
+        cin >> type;
+        
+        if (type == '-') {
+            int pos;
+            cin >> pos;
+            move_to_front(root, pos);
         } else {
-            int pos; cin >> pos;
-            update(pos);
+            int l1, l2, k;
+            cin >> l1 >> l2 >> k;
+            
+            ll h1 = get_sub_hash(root, l1, l1 + k - 1);
+            ll h2 = get_sub_hash(root, l2, l2 + k - 1);
+            
+            if (h1 == h2)
+                cout << "YES" << el;
+            else
+                cout << "NO" << el;
         }
     }
 }

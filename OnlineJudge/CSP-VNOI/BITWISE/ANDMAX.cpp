@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:35
+// Created: 2026-03-23 19:09
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "127"
+#define FILENAME "ANDMAX"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,47 +41,21 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, m, s, t;
-
-vector<int> g[MAXN];
-bool vis[MAXN];
-vector<int> par(MAXN, -1);
-
-bool found = false;
-
-void dfs(int u) {
-    sort(all(g[u]));
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (found) return;
-        if (vis[v]) continue;
-        par[v] = u;
-
-        if (v == t) {
-            found = true;
-            return; 
-        }
-        dfs(v);
-    }
-}
-
 void testcase() {
-    cin >> n >> m >> s >> t;
-    for (int i = 1; i <= m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].push_back(b);
+    ll n;
+    cin >> n;
+
+    ll x = 0;
+
+    for (int bit = 60; bit >= 0; bit--)
+    {
+        ll nx = x | (1LL << bit);
+
+        if (3 * nx <= n && ((n - 3 * nx) & nx) == 0)
+            x = nx;
     }
-    dfs(s);
-    int cur = t;
-    vector<int> path;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = par[cur];
-    }
-    reverse(all(path));
-    for (auto x : path) cout << x << ' ';
+
+    cout << x;
 }
 
 int32_t main() {

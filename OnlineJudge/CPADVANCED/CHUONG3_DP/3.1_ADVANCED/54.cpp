@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-24 14:35
+// Created: 2026-03-23 16:26
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "127"
+#define FILENAME "54"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,47 +41,20 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
-int n, m, s, t;
-
-vector<int> g[MAXN];
-bool vis[MAXN];
-vector<int> par(MAXN, -1);
-
-bool found = false;
-
-void dfs(int u) {
-    sort(all(g[u]));
-    vis[u] = true;
-    for (int v : g[u]) {
-        if (found) return;
-        if (vis[v]) continue;
-        par[v] = u;
-
-        if (v == t) {
-            found = true;
-            return; 
-        }
-        dfs(v);
-    }
-}
+const int MOD = 15746;
 
 void testcase() {
-    cin >> n >> m >> s >> t;
-    for (int i = 1; i <= m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].push_back(b);
+    int n; cin >> n;
+    vector<vector<int>> dp(2, vector<int>(n + 5, 0));
+    dp[1][1] = 1;
+    dp[1][2] = 1;
+    dp[0][2] = 1;
+    for (int i = 3; i <= n; i++) {
+        dp[1][i] = (dp[0][i - 1] + dp[1][i - 1]) % MOD;
+        dp[0][i] = (dp[1][i - 2] + dp[0][i - 2]) % MOD;
     }
-    dfs(s);
-    int cur = t;
-    vector<int> path;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = par[cur];
-    }
-    reverse(all(path));
-    for (auto x : path) cout << x << ' ';
+
+    cout << (dp[0][n] + dp[1][n]) % MOD;
 }
 
 int32_t main() {
