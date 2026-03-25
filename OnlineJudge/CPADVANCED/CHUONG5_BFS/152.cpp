@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-25 10:07
+// Created: 2026-03-25 20:59
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "149"
+#define FILENAME "152"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,50 +41,50 @@ void file() {
     }
 }
 
-void testcase() {
-    ll n, D;
-    cin >> n >> D;
+const int MAXN = 1e5 + 5;
 
-    vector<pll> a;
+vector<int> g[MAXN];
+vector<int> dist(MAXN, 0);
+bool vis[MAXN];
+vector<int> doors;
 
-    for(int i=0;i<n;i++)
-    {
-        ll x,y;
-        cin >> x >> y;
+void bfs() {
+    queue<int> q;
 
-        if(abs(x) + abs(y) <= D)
-        {
-            ll u = x + y;
-            ll v = x - y;
-            a.push_back({u,v});
+    for (auto u : doors) {
+        q.push(u);
+        dist[u] = 0;
+        vis[u] = true;
+    }
+
+    while (q.size()) {
+        int u = q.front(); q.pop();
+        for (int v : g[u]) {
+            if (!vis[v]) {
+                vis[v] = true;
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
         }
     }
+}
 
-    sort(a.begin(), a.end());
-
-    vector<ll> lis;
-
-    for(auto [u,v] : a)
-    {
-        auto it = lower_bound(lis.begin(), lis.end(), v);
-
-        if(it == lis.end())
-            lis.push_back(v);
-        else
-            *it = v;
+void testcase() {
+    int n, k; cin >> n >> k;
+    for (int i = 1; i <= k; i++) {
+        int x; cin >> x;
+        doors.pb(x);
+    }
+    int m; cin >> m;
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].pb(b);
+        g[b].pb(a);
     }
 
-    ll k = lis.size();
+    bfs();
 
-    ll R = D - 2*k;
-
-    if(R < 0)
-    {
-        cout << 0;
-        return;
-    }
-
-    cout << 2*R*R + 2*R + 1;
+    for (int i = 1; i <= n; i++) cout << dist[i] << ' ';
 }
 
 int32_t main() {
