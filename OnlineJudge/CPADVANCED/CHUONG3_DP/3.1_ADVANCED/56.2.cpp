@@ -44,66 +44,51 @@ void file() {
 void testcase() {
     int n, m; cin >> n >> m;
     vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) cin >> a[i];
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
 
     vector<vector<int>> dp(n + 1, vector<int>(m + 1, INF));
     vector<vector<int>> par(n + 1, vector<int>(m + 1, -1));
 
-    vector<int> best(m + 1, INF);
-    vector<int> best_id(m + 1, -1);
-
     for (int i = 1; i <= n; i++) {
-        if (a[i] <= m) {
-            dp[i][a[i]] = 1;
+        if (a[i] > m) continue;
+        if (a[i] == m) {
+            cout << 1 << el << i;
+            return;
         }
-
+        dp[i][a[i]] = 1;
         for (int s = 1; s <= m; s++) {
-            if (best[s] == INF) continue;
-            if (s + a[i] > m) continue;
-
-            if (dp[i][s + a[i]] > best[s] + 1) {
-                dp[i][s + a[i]] = best[s] + 1;
-                par[i][s + a[i]] = best_id[s];
-            }
-        }
-
-        for (int s = 1; s <= m; s++) {
-            if (dp[i][s] < best[s]) {
-                best[s] = dp[i][s];
-                best_id[s] = i;
+            for (int j = 1; j < i; j++) {
+                if (s - a[j] > 0) continue;
             }
         }
     }
 
     int res = INF;
     int curidx = -1;
-
+    int curwei = m;
     for (int i = 1; i <= n; i++) {
-        if (dp[i][m] < res) {
+        if (res > dp[i][m]) {
             res = dp[i][m];
             curidx = i;
         }
     }
 
-    if (res == INF) {
-        cout << -1;
-        return;
-    }
-
-    cout << res << el;
-
     vector<int> path;
-    int curwei = m;
-
     while (curidx != -1) {
         path.pb(curidx);
-        int prev = par[curidx][curwei];
+        int w = curwei;
         curwei -= a[curidx];
-        curidx = prev;
+        if (curwei < 0) break;
+        curidx = par[curidx][w];
     }
-
     reverse(all(path));
-    for (int x : path) cout << x << ' ';
+
+    assert(res == path.size());
+
+    cout << res << el;
+    for (auto x : path) cout << x << ' ';
 }
 
 int32_t main() {
