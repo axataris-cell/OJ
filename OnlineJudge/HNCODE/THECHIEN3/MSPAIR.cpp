@@ -10,16 +10,14 @@
 #define pb push_back
 #define len length
 #define ll long long
-#define ld long double
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-25 09:29
+// Created: 2026-04-03 14:00
 
 constexpr int INF = 2e9;
-constexpr ll LINF = 4e18;
 
-#define FILENAME "loas"
+#define FILENAME "MSPAIR"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,19 +39,30 @@ void file() {
     }
 }
 
-void testcase() {
-    ll n, k; cin >> n >> k;
-    ll l = (n + 1) / k;
-    ll res = (l * (l + 1) / 2) * k - l;
-    ll t = (2 * n) / k;
-    if (l + 1 <= t && (l + 1) * k <= 2 * n) {
-        res += 2 * n * (t - l) - k * (l + 1 + t) * (t - l) / 2 + (t - l);
-    }
-    debug(l);
-    debug(t);
-    // if ((n + 1) % k == 0) res -= n;
+#define int long long
+#define LINF 4e18
 
-    cout << res;
+void testcase() {
+    ll m, n; cin >> m >> n;
+
+    if (n % m != 0) {
+        cout << -1 << el;
+        return;
+    }
+
+    ll k = n / m;
+    ll res = LINF;
+
+    for (ll x = 1; x * x <= k; x++) {
+        if (k % x == 0) {
+            ll y = k / x;
+            if (__gcd(x, y) == 1) {
+                res = min(res, m * (x + y));
+            }
+        }
+    }
+
+    cout << (res == LINF ? -1 : res) << el;
 }
 
 int32_t main() {

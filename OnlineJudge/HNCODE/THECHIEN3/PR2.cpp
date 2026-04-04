@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-31 13:58
+// Created: 2026-04-03 15:04
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "tongmaxtrumin"
+#define FILENAME "PR"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,16 +41,18 @@ void file() {
     }
 }
 
-// De bai: tong max tru min cua moi doan con trong mang. n <= 1e6.
-// HSG9 HCM
-
-#define int long long
+const int MAXN = 1e5 + 5;
 
 void testcase() {
     int n; cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) cin >> a[i];
-    
+    vector<pii> res;
+    vector<pii> a;
+    for (int i = 1; i <= n; i++) {
+        int x, e; cin >> x >> e;
+        a.pb({x, e});
+    }
+    sort(all(a), [](pii x, pii y) {return x.fi > y.fi;});
+     
 }
 
 int32_t main() {

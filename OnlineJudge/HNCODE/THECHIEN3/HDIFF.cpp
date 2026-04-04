@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-01 10:20
+// Created: 2026-04-03 14:53
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "xola"
+#define FILENAME "HDIFF"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -40,45 +40,44 @@ void file() {
         freopen(FILENAME".OUT", "w", stdout);
     }
 }
-const int maxn = 1e5 + 5;
-bool vis[maxn];
-vector <int> g[maxn];
-vector <int> tplt;
-void dfs (int s){
-    vis[s] = true;
-    tplt.push_back(s);
-    for (auto x : g[s]){
-        if (!vis[x]) dfs(x);
+
+#define int long long
+
+ll countPair(const vector<int>& a, int n, int diff) {
+    ll cnt = 0;
+    int l = 0;
+    for (int r = 0; r < n; r++) {
+        while (a[r] - a[l] > diff) {
+            l++;
+        }
+        cnt += (r - l);
     }
+    return cnt;
 }
+
 void testcase() {
-    int n,m;
-    cin >> n >> m;
-    for (int i = 1; i <= m; i++){
-        int u,v;
-        cin >> u >> v;
-        g[u].push_back(v);
-        g[v].push_back(u);
+    int n, k; cin >> n >> k;
+    vector<int> a(n);
+    for (auto &x : a) {
+        cin >> x;
     }
-    int cnt = 0;
-    for (int i = 1; i <= n; i++){
-        if (!vis[i]){
-            cnt++;
-            dfs(i);
+    sort(all(a));
+
+    int l = 0;
+    int r = a[n - 1] - a[0];
+    int ans = r;
+
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (countPair(a, n, mid) >= k) {
+            ans = mid;
+            r = mid - 1;
+        } else {
+            l = mid + 1;
         }
     }
-    cout << cnt << '\n';
-    memset(vis, false, sizeof(vis));
-    for (int i = 1; i <= n; i++){
-        if (!vis[i]){
-            tplt.clear();
-            dfs(i);
-            cout << tplt.size() << ' ';
-            for (auto x : tplt) cout << x << ' ';
-            cout << '\n';
-        }
-        
-    }
+
+    cout << ans;
 }
 
 int32_t main() {

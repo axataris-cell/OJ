@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-03-31 13:31
+// Created: 2026-04-03 14:09
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "dfs"
+#define FILENAME "MIN"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,10 +41,41 @@ void file() {
     }
 }
 
+#define int long long
+
 void testcase() {
-    int a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z;
-    cin >> a >> b >> c >> d >> e >> f >> g >> h >> i >> j >> k >> l >> m >> n >> o >> p >> q >> r >> s >> t >> u >> v >> w >> x >> y >> z;
-    cout << a << b << c << d << e << f << g << h << i << j << k << l << m << n << o << p << q << r << s << t << u << v << w << x << y << z;
+    int n; cin >> n;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    ll res = 0;
+    stack<int> st;
+    vector<int> left(n + 1, 0), right(n + 1, 0);
+    for (int i = 1; i <= n; i++) {
+        while (st.size() && a[st.top()] > a[i]) {
+            right[st.top()] = i;
+            st.pop(); // mono
+        }
+        
+        if (st.size()) left[i] = st.top();
+        else left[i] = 0;
+
+        st.push(i);
+    }
+    // stsz
+    while (st.size()) {
+        int u = st.top();
+        right[u] = n + 1;
+        st.pop();
+        if (st.size()) left[u] = st.top();
+    }
+
+    for (int i = 1; i <= n; i++) {
+        res += a[i] * (i - left[i]) * (right[i] - i);
+    }
+
+    cout << res;
 }
 
 int32_t main() {
