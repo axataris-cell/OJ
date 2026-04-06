@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define el '\n'
+
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
 const int ntest = 20;
@@ -12,16 +13,8 @@ int gen(int l, int r) {
     return mt() % (r - l + 1) + l;
 }
 
-int great = 0;
-
 void gentest(ofstream &out, int id) {
-    int t = gen(727, 1000);
-    out << t << '\n';
-    while (t--) {
-        int n = gen(1e5, 1e7);
-        if (id >= 10) n = gen(1e7, 3e8);
-        out << n << '\n';
-    }
+    
 }
 
 bool comp(const string &f1, const string &f2) {
@@ -41,14 +34,14 @@ bool comp(const string &f1, const string &f2) {
 
 int main() {
     system("mkdir Test");
-    system(("mkdir Test\\" + problem).c_str());
+    system(("mkdir Test\" + problem).c_str());
 
     for (int i = 1; i <= ntest; i++) {
         string id = to_string(i);
-        string testdir = "Test\\" + problem + "\\TEST" + id;
-        string input = testdir + "\\" + problem + ".INP";
-        string output = testdir + "\\" + problem + ".ANS";
-        string tout = testdir + "\\" + solname + ".OUT";
+        string testdir = "Test\" + problem + "\TEST" + id;
+        string input = testdir + "\" + problem + ".INP";
+        string output = testdir + "\" + problem + ".ANS";
+        string tout = testdir + "\" + solname + ".OUT";
         system(("mkdir " + testdir).c_str());
 
         ofstream inputfile(input.c_str());
@@ -69,10 +62,12 @@ int main() {
             double elapsed = after - before;
             cout << "Solution " << id << " in " << elapsed << el << el;
         }
+
         if (!comp(output, tout)) {
             cout << "WA at test " << id << el;
             break;
-        }   
+        }
     }
+
     system("pause");
 }
