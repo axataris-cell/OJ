@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-06 14:20
+// Created: 2026-04-01 09:15
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "Brute"
+#define FILENAME "prime"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,19 +41,39 @@ void file() {
     }
 }
 
-void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+ll prune(ll x) {
+    ll res = 1;
+    for (ll i = 2; i * i <= x; i++) {
+        if (x % i == 0) {
+            res *= i;
+            while (x % i == 0) x /= i;
+        }
     }
-    for (int i = 1; i <= n; i++) {
-        for (int j = 2; j <= n; j++) {
-            if (a[j] < a[j - 1]) swap(a[j], a[j - 1]);
+    if (x > 1) res *= x;
+    return res;
+}
+
+void testcase() {
+    ll x; cin >> x;
+
+    ll s = sqrtl(x);
+    ll ans = LINF;
+
+    for (ll d = 0; d <= 100; d++) {
+        for (ll sign = -1; sign <= 1; sign += 2) {
+            ll t = s + sign * d;
+            if (t <= 0) continue;
+
+            ll sf = prune(t);
+            ll y = sf * sf;
+
+            ans = min(ans, llabs(x - y));
         }
     }
 
-    for (int i = 1; i <= n; i++) cout << a[i] << ' ';
+    cout << ans << el;
+
+    multiset<int> st;
 }
 
 int32_t main() {
@@ -61,7 +81,7 @@ int32_t main() {
     cin.tie(nullptr);
     file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;

@@ -46,7 +46,7 @@ int main() {
 
                 if (dist[v] > dist[u] + w) {
                     dist[v] = dist[u] + w;
-                    bucket[dist[v]].push_back(v);
+                    bucket[dist[v]].push_back(v); //?
                 }
             }
         }

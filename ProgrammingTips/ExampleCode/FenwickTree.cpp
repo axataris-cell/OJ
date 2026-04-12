@@ -31,17 +31,15 @@ vector<int> a(MAXN), bit(MAXN, 0);
 int n, q;
 
 void update(int pos, int val) {
-	while (pos <= n) {
+	for (; pos <= n; pos += pos & -pos) {
 		bit[pos] += val;
-		pos += pos & -pos;
 	}
 }
 
 int query(int i) {
 	int res = 0;
-	while (i > 0) {
+	for (; i > 0; i -= i & -i) {
 		res += bit[i];
-		i -= i & -i;
 	}
 	return res;
 }

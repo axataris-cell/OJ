@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-06 14:20
+// Created: 2026-04-08 10:39
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "Brute"
+#define FILENAME "moi"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,19 +41,35 @@ void file() {
     }
 }
 
-void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    for (int i = 1; i <= n; i++) {
-        for (int j = 2; j <= n; j++) {
-            if (a[j] < a[j - 1]) swap(a[j], a[j - 1]);
+const int MAXN = 1e5 + 5;
+
+vector<pair<int, int>> g[MAXN]; // u - d.
+vector<int> dist(MAXN, INF);
+
+void dijkstra() {
+    pqueue<pii, vector<pii>, greater<pii>> pq; // ưu tiên nhỏ nhất
+    pq.emplace(0, 1);
+    dist[1] = 0;
+    while (pq.size()) {
+        auto [d, u] = pq.top(); pq.pop();
+        if (d > dist[u]) continue;
+        for (auto &[v, w] : g[u]) {
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                pq.emplace(dist[v], v);
+            }
         }
     }
+}
 
-    for (int i = 1; i <= n; i++) cout << a[i] << ' ';
+void testcase() {
+    int n, m; cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int a, b, c; cin >> a >> b >> c;
+        g[a].pb({b, c});
+        g[b].pb({a, c});
+    }
+    dijkstra();
 }
 
 int32_t main() {

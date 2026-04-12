@@ -43,17 +43,14 @@ void file() {
 
 void testcase() {
     int n; cin >> n;
-    vector<int> a(n + 1);
+    vector<int> a(n + 5);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
+    sort(a.begin() + 2, a.end());
     for (int i = 1; i <= n; i++) {
-        for (int j = 2; j <= n; j++) {
-            if (a[j] < a[j - 1]) swap(a[j], a[j - 1]);
-        }
+        cout << a[i] << ' ';
     }
-
-    for (int i = 1; i <= n; i++) cout << a[i] << ' ';
 }
 
 int32_t main() {
