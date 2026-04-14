@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-13 20:42
+// Created: 2026-04-14 22:30
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "3"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,21 +42,8 @@ void file() {
 }
 
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
+    int n; cin >> n;
     vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin() + 1, a.end());
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
-    }
-
-    cout << res;
 }
 
 int32_t main() {

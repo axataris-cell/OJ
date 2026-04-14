@@ -1,0 +1,59 @@
+4/2026
++ Interactive problems
++ Ôn Binary search, Two pointer
++ Ôn CTDL queue, stack, deque, multiset, set, ...
++ Ôn dp cơ bản
++ Ôn Bignum
++ Ôn kthuc cũ (DSU, MST, ...)
++ DSU rollback (optional)
++ Bridge + Articulation points, SCC, BCC, ...
++ Dial's algo, Floyd's algo
++ Làm nốt dijkstra trong CP Advanced
+
+5/2026
++ DP nâng cao: DP bitmask / digit / matrix / SOS / DP DAG 
++ Sweep line
++ Sqrt Decomposition
++ Mo's Algorithm
+
++ Số học, toán học.
++ Tổ hợp, chỉnh hợp, hoán vị, chia kẹo euler, ...
++ Bao hàm loại trừ
++ Mobius function / Inversed Mobius
++ Gauss elimination
++ Thặng dư Trung Hoa (CRT)
++ Miller - Rabin / Pollard Rho
++ Wilson / Lucas (VNOI wiki) (optinal)
++ NTT / FFT (optional)
+
++ Ôn tập LCA, euler tour, ...
+
+6/2026
++ Cặp ghép cực đại trên đồ thị
++ Bài toán luồng trên mạng / Luồng cực đại
++ Hình học / Bao lồi
++ Trie / Aho-corasick / Suffix tree / Suffix array
+
++ Ôn Fenwick tree, Segment tree, Persistent DS, Interval tree (optional), ...
++ Tối ưu DP: Alien's trick, Convex Hull trick, Li chao tree, Đảo nhãn, Slope trick, Divide and Conquer, Knuth optimization, ...
+
+7/2026
++ DP trên cây: Centroid Decomposition / Đảo gốc / Small to large / ...
++ Ôn treap + HLD
++ Ternary search
++ Parallel binary search
++ Segment tree beats (optional)
++ Heuristic
+
+8/2026
+
++ Link cut tree
++ Cliques
++ Tree isomorphism
++ Rollback segment tree
++ Adhoc
++ Chen Danqi
++ ...
+
++ Codeforces / VOI practices...
++ Remaining content

@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-13 20:42
+// Created: 2026-04-14 21:13
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "12"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,21 +42,41 @@ void file() {
 }
 
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
+    int n; ll s;
+    cin >> n >> s;
+    vector<ll> a(n + 1), p(n + 1, 0);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
-    }
-    sort(a.begin() + 1, a.end());
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+        p[i] = p[i - 1] + a[i];
     }
 
-    cout << res;
+    vector<ll> min_suf(n + 1);
+    min_suf[n] = p[n];
+    for (int i = n - 1; i >= 0; i--) {
+        min_suf[i] = min(p[i], min_suf[i + 1]);
+    }
+
+    int res = -1;
+    for (int i = 1; i <= n; i++) {
+        ll target = s + p[i - 1];
+
+        int l = i, r = n, pos = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (min_suf[mid] <= target) {
+                pos = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+
+        if (pos != -1) {
+            res = max(res, pos - i + 1);
+        }
+    }
+
+    cout << res << el;
 }
 
 int32_t main() {

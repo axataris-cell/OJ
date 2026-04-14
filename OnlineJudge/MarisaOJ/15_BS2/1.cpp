@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-13 20:42
+// Created: 2026-04-14 21:26
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "1"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,21 +41,44 @@ void file() {
     }
 }
 
-void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin() + 1, a.end());
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
-    }
+const int MAXN = 1e5 + 5;
+int n, k;
 
+vector<int> a(MAXN, 0);
+
+bool check(int v) {
+    int cur = a[1];
+    int cnt = 1;
+    for (int i = 2; i <= n; i++) {
+        // cerr << a[i] << ' ' << cur << el;
+        if (a[i] - cur < v) continue;
+        ++cnt;
+        cur = a[i];
+    }
+    cerr << v << ' ' << cnt << el;
+    return cnt >= k;
+}
+
+void testcase() {
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    sort(a.begin() + 1, a.begin() + n + 1);
+
+    check(4);
+
+    int res = 0;
+    int l = 0, r = 1e9 + 1;
+
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (check(mid)) {
+            res = max(res, mid);
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    
     cout << res;
 }
 

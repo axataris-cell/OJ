@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-13 20:42
+// Created: 2026-04-14 19:53
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "8"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,18 +42,25 @@ void file() {
 }
 
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
+    int n; cin >> n;
     vector<int> a(n + 1);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
+    if (n < 3) {
+        cout << 0;
+        return;
+    }
     sort(a.begin() + 1, a.end());
     int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+    for (int i = 3; i <= n; i++) {
+        for (int j = 2; j < i; j++) {
+            int r = lower_bound(a.begin() + 1, a.begin() + j, a[j] + a[i]) - a.begin() - 1;
+            int l = upper_bound(a.begin() + 1, a.begin() + j, abs(a[j] - a[i])) - a.begin();
+            if (l <= r) {
+                res += r - l + 1;
+            }
+        }
     }
 
     cout << res;
