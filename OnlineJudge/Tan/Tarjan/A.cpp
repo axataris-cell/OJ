@@ -14,16 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-<<<<<<< HEAD
-// Created: 2026-04-13 14:57
-=======
-// Created: 2026-04-13 20:42
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+// Created: 2026-04-15 20:01
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "A"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -45,30 +41,50 @@ void file() {
     }
 }
 
+const int MAXN = 1e5 + 5;
+
+int componentCount = 0;
+
+vector<int> g[MAXN];
+vector<int> low(MAXN, 0);
+vector<int> tin(MAXN, 0);
+vector<bool> del(MAXN, 0);
+stack<int> st;
+
+int timeDfs = 0;
+
+void dfs(int u) {
+    tin[u] = low[u] = ++timeDfs;
+    st.push(u);
+    for (int v : g[u]) {
+        if (del[v]) continue;
+        if (!tin[v]) {
+            dfs(v);
+            low[u] = min(low[u], low[v]);
+        } else low[u] = min(low[u], tin[v]);
+    }
+    if (tin[u] == low[u]) {
+        ++componentCount;
+        int v;
+        do {
+            v = st.top();
+            st.pop();
+            del[v] = true;
+        } while (u != v);
+    }
+}
+
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+    int n, m; cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].pb(b);
     }
-    sort(a.begin() + 1, a.end());
-<<<<<<< HEAD
     for (int i = 1; i <= n; i++) {
-        if (a[i] < l || a[i] > r) continue;
-        int la = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int ra = 
-    }
-=======
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+        if (!tin[i]) dfs(i);
     }
 
-    cout << res;
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+    cout << componentCount;
 }
 
 int32_t main() {

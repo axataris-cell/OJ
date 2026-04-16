@@ -14,16 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-<<<<<<< HEAD
-// Created: 2026-04-13 14:57
-=======
-// Created: 2026-04-13 20:42
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+// Created: 2026-04-13 20:36
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "Chutrinh"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -44,31 +40,32 @@ void file() {
         freopen(FILENAME".OUT", "w", stdout);
     }
 }
-
+const int MAXN = 2e5 + 5;
+vector<int> g[MAXN];
+vector<int> deg(MAXN, 0);
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+    int n, m; cin >> n >> m;
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].pb(b);
+        ++deg[b];
     }
-    sort(a.begin() + 1, a.end());
-<<<<<<< HEAD
-    for (int i = 1; i <= n; i++) {
-        if (a[i] < l || a[i] > r) continue;
-        int la = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int ra = 
+    vector<int> topo;
+    queue<int> q;
+    for (int i = 1; i <= n; i++) { 
+        if (deg[i] == 0) q.emplace(i);
     }
-=======
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+    while (q.size()) {
+        int u = q.front(); q.pop();
+        topo.pb(u);
+        for (int v : g[u]) {
+            if (deg[v] == 0) continue;
+            if (--deg[v] == 0) {
+                q.emplace(v);
+            }
+        }
     }
-
-    cout << res;
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+    cout << (topo.size() < n ? "YES" : "NO");
 }
 
 int32_t main() {

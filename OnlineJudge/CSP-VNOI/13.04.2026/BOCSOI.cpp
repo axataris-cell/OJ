@@ -14,16 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-<<<<<<< HEAD
-// Created: 2026-04-13 14:57
-=======
-// Created: 2026-04-13 20:42
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+// Created: 2026-04-13 20:23
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "BOCSOI"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -46,29 +42,41 @@ void file() {
 }
 
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin() + 1, a.end());
-<<<<<<< HEAD
-    for (int i = 1; i <= n; i++) {
-        if (a[i] < l || a[i] > r) continue;
-        int la = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int ra = 
-    }
-=======
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+    int n;
+    ll x, y, z;
+    cin >> n >> x >> y >> z;
+
+    vector<int> A, B;
+    for (int i = 1; i <= n; ++i) {
+        int ai, bi;
+        cin >> ai >> bi;
+        while (ai--) A.push_back(i);
+        while (bi--) B.push_back(i);
     }
 
-    cout << res;
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+    int szA = A.size();
+    int szB = B.size();
+
+    vector<ll> dp(szB + 1, 0);
+    vector<ll> pre_dp(szB + 1, 0);
+
+    for (int j = 0; j <= szB; ++j) {
+        pre_dp[j] = j * x;
+    }
+
+    for (int i = 1; i <= szA; ++i) {
+        dp[0] = i * y;
+        for (int j = 1; j <= szB; ++j) {
+            ll cost_delete = pre_dp[j] + y;
+            ll cost_insert = dp[j - 1] + x;
+            ll cost_move = pre_dp[j - 1] + z * abs(A[i - 1] - B[j - 1]);
+
+            dp[j] = min({cost_delete, cost_insert, cost_move});
+        }
+        pre_dp = dp;
+    }
+
+    cout << pre_dp[szB] << el;
 }
 
 int32_t main() {

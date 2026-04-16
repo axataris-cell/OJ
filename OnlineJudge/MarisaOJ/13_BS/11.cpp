@@ -14,16 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-<<<<<<< HEAD
-// Created: 2026-04-13 14:57
-=======
-// Created: 2026-04-13 20:42
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+// Created: 2026-04-14 20:31
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "11"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -46,30 +42,36 @@ void file() {
 }
 
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin() + 1, a.end());
-<<<<<<< HEAD
-    for (int i = 1; i <= n; i++) {
-        if (a[i] < l || a[i] > r) continue;
-        int la = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int ra = 
-    }
-=======
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+    string a, b; 
+    cin >> a >> b;
+    
+    int n = a.length();
+    int m = b.length();
+
+    vector<vector<int>> pref(26, vector<int>(m + 1, 0));
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < 26; j++) {
+            pref[j][i + 1] = pref[j][i];
+        }
+        pref[b[i] - 'a'][i + 1]++;
     }
 
-    cout << res;
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+    long long total_gnimmah = 0;
+
+    for (int i = 0; i < n; i++) {
+        int char_idx = a[i] - 'a';
+
+        int j_min = max(0, i - (n - m));
+        int j_max = min(i, m - 1);
+
+        if (j_min <= j_max) {
+            total_gnimmah += (pref[char_idx][j_max + 1] - pref[char_idx][j_min]);
+        }
+    }
+
+    cout << total_gnimmah << el;
 }
+
 
 int32_t main() {
     ios_base::sync_with_stdio(false);

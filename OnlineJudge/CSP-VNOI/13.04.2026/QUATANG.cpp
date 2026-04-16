@@ -14,16 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-<<<<<<< HEAD
-// Created: 2026-04-13 14:57
-=======
-// Created: 2026-04-13 20:42
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+// Created: 2026-04-13 19:22
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "QUATANG"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -46,29 +42,20 @@ void file() {
 }
 
 void testcase() {
-    int n, l, r; cin >> n >> l >> r;
+    int n, x; cin >> n >> x;
     vector<int> a(n + 1);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
     sort(a.begin() + 1, a.end());
-<<<<<<< HEAD
-    for (int i = 1; i <= n; i++) {
-        if (a[i] < l || a[i] > r) continue;
-        int la = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int ra = 
-    }
-=======
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
+    int res = a[1] + a[2] + a[3];
+    for (int r = 3; r <= n; r++) {
+        if (a[r] > x) break;
+        int l = upper_bound(a.begin() + 1, a.begin() + r, x - a[r]) - a.begin() - 1;
+        if (l > 1) res = max(res, a[r] + a[l] + a[l - 1]);
     }
 
     cout << res;
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
 }
 
 int32_t main() {

@@ -4,7 +4,8 @@ using namespace std;
 using ll = long long;
 const ll INF = 1e18;
 
-// 0 <= w <= 9
+// Trọng số tối đa (0 <= w <= 9)
+const int MAX_W = 9; 
 
 int main() {
     ios::sync_with_stdio(false);
@@ -28,26 +29,40 @@ int main() {
     vector<ll> dist(n + 1, INF);
     dist[s] = 0;
 
-    int maxDist = 9 * n;
-    vector<vector<int>> bucket(maxDist + 1);
-
+    // Thuật toán Dial: Chỉ cần dùng mảng kích thước MAX_W + 1
+    vector<vector<int>> bucket(MAX_W + 1);
     bucket[0].push_back(s);
 
-    for (int d = 0; d <= maxDist; d++) {
-        while (!bucket[d].empty()) {
-            int u = bucket[d].back();
-            bucket[d].pop_back();
+    int count = 1; // Đếm số lượng phần tử đang nằm trong tất cả các bucket
+    ll d = 0;      // Lưu khoảng cách hiện tại đang xét
 
-            if (dist[u] != d) continue;
+    while (count > 0) {
+        // Nếu bucket tại khoảng cách d đang rỗng, tiến tới khoảng cách d+1
+        while (bucket[d % (MAX_W + 1)].empty()) {
+            d++;
+        }
 
-            for (int i = 0; i < adj[u].size(); i++) {
-                int v = adj[u][i].first;
-                int w = adj[u][i].second;
+        // Lấy đỉnh ra khỏi bucket
+        int u = bucket[d % (MAX_W + 1)].back();
+        bucket[d % (MAX_W + 1)].pop_back();
+        count--;
 
-                if (dist[v] > dist[u] + w) {
-                    dist[v] = dist[u] + w;
-                    bucket[dist[v]].push_back(v); //?
-                }
+        // Lazy deletion: bỏ qua nếu đã tìm được đường ngắn hơn tới u từ trước
+        if (dist[u] != d) continue;
+
+        // Tối ưu: Dừng sớm nếu đã tìm ra khoảng cách ngắn nhất đến đích
+        if (u == t) break;
+
+        for (int i = 0; i < adj[u].size(); i++) {
+            int v = adj[u][i].first;
+            int w = adj[u][i].second;
+
+            if (dist[v] > dist[u] + w) {
+                dist[v] = dist[u] + w;
+                
+                // Đẩy vào bucket tương ứng theo vòng tròn (modulo MAX_W + 1)
+                bucket[dist[v] % (MAX_W + 1)].push_back(v);
+                count++;
             }
         }
     }

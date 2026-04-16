@@ -14,16 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-<<<<<<< HEAD
-// Created: 2026-04-13 14:57
-=======
-// Created: 2026-04-13 20:42
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+// Created: 2026-04-14 19:48
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "6"
+#define FILENAME "7"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -45,30 +41,27 @@ void file() {
     }
 }
 
-void testcase() {
-    int n, l, r; cin >> n >> l >> r;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin() + 1, a.end());
-<<<<<<< HEAD
-    for (int i = 1; i <= n; i++) {
-        if (a[i] < l || a[i] > r) continue;
-        int la = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int ra = 
-    }
-=======
-    int res = 0;
-    for (int i = 2; i <= n; i++) {
-        if (a[i] > r) break;
-        int ar = upper_bound(a.begin() + 1, a.begin() + i, r - a[i]) - a.begin() - 1;
-        int al = lower_bound(a.begin() + 1, a.begin() + i, l - a[i]) - a.begin();
-        if (al <= ar) res += ar - al + 1;
-    }
+#define int long long
 
-    cout << res;
->>>>>>> 69b4f90bdeef542fb5d3dc3eead0e0e18c7d3b17
+void testcase() {
+    int n; cin >> n;
+    int q; cin >> q;
+    vector<pii> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i].fi >> a[i].se;
+    }
+    sort(a.begin() + 1, a.end(), [](pii x, pii y) {
+        return x.se < y.se;
+    });
+    vector<int> f(n + 1);
+    for (int i = 1; i <= n; i++) {
+        f[i] = f[i - 1] + a[i].fi;
+    }
+    while (q--) {
+        int k; cin >> k;
+        k = lower_bound(f.begin() + 1, f.end(), k) - f.begin();
+        cout << (k <= n && k >= 1 ? a[k].se : -1) << el;
+    }
 }
 
 int32_t main() {
