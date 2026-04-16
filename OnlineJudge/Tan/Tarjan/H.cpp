@@ -14,7 +14,7 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-16 08:01
+// Created: 2026-04-16 09:31
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
@@ -42,104 +42,74 @@ void file() {
 }
 
 const int MAXN = 5e5 + 5;
-const int MAXM = 5e5 + 5;
 
 struct Edge {
     int v, id;
 };
 
 vector<Edge> g[MAXN];
-vector<pii> edges;
-vector<int> low(MAXN, 0), num(MAXN, 0);
-bool isBridge[MAXM];
+vector<pii> edges(MAXN, {0, 0});
+vector<int> tin(MAXN, 0), low(MAXN, 0);
+stack<int> tarjan;
+vector<int> scc(MAXN, 0);
 
-int countBridge = 0;
+int sccCount = 0;
 int timeDfs = 0;
-
-struct DSU {
-    vector<int> sz, par;
-
-    DSU(int n) : sz(n), par(n) {}
-
-    void make(int u) {
-        par[u] = u;
-        sz[u] = 1;
-    }
-
-    int find(int u) {
-        return u == par[u] ? u : par[u] = find(par[u]);
-    }
-
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-        return;
-    }
-};
-
-void dfs(int u, int p, int preEdge) {
-    num[u] = low[u] = ++timeDfs;
+void dfs(int u, int preID) {
+    tin[u] = low[u] = ++timeDfs;
+    tarjan.push(u);
     for (const auto &e : g[u]) {
-        if (e.id == preEdge || e.v == p) continue;
-        if (!num[e.v]) {
-            dfs(e.v, u, e.id);
-            low[u] = min(low[u], low[e.v]);
-            if (low[e.v] == num[e.v]) {
-                ++countBridge;
-                isBridge[e.id] = true;
-            }
-        } else low[u] = min(low[u], num[e.v]);
+        if (e.id == preID) continue;
+        if (!tin[e.v]) dfs(e.v, e.id);
+        low[u] = min(low[u], low[e.v]);
+    }
+    if (tin[u] == low[u]) {
+        int v;
+        ++sccCount;
+        do {
+            v = tarjan.top();
+            tarjan.pop();
+            scc[v] = sccCount;
+        } while (u != v);
     }
 }
 
-vector<int> adj[MAXN]; // block cut tree
+int leaf = 0;
+vector<int> treeadj[MAXN];
+
+void dp(int u, int p) {
+    int child = 0;
+    for (int v : treeadj[u]) {
+        if (v == p) continue;
+        ++child;
+        dp(v, u);
+    }
+    if (child == 0 && u != 1) {
+        ++leaf;
+    }
+}
 
 void testcase() {
     int n, m; cin >> n >> m;
-    for (int i = 0; i < m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].pb({b, i});
-        g[b].pb({a, i});
-        edges.pb({ a, b});
+    for (int i = 1; i <= m; i++) {
+        cin >> edges[i].fi >> edges[i].se;
+        g[edges[i].fi].pb({edges[i].se, i});
+        g[edges[i].se].pb({edges[i].fi, i});
     }
     for (int i = 1; i <= n; i++) {
-        if (!num[i]) {
-            dfs(i, i, -1);
+        if (tin[i] == 0) dfs(i, -1);
+    }
+    for (int i = 1; i <= m; i++) {
+        int u = scc[edges[i].fi], v = scc[edges[i].se];
+        if (u != v) {
+            treeadj[u].pb(v);
+            treeadj[v].pb(u);
         }
     }
+    dp(1, 0);
+    if (treeadj[1].size() == 1) ++leaf;
 
-    // Block cut tree
-    DSU dsu(n + 1);
-    for (int i = 1; i <= n; i++) dsu.make(i);
-    for (int i = 0; i < m; i++) {
-        if (!isBridge[i]) {
-            dsu.join(edges[i].fi, edges[i].se);
-        }
-    }
-
-    map<pii, bool> addedEdge;
-    for (int i = 0; i < m; i++) {
-        if (isBridge[i] && !addedEdge[{edges[i].fi, edges[i].se}]) {
-            int u = dsu.find(edges[i].fi);
-            int v = dsu.find(edges[i].se);
-            adj[u].pb(v);
-            adj[v].pb(u);
-            addedEdge[{edges[i].fi, edges[i].se}] = addedEdge[{edges[i].se, edges[i].fi}] = true;
-        }
-    }
-
-    int leaf = 0;
-    for (int i = 1; i <= n; i++) {
-        if (dsu.find(i) == i && adj[i].size() == 1) {
-            leaf++;
-        }
-    }
-
-    cout << (leaf + 1) / 2 << el;
+    cout << (leaf + 1) / 2;
 }
 
 int32_t main() {
