@@ -6,7 +6,7 @@
 + Ôn Bignum
 + Ôn kthuc cũ (DSU, MST, ...)
 + DSU rollback (optional)
-+ Bridge + Articulation points, SCC, BCC, ...
++ Bridge + Articulation points, SCC, BCC, 2-SAT, ...
 + Dial's algo, Floyd's algo
 + Làm nốt dijkstra trong CP Advanced
 

@@ -40,7 +40,7 @@ void bellmanfordVertex(int src) {
 	
 	bool ncyclic = false;
     // Relax n-1 l?n
-    for (int i = 1; i <= n - 1; i++) {
+    for (int i = 1; i <= n; i++) {
         bool changed = false;
         for (int u = 1; u <= n; u++) {
             if (dist[u] == INF) continue;
