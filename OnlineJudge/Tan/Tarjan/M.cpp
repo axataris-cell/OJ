@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-16 15:17
+// Created: 2026-04-16 16:37
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "NOBRIDGE"
+#define FILENAME "M"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,7 +41,14 @@ void file() {
     }
 }
 
-const int MAXN = 5e5 + 5;
+/*
++ gom BCC
++ dfs 2 lần cho cây BC (loại 1 & 2)
+*/
+
+const int MAXN = 1e5 + 5;
+
+int n, m, k, l;
 
 struct Edge {
     int v, id;
@@ -49,58 +56,72 @@ struct Edge {
 
 vector<Edge> g[MAXN];
 vector<pii> edges(MAXN);
-vector<int> low(MAXN, 0), tin(MAXN, 0);
+vector<int> tin(MAXN, 0), low(MAXN, 0);
 stack<int> tarjan;
-
-bool isBridge[MAXN];
 vector<int> bcc(MAXN, 0);
+bool isBridge[MAXN];
 
-int timeDfs = 0;
+vector<int> debug1[MAXN];
+
 int bccCount = 0;
+int timeDfs = 0;
+
+bool istype0[MAXN], istype1[MAXN];
+
+int res = 0;
+vector<int> adj[MAXN]; // block cut tree
+vector<vector<int>> dp(2, vector<int>(MAXN, 0));
+bool vis[MAXN];
+
 void tj(int u, int preid) {
     tin[u] = low[u] = ++timeDfs;
     tarjan.push(u);
-    for (const auto &e : g[u]) {
-        if (e.id == preid) continue;
-        if (!tin[e.v]) {
-            tj(e.v, e.id);
-            if (tin[e.v] == low[e.v]) isBridge[e.id] = true;
+    for (auto &[v, id] : g[u]) {
+        if (id == preid) continue;
+        if (!tin[v]) {
+            tj(v, id);
+            low[u] = min(low[u], low[v]);
+            if (low[v] > tin[u]) isBridge[id] = true;
+        } else {
+            low[u] = min(low[u], tin[v]);
         }
-        low[u] = min(low[u], low[e.v]);
     }
     if (tin[u] == low[u]) {
-        ++bccCount;
         int v;
+        ++bccCount;
         do {
             v = tarjan.top();
             tarjan.pop();
             bcc[v] = bccCount;
+            if (istype0[v]) ++dp[0][bccCount];
+            if (istype1[v]) ++dp[1][bccCount];
         } while (u != v);
     }
 }
 
-vector<int> adjTree[MAXN];
-bool vis[MAXN];
-int leaf = 0;
-int res = 0;
 
-void dp(int u, int p) {
-    vis[u] = true;
-    int child = 0;
-    for (auto v : adjTree[u]) {
+void dfs(int u, int p) {    
+    for (const int &v : adj[u]) {
         if (v == p) continue;
-        dp(v, u);
-        ++child;
+        dfs(v, u);
+        dp[0][u] += dp[0][v];
+        dp[1][u] += dp[1][v];
     }
-    if (child == 0) {
-        ++leaf;
-    } else if (child == 1 && u == p) {
-        ++leaf;
+    if (u != 1) {
+        if (!dp[0][u] || !dp[1][u] || dp[0][u] == k || dp[1][u] == l) ++res;
     }
 }
 
 void testcase() {
-    int n, m; cin >> n >> m;
+    cin >> n >> m >> k >> l;
+    for (int i = 1; i <= k; i++) {
+        int x; cin >> x;
+        istype0[x] = true;
+    }
+    for (int i = 1; i <= l; i++) {
+        int x; cin >> x;
+        istype1[x] = true;
+    }
     for (int i = 1; i <= m; i++) {
         cin >> edges[i].fi >> edges[i].se;
         g[edges[i].fi].pb({edges[i].se, i});
@@ -111,21 +132,15 @@ void testcase() {
     }
 
     for (int i = 1; i <= m; i++) {
-        if (isBridge[i]) {
-            adjTree[bcc[edges[i].fi]].pb(bcc[edges[i].se]);
-            adjTree[bcc[edges[i].se]].pb(bcc[edges[i].fi]);
+        int u = bcc[edges[i].fi];
+        int v = bcc[edges[i].se];
+        if (u != v) {
+            adj[u].pb(v);
+            adj[v].pb(u);
         }
     }
-
-    debug(bccCount);
-
-    for (int i = 1; i <= bccCount; i++) {
-        if (!vis[i]) {
-            leaf = 0;
-            dp(i, i);
-            if (leaf > 1) res += (leaf + 1) / 2;
-        }
-    }
+    
+    dfs(1, 0);
 
     cout << res;
 }
