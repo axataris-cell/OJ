@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-14 22:30
+// Created: 2026-04-19 21:51
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "3"
+#define FILENAME "A"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,27 +41,38 @@ void file() {
     }
 }
 
-bool check(ll v, ll k) {
-    ll cnt = v / 3 + v / 5 + v / 7 - v / 15 - v / 21 - v / 35 + v / 105;
-    // cerr << cnt;
-    return cnt >= k;
-}
+#define int long long
 
 void testcase() {
-    ll k; cin >> k;
-    ll l = 0, r = 1e15;
-    ll res = INF;
-    while (l <= r) {
-        ll mid = (l + r) / 2;
-        if (check(mid, k)) {
-            res = min(res, mid);
-            r = mid - 1;
-        } else {
-            l = mid + 1;
+    int n, k;
+    cin >> n >> k;
+
+    vector<pll> p(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> p[i].fi;
+        p[i].se = i;
+    }
+
+    sort(all(p));
+
+    int ans = -1;
+    int l = -1;
+    int curmin = LINF;
+
+    for (int r = 0; r < n; ++r) {
+        int target = p[r].first - k;
+
+        while (l + 1 < n && p[l + 1].first <= target) {
+            l++;
+            curmin = min(curmin, p[l].second);
+        }
+
+        if (l != -1 && curmin < p[r].second) {
+            ans = max(ans, p[r].second - curmin);
         }
     }
 
-    cout << res;
+    cout << ans << el;
 }
 
 int32_t main() {

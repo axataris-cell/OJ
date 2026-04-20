@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-14 22:30
+// Created: 2026-04-20 08:10
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "3"
+#define FILENAME "2162D"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,27 +41,44 @@ void file() {
     }
 }
 
-bool check(ll v, ll k) {
-    ll cnt = v / 3 + v / 5 + v / 7 - v / 15 - v / 21 - v / 35 + v / 105;
-    // cerr << cnt;
-    return cnt >= k;
-}
-
 void testcase() {
-    ll k; cin >> k;
-    ll l = 0, r = 1e15;
-    ll res = INF;
+    int n; cin >> n;
+    // query 1 -> n => tìm được chênh lệnh r - l + 1
+    // BS cho 2 phía l, r: đầu tiên cố định l = 1, bs cho r sao cho tổng chênh lệch đúng r - l + 1
+    // rồi sau đó BS cho l
+    // tổng 2 * log(n) + 2 => 30 queries
+
+    int rl1, rl2;
+    cout << "1 " << 1 << ' ' << n << endl;
+    cin >> rl1;
+    cout << "2 " << 1 << ' ' << n << endl;
+    cin >> rl2;
+
+    int diff = rl2 - rl1; // r - l + 1   real
+
+    int r = n;
+    int l = 1;
+
+    int _r = 0;
     while (l <= r) {
-        ll mid = (l + r) / 2;
-        if (check(mid, k)) {
-            res = min(res, mid);
+        int mid = (l + r) / 2;
+
+        cout << "1 " << 1 << ' ' << mid << endl;
+        int res1; cin >> res1;
+        cout << "2 " << 1 << ' ' << mid << endl;
+        int res2; cin >> res2;
+
+        int cnt = res2 - res1;
+
+        if (cnt > 0) {
             r = mid - 1;
         } else {
+            _r = mid;
             l = mid + 1;
         }
     }
-
-    cout << res;
+    
+    cout << "! " << _r + 1 << ' ' << _r + diff << endl;
 }
 
 int32_t main() {
@@ -69,7 +86,7 @@ int32_t main() {
     cin.tie(nullptr);
     file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;

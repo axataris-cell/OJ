@@ -5,7 +5,6 @@
 + Ôn dp cơ bản
 + Ôn Bignum
 + Ôn kthuc cũ (DSU, MST, ...)
-+ DSU rollback (optional)
 + Bridge + Articulation points, SCC, BCC, 2-SAT, ...
 + Dial's algo, Floyd's algo
 + Làm nốt dijkstra trong CP Advanced
@@ -26,7 +25,7 @@
 + Wilson / Lucas (VNOI wiki) (optinal)
 + NTT / FFT (optional)
 
-+ Ôn tập LCA, euler tour, ...
++ Ôn tập LCA, euler tour, euler circuit, ...
 
 6/2026
 + Cặp ghép cực đại trên đồ thị

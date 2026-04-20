@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-14 22:30
+// Created: 2026-04-19 22:05
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "3"
+#define FILENAME "B"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,27 +41,35 @@ void file() {
     }
 }
 
-bool check(ll v, ll k) {
-    ll cnt = v / 3 + v / 5 + v / 7 - v / 15 - v / 21 - v / 35 + v / 105;
-    // cerr << cnt;
-    return cnt >= k;
-}
-
 void testcase() {
-    ll k; cin >> k;
-    ll l = 0, r = 1e15;
-    ll res = INF;
-    while (l <= r) {
-        ll mid = (l + r) / 2;
-        if (check(mid, k)) {
-            res = min(res, mid);
-            r = mid - 1;
+    ll L, R;
+    cin >> L >> R;
+
+    ll M = L - 1;
+    ll max_gcd = 1;
+
+    for (ll l = 1, r; l <= R; l = r + 1) {
+        ll v1 = R / l;
+        if (v1 == 0) {
+            r = R;
         } else {
-            l = mid + 1;
+            r = R / v1;
+        }
+
+        ll v2 = 0;
+        if (l <= M) {
+            v2 = M / l;
+            if (v2 > 0) {
+                r = min(r, M / v2);
+            }
+        }
+
+        if (v1 - v2 >= 2) {
+            max_gcd = max(max_gcd, r);
         }
     }
 
-    cout << res;
+    cout << max_gcd << el;
 }
 
 int32_t main() {
@@ -69,7 +77,7 @@ int32_t main() {
     cin.tie(nullptr);
     file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;

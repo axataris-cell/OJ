@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-14 22:30
+// Created: 2026-04-19 22:19
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "3"
+#define FILENAME "C"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,27 +41,55 @@ void file() {
     }
 }
 
-bool check(ll v, ll k) {
-    ll cnt = v / 3 + v / 5 + v / 7 - v / 15 - v / 21 - v / 35 + v / 105;
-    // cerr << cnt;
-    return cnt >= k;
+const int MAXN = 2e5 + 5;
+
+ll w[MAXN];
+vector<int> g[MAXN];
+ll sz[MAXN];
+ll sumW[MAXN];
+int n;
+
+void dfs1(int u) {
+    sz[u] = 1;
+    sumW[u] = w[u];
+    for (int v : g[u]) {
+        dfs1(v);
+        sz[u] += sz[v];
+        sumW[u] += sumW[v];
+    }
+}
+
+ll timer = 0;
+ll ans = 0;
+
+void dfs2(int u) {
+    timer++;
+    ans += timer * w[u];
+
+    sort(all(g[u]), [](int a, int b) {
+        return sumW[a] * sz[b] < sumW[b] * sz[a];
+    });
+
+    for (int v : g[u]) {
+        dfs2(v);
+    }
 }
 
 void testcase() {
-    ll k; cin >> k;
-    ll l = 0, r = 1e15;
-    ll res = INF;
-    while (l <= r) {
-        ll mid = (l + r) / 2;
-        if (check(mid, k)) {
-            res = min(res, mid);
-            r = mid - 1;
-        } else {
-            l = mid + 1;
-        }
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
     }
 
-    cout << res;
+    for (int i = 2; i <= n; i++) {
+        int p; cin >> p;
+        g[p].push_back(i);
+    }
+
+    dfs1(1);
+    dfs2(1);
+
+    cout << ans << el;
 }
 
 int32_t main() {
