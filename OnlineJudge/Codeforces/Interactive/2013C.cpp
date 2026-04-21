@@ -43,7 +43,67 @@ void file() {
 
 void testcase() {
     int n; cin >> n;
-    
+    if (n == 1) {
+        cout << "? " << 0 << endl;
+        int orz;
+        cin >> orz;
+        cout << "! " << (orz == 1 ? 0 : 1) << endl;
+        return;
+    }
+    string s = "0";
+
+    while (true) {
+        if (s.len() >= n) break;
+        {
+            cout << "? " << s + "0" << endl;
+            int orz; cin >> orz;
+            if (orz == 1) {
+                s = s + "0";
+                continue;
+            }
+        }
+        {
+            cout << "? " << s + "1" << endl;
+            int orz; cin >> orz;
+            if (orz == 1) {
+                s = s + "1";
+                continue;
+            }
+        }
+        break;
+    }
+    if (s.len() == n) {
+        cout << "! " << s << endl;
+        return;
+    }
+    while (true) {
+        if (s.len() >= n) break;
+        {
+            cout << "? " << "0" + s << endl;
+            int orz; cin >> orz;
+            if (orz == 1) {
+                s = "0" + s;
+                continue;
+            }
+        }
+        {
+            cout << "? " << "1" + s << endl;
+            int orz; cin >> orz;
+            if (orz == 1) {
+                s = "1" + s;
+                continue;
+            }
+        }
+        break;
+    }
+    if (s.len() < n) {
+        cout << "! ";
+        for (int i = 1; i <= n; i++) cout << 1;
+        cout << endl;
+        return;
+    }
+    cout << "! " << s << endl;
+    return;
 }
 
 int32_t main() {
