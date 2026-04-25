@@ -1,5 +1,5 @@
 4/2026
-+ Interactive problems
++ Interactive problems (https://codeforces.com/problemset?tags=interactive,1-2000)
 + Ôn Binary search, Two pointer
 + Ôn CTDL queue, stack, deque, multiset, set, ...
 + Ôn dp cơ bản
@@ -34,6 +34,8 @@
 + Trie / Aho-corasick / Suffix tree / Suffix array
 
 + Ôn Fenwick tree, Segment tree, Persistent DS, Interval tree (optional), ...
++ Segment tree beats (optional)
++ Rollback segment tree
 + Tối ưu DP: Alien's trick, Convex Hull trick, Li chao tree, Đảo nhãn, Slope trick, Divide and Conquer, Knuth optimization, ...
 
 7/2026
@@ -41,7 +43,6 @@
 + Ôn treap + HLD
 + Ternary search
 + Parallel binary search
-+ Segment tree beats (optional)
 + Heuristic
 
 8/2026
@@ -49,7 +50,6 @@
 + Link cut tree
 + Cliques
 + Tree isomorphism
-+ Rollback segment tree
 + Adhoc
 + Chen Danqi
 + ...
