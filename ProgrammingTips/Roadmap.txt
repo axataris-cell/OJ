@@ -29,8 +29,8 @@
 
 -> Detailed Routine For 5/2026 
 
-+ Tuần đầu: Ôn DP cơ bản, Học dp mới (KH: 15 -> 30p rồi xem đáp)
-+ Tuần hai: Ôn DSU, MST; Ôn LCA, ETour, Ecircuit (3 ngày)
++ Tuần đầu, nửa tuần 2: Ôn DP cơ bản (Marisa 25, Vài bài Basic) , Học dp mới (KH: 15 -> 30p rồi xem đáp)
++ Tuần hai, nửa tuần 3: Ôn DSU, MST; Ôn LCA, ETour, Ecircuit (3 ngày)
 + Sweep line, SQRT Decomposition, Mo's
 + Tuần 3, 4: Học toán (lọ chúa) bên trên
 
