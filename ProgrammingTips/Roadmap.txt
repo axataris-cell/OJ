@@ -5,7 +5,7 @@
 + Ôn dp cơ bản
 + Ôn Bignum
 + Ôn kthuc cũ (DSU, MST, ...)
-+ Bridge + Articulation points, SCC, BCC, 2-SAT, ...
+// + Bridge + Articulation points, SCC, BCC, 2-SAT, ... - DONE
 + Dial's algo, Floyd's algo
 + Làm nốt dijkstra trong CP Advanced
 
@@ -16,7 +16,7 @@
 + Mo's Algorithm
 
 + Số học, toán học.
-+ Tổ hợp, chỉnh hợp, hoán vị, chia kẹo euler, ...
++ Tổ hợp, chỉnh hợp, hoán vị, chia kẹo euler, ... (Nghịch đảo fermat)
 + Bao hàm loại trừ
 + Mobius function / Inversed Mobius
 + Gauss elimination
@@ -26,6 +26,15 @@
 + NTT / FFT (optional)
 
 + Ôn tập LCA, euler tour, euler circuit, ...
+
+-> Detailed Routine For 5/2026 
+
++ Tuần đầu: Ôn DP cơ bản, Học dp mới (KH: 15 -> 30p rồi xem đáp)
++ Tuần hai: Ôn DSU, MST; Ôn LCA, ETour, Ecircuit (3 ngày)
++ Sweep line, SQRT Decomposition, Mo's
++ Tuần 3, 4: Học toán (lọ chúa) bên trên
+
++ Nếu còn thời gian thì hoàn thành nốt bài từ T4: Dijkstra, Floyd, Dial, Bignum, Interactive, BinarySearch, TwoPointer
 
 6/2026
 + Cặp ghép cực đại trên đồ thị
@@ -46,7 +55,6 @@
 + Heuristic
 
 8/2026
-
 + Link cut tree
 + Cliques
 + Tree isomorphism

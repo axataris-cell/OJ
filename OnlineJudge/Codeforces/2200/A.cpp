@@ -13,13 +13,10 @@
 #define ld long double
 #define el '\n'
 
-// Author: Axataris
-// Created: 2026-04-22 17:09
+// Author: Fua
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
-
-#define FILENAME "ae"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -33,35 +30,25 @@ using pll = pair<long long, long long>;
 
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
-void file() {
-    if (FILE *f = fopen(FILENAME".INP", "r")) {
-        fclose(f);
-        freopen(FILENAME".INP", "r", stdin);
-        freopen(FILENAME".OUT", "w", stdout);
-    }
-}
-
 void testcase() {
     int n; cin >> n;
-    vector<int> a(n + 5);
+    vector<int> a(n + 1, 0);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    int mx = *max_element(a.begin() + 1, a.end());
+
+    int cnt = 0;
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        if (a[i] == mx) ++cnt;
     }
-    a[n + 1] = a[1];
-    for (int i = 1; i <= n; i++) {
-        cout << (a[i] & a[i + 1]) << ' ';
-    }
-    for (int i = 1; i <= n; i++) {
-        cout << (a[i] | a[i + 1]) << ' ';
-    }
+
+    cout << cnt << el;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;

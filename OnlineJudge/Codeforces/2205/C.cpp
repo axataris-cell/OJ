@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-16 21:35
+// Created: 2026-04-30 18:22
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "BMF"
+#define FILENAME "C"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,43 +41,41 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
-struct Edge {
-    int u, v, w;
-};
-vector<Edge> edges;
-vector<int> dist(MAXN, INF);
+bool comp(const vector<int> &a, const vector<int> &b) {
+    
+}
 
 void testcase() {
-    int n, m; cin >> n >> m;
-    int s, t; cin >> s >> t;
-    for (int i = 1; i <= m; i++) {
-        int a, b, w; cin >> a >> b >> w;
-        edges.pb({a, b, w});
-        edges.pb({b, a, w});
+    int n; cin >> n;
+    vector<vector<int>> user(n, vector<int>());
+    for (int i = 0; i < n; i++) {
+        int sz; cin >> sz;
+        for (int j = 1; j <= sz; j++) {
+            int x; cin >> x;
+            user[i].pb(x);
+        }
     }
-    
-    dist[s] = 0;
-    bool ncyclic = false;
-    for (int i = 1; i <= n; i++) {
-        bool changed = false;
-        for (const auto &e : edges) {
-            if (dist[e.u] == INF) continue;
-            if (dist[e.v] > dist[e.u] + e.w) {
-                dist[e.v] = dist[e.u] + e.w;
-                changed = true;
-                if (i == n) {
-                    ncyclic = true;
-                    break;
-                }
+    sort(all(user), comp);
+    vector<bool> vis(1e6 + 5, false);
+    // for (const auto &v : user) {
+    //     cout << "debug: ";
+    //     for (const auto &x : v) {
+    //         cout << x << ' ';
+    //     }
+    //     cout << el;
+    // }
+
+    cerr << "ans: ";
+    for (const auto &v : user) {
+        for (int i = v.size() - 1; i >= 0; i--) {
+            int x = v[i];
+            if (!vis[x]) {
+                cout << x << ' ';
+                vis[x] = true;
             }
         }
-        if (!changed) break;
-        if (ncyclic) break;
     }
-
-    cout << ((ncyclic || dist[t] == INF) ? -1 : dist[t]);
+    cout << el;
 }
 
 int32_t main() {
@@ -85,7 +83,7 @@ int32_t main() {
     cin.tie(nullptr);
     file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;

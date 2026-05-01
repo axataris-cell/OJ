@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-04-16 10:20
+// Created: 2026-04-30 22:58
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "Mono"
+#define FILENAME "H"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,56 +41,33 @@ void file() {
     }
 }
 
-const int MAXN = 5e5 + 5;
+#define int long long
 
-struct Edge {
-int v, id;
+struct State {
+    int fi, se, num;
 };
 
-vector<Edge> g[MAXN];
-vector<int> tin(MAXN, 0), low(MAXN, 0);
-vector<bool> isBridge(MAXN, false);
-vector<int> ecc(MAXN, 0);
-stack<int> tarjan;
-
-int timeDfs = 0;
-int eccCount = 0;
-
-void tj(int u, int preid) {
-    tin[u] = low[u] = ++timeDfs;
-    tarjan.push(u);
-    for (const auto &[v, id] : g[u]) {
-        if (id == preid) continue;
-        if (!tin[v]) {
-            tj(v, id);
-            low[u] = min(low[u], low[v]);
-            if (low[v] == tin[v]) isBridge[id] = true;
-        } else low[u] = min(low[u], tin[v]);
-    }
-    if (tin[u] == low[u]) {
-        int v;
-        ++eccCount;
-        do {
-            v = tarjan.top();
-            tarjan.pop();
-            ecc[v] = eccCount;
-        } while (u != v);
-    }
-}
-
 void testcase() {
-    int n, m; cin >> n >> m;
-    for (int i = 1; i <= m; i++) {
-        int a, b; cin >> a >> b;
-        g[a].pb({b, i});
-        g[b].pb({a, i});
-    }
+    int n; cin >> n;
+    vector<int> a(n + 1);
     for (int i = 1; i <= n; i++) {
-        if (!tin[i]) tj(i, -1);
+        cin >> a[i];
     }
+    stack<State> st; // index - count left, increase
+    vector<int> f(n + 1, 0);
     for (int i = 1; i <= n; i++) {
-        cout << ecc[i] << ' ';
+        int cnt = 1;
+        int num = 0;
+        while (st.size() && a[st.top().fi] >= a[i]) {
+            cnt += st.top().se;
+            f[i] += st.top().se * (a[st.top().fi] - a[i]) + num * ;
+            st.pop();
+        }
+        if (st.size()) f[i] += f[st.top().fi];
+        st.push({i, cnt, num});
     }
+
+    for (int i = 1; i <= n; i++) cout << f[i] << ' ';
 }
 
 int32_t main() {
@@ -98,7 +75,7 @@ int32_t main() {
     cin.tie(nullptr);
     file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;

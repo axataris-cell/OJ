@@ -13,13 +13,10 @@
 #define ld long double
 #define el '\n'
 
-// Author: Axataris
-// Created: 2026-04-15 09:42
+// Author: Fua
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
-
-#define FILENAME "Lovuon"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -33,28 +30,36 @@ using pll = pair<long long, long long>;
 
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
-void file() {
-    if (FILE *f = fopen(FILENAME".INP", "r")) {
-        fclose(f);
-        freopen(FILENAME".INP", "r", stdin);
-        freopen(FILENAME".OUT", "w", stdout);
-    }
-}
-
 void testcase() {
-    for (int i = 0; i <= 256; i++) {
-        for (int j = 0; j <= 256; j++) {
-            system(("ping -t 192.168." + to_string(i) + "." + to_string(j) + " -n 3").c_str());
-        }
+    int n; cin >> n;
+    vector<int> a(n + 1);
+    vector<int> urgent;
+    vector<int> div2, div3;
+    vector<int> normal;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        if (a[i] % 6 == 0) {
+            urgent.pb(a[i]);
+        } else if (a[i] % 2 == 0) {
+            div2.pb(a[i]);
+        } else if (a[i] % 3 == 0) {
+            div3.pb(a[i]);
+        } else normal.pb(a[i]);
     }
+    vector<int> left;
+    vector<int> right;
+    for (const auto &x : urgent) cout << x << ' ';
+    for (const auto &x : div2) cout << x << ' ';
+    for (const auto &x : normal) cout << x << ' ';
+    for (const auto &x : div3) cout << x << ' ';
+    cout << el;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    file();
 
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     while (t--) testcase();
 
     return 0;
