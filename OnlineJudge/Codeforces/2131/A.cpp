@@ -31,6 +31,14 @@ using pll = pair<long long, long long>;
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
 void testcase() {
+    int n; cin >> n;
+    vector<int> a(n + 1), b(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> b[i];
+    }
     
 }
 

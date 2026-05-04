@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-05-01 13:42
+// Created: 2026-05-01 21:00
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "1"
+#define FILENAME "a"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,21 +42,7 @@ void file() {
 }
 
 void testcase() {
-    int n, k; cin >> k >> n;
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    vector<bool> f(k + 1, false);
-    for (int i = 1; i <= k; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (i - a[j] >= 0 && !f[i - a[j]]) {
-                f[i] = true;
-                break;
-            }
-        }
-    }
-    cout << (f[k] ? "Marisa" : "Reimu");
+    
 }
 
 int32_t main() {

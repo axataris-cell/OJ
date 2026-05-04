@@ -6,6 +6,7 @@ Nói về stack thì chúng ta có 2 cách sử dụng chính (chắc thí)
 Bài 1:
 Cho một hàng người gồm n người. Hai người A và B có thể nhìn thấy nhau nếu họ đứng ngay cạnh nhau hoặc nếu không có người nào giữa họ cao hơn người A hoặc người B.
 Tính số cặp người có thể nhìn thấy nhau?
+Tóm tắt: Cho mảng A có n phần tử, đếm số cặp chỉ số i, j thỏa mãn  i < j và max(a(i + 1), a(i + 2), ... a(j - 1)) < min(ai, aj) hoặc j - i = 1
 
 Ý tưởng:
 Đầu tiên, chúng ta gộp lại tất cả các người có chiều cao liên tiếp với nhau để tính.

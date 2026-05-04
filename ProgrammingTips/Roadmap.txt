@@ -18,9 +18,10 @@
 + Số học, toán học.
 + Tổ hợp, chỉnh hợp, hoán vị, chia kẹo euler, ... (Nghịch đảo fermat)
 + Bao hàm loại trừ
-+ Mobius function / Inversed Mobius
-+ Gauss elimination
 + Thặng dư Trung Hoa (CRT)
++ Dirichlet Convolution
++ Mobius function / Inversed Mobius, phi euler
++ Gauss elimination
 + Miller - Rabin / Pollard Rho
 + Wilson / Lucas (VNOI wiki) (optinal)
 + NTT / FFT (optional)
@@ -29,8 +30,8 @@
 
 -> Detailed Routine For 5/2026 
 
-+ Tuần đầu, nửa tuần 2: Ôn DP cơ bản (Marisa 25, Vài bài Basic) , Học dp mới (KH: 15 -> 30p rồi xem đáp)
-+ Tuần hai, nửa tuần 3: Ôn DSU, MST; Ôn LCA, ETour, Ecircuit (3 ngày)
++ Tuần đầu, nửa tuần 2: Ôn DP cơ bản (Marisa 25, Vài bài Basic) (3 ngày) , Học dp mới (KH: 15 -> 30p rồi xem đáp)
++ Tuần hai, nửa tuần 3: Ôn DSU, MST; Ôn LCA, ETour, Ecircuit (3-5 ngày)
 + Sweep line, SQRT Decomposition, Mo's
 + Tuần 3, 4: Học toán (lọ chúa) bên trên
 
@@ -60,6 +61,7 @@
 + Tree isomorphism
 + Adhoc
 + Chen Danqi
++ Sprague - Grundy
 + ...
 
 + Codeforces / VOI practices...
