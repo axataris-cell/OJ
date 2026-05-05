@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-05-04 14:48
+// Created: 2026-05-05 20:02
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "A"
+#define FILENAME "E"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -45,34 +45,42 @@ void file() {
 
 void testcase() {
     int n; cin >> n;
-    vector<vector<int>> a(n, vector<int>(n, 0));
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> a[i][j];
-        }
+    vector<vector<int>> a(8, vector<int>(n, 0));
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < n; j++) cin >> a[i][j];
     }
 
-    vector<vector<int>> dp(n + 1, vector<int>(1 << n, INF));
+    vector<vector<int>> dp(n + 1, vector<int>(256, -LINF));
 
-    for (int i = 0; i < n; i++) dp[i][1 << i] = 0;
+    vector<int> valid_masks;
+    for (int mask = 0; mask < (1 << 8); mask++) {
+        bool ok = true;
+        for (int i = 0; i < 7; i++) {
+            if (((mask >> i) & 1) && ((mask >> (i + 1)) & 1)) ok = false;
+        }
+        if (ok) valid_masks.push_back(mask);
+    }
 
-    for (int mask = 0; mask < (1 << n); mask++) {
-        for (int i = 0; i < n; i++) {
-            if (!((mask >> i) & 1)) continue;
-            for (int j = 0; j < n; j++) {
-                if (!((mask >> j) & 1) || i == j || dp[j][mask - (1 << i)] == INF) continue;
-                dp[i][mask] = min(dp[i][mask], dp[j][mask - (1 << i)] + a[j][i]);
+    dp[0][0] = 0;
+
+    int res = 0;
+
+    for (int i = 1; i <= n; i++) {
+        for (int mask : valid_masks) {
+            int val = 0;
+            for (int j = 0; j < 8; j++) if ((mask >> j) & 1) val += a[j][i - 1];
+
+            for (int prev_mask : valid_masks) {
+                if (mask & prev_mask) continue;
+                if (dp[i-1][prev_mask] != -INF) {
+                    dp[i][mask] = max(dp[i][mask], dp[i-1][prev_mask] + val);
+                }
             }
+            if (mask > 0) res = max(res, dp[i][mask]);
         }
-    }
-
-    int res = INF;
-    for (int i = 0; i < n; i++) {
-        res = min(res, dp[i][(1 << n) - 1]);
     }
 
     cout << res;
-    
 }
 
 int32_t main() {

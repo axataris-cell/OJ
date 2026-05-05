@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-05-04 14:48
+// Created: 2026-05-05 17:54
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "A"
+#define FILENAME "B"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -44,35 +44,29 @@ void file() {
 #define int long long
 
 void testcase() {
-    int n; cin >> n;
-    vector<vector<int>> a(n, vector<int>(n, 0));
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> a[i][j];
-        }
-    }
+    int n, k; cin >> n >> k;
+    vector<int> a(n);
+    for (auto &x : a) cin >> x;
 
-    vector<vector<int>> dp(n + 1, vector<int>(1 << n, INF));
+    vector<vector<int>> dp(n, vector<int>(1 << n, 0)); // dp[i][mask] số cách sắp xếp hợp lí với i là con cuối cùng, và đã có [mask] con đc chọn
 
-    for (int i = 0; i < n; i++) dp[i][1 << i] = 0;
+    for (int i = 0; i < n; i++) dp[i][(1 << i)] = 1;
 
     for (int mask = 0; mask < (1 << n); mask++) {
         for (int i = 0; i < n; i++) {
-            if (!((mask >> i) & 1)) continue;
+            if (!(mask & (1 << i))) continue;
             for (int j = 0; j < n; j++) {
-                if (!((mask >> j) & 1) || i == j || dp[j][mask - (1 << i)] == INF) continue;
-                dp[i][mask] = min(dp[i][mask], dp[j][mask - (1 << i)] + a[j][i]);
+                if (!(mask & (1 << j)) || i == j || abs(a[i] - a[j]) <= k) continue;
+                int prev_mask = mask ^ (1 << i); // ko co i
+                dp[i][mask] += dp[j][prev_mask];
             }
         }
     }
 
-    int res = INF;
-    for (int i = 0; i < n; i++) {
-        res = min(res, dp[i][(1 << n) - 1]);
-    }
+    int res = 0;
+    for (int i = 0; i < n; i++) res += dp[i][(1 << n) - 1];
 
     cout << res;
-    
 }
 
 int32_t main() {
