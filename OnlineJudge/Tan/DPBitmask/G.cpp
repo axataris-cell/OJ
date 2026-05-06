@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-05-05 21:11
+// Created: 2026-05-05 18:27
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "F"
+#define FILENAME "G"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -43,28 +43,28 @@ void file() {
 
 #define int long long
 
+const int MOD = 1e9 + 7;
+
 void testcase() {
     int n; cin >> n;
-    vector<vector<int>> a(n, vector<int>(n, 0));
+    vector<vector<int>> match(n, vector<int>(n, 0));
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) cin >> a[i][j];
-    }
-
-    vector<int> cost(1 << n, 0);
-    for (int mask = 0; mask < (1 << n); mask++) {
-        for (int i = 0; i < n; i++) {
-            if (!((mask >> i) & 1)) continue;
-            for (int j = i + 1; j < n; j++) {
-                if (!((mask >> j) & 1)) continue;
-                cost[mask] += a[i][j];
-            }
+        for (int j = 0; j < n; j++) {
+            cin >> match[i][j];
         }
     }
-
+    
     vector<int> dp(1 << n, 0);
+
+    dp[0] = 1;
+
     for (int mask = 0; mask < (1 << n); mask++) {
-        for (int sub = mask; sub > 0; sub = (sub - 1) & mask) {
-            dp[mask] = max(dp[mask], dp[mask ^ sub] + cost[sub]);
+        int k = __builtin_popcount(mask);
+        for (int i = 0; i < n; i++) {
+            if (!((mask >> i) & 1)) continue;
+            if (match[k - 1][i]) {
+                dp[mask] = (dp[mask] + dp[mask ^ (1 << i)]) % MOD;
+            }
         }
     }
 

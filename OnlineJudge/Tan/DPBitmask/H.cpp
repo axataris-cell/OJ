@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-05-05 21:11
+// Created: 2026-05-05 18:27
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "F"
+#define FILENAME "H"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -43,32 +43,44 @@ void file() {
 
 #define int long long
 
+const int MOD = 1e9 + 7;
+
 void testcase() {
     int n; cin >> n;
-    vector<vector<int>> a(n, vector<int>(n, 0));
+    int m; cin >> m;
+
+    vector<int> people[m + 1];
+
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) cin >> a[i][j];
+        int num; cin >> num;
+        for (int j = 0; j < num; j++) {
+            int x; cin >> x;
+            people[x].pb(i);
+        }
     }
 
-    vector<int> cost(1 << n, 0);
-    for (int mask = 0; mask < (1 << n); mask++) {
-        for (int i = 0; i < n; i++) {
-            if (!((mask >> i) & 1)) continue;
-            for (int j = i + 1; j < n; j++) {
-                if (!((mask >> j) & 1)) continue;
-                cost[mask] += a[i][j];
+    vector<vector<int>> dp(m + 1, vector<int>(1 << n, 0));
+
+    dp[0][0] = 1;
+
+    for (int i = 1; i <= m; i++) {
+        for (int mask = 0; mask < (1 << n); mask++) {
+            if (dp[i - 1][mask] == 0) continue;
+
+            dp[i][mask] += dp[i - 1][mask];
+            dp[i][mask] %= MOD;
+
+            for (const auto &p : people[i]) {
+                if ((mask >> p) & 1) continue;
+                int next_mask = mask | (1 << p);
+                dp[i][next_mask] += dp[i - 1][mask];
+                dp[i][next_mask] %= MOD;
             }
         }
     }
 
-    vector<int> dp(1 << n, 0);
-    for (int mask = 0; mask < (1 << n); mask++) {
-        for (int sub = mask; sub > 0; sub = (sub - 1) & mask) {
-            dp[mask] = max(dp[mask], dp[mask ^ sub] + cost[sub]);
-        }
-    }
+    cout << dp[m][(1 << n) - 1];
 
-    cout << dp[(1 << n) - 1];
 }
 
 int32_t main() {

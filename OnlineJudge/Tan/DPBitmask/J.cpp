@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-05-05 21:11
+// Created: 2026-05-06 11:30
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "F"
+#define FILENAME "J"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,34 +41,51 @@ void file() {
     }
 }
 
-#define int long long
-
 void testcase() {
-    int n; cin >> n;
-    vector<vector<int>> a(n, vector<int>(n, 0));
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) cin >> a[i][j];
+    int k, r; cin >> k >> r;
+    int m; cin >> m;
+    bitset<105> reach[m];
+    vector<pii> restaurant, pos;
+    for (int i = 0; i < m; i++) {
+        int a, b; cin >> a >> b;
+        restaurant.pb({a, b});
     }
-
-    vector<int> cost(1 << n, 0);
-    for (int mask = 0; mask < (1 << n); mask++) {
-        for (int i = 0; i < n; i++) {
-            if (!((mask >> i) & 1)) continue;
-            for (int j = i + 1; j < n; j++) {
-                if (!((mask >> j) & 1)) continue;
-                cost[mask] += a[i][j];
+    int n; cin >> n;
+    vector<int> amount(n, 0);
+    for (int i = 0; i < n; i++) {
+        int a, b; cin >> a >> b;
+        pos.pb({a, b});
+        cin >> amount[i];
+    }
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            auto [x1, y1] = restaurant[i];
+            auto [x2, y2] = pos[j];
+            if (hypot(float(abs(x2 - x1)), float(abs(y2 - y1))) <= float(r)) {
+                reach[i][j] = true;
             }
         }
     }
-
-    vector<int> dp(1 << n, 0);
-    for (int mask = 0; mask < (1 << n); mask++) {
-        for (int sub = mask; sub > 0; sub = (sub - 1) & mask) {
-            dp[mask] = max(dp[mask], dp[mask ^ sub] + cost[sub]);
-        }
+    vector<int> validmask;
+    for (int mask = 0; mask < (1 << m); mask++) {
+        if (__builtin_popcount(mask) == k) validmask.pb(mask);
     }
 
-    cout << dp[(1 << n) - 1];
+    int res = 0;
+
+    for (const auto &mask : validmask) {
+        bitset<105> hop;
+        for (int i = 0; i < m; i++) {
+            if ((mask >> i) & 1) hop |= reach[i];
+        }
+        int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            if (hop[i]) cnt += amount[i];
+        }
+        res = max(res, cnt);
+    }
+
+    cout << res << el;
 }
 
 int32_t main() {
