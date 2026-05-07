@@ -10,11 +10,12 @@
 + Làm nốt dijkstra trong CP Advanced
 
 5/2026
-+ DP nâng cao: DP bitmask / digit / matrix / SOS / DP DAG 
++ DP nâng cao: DP bitmask / digit / matrix / SOS / DP DAG / Broken Profile
 + Sweep line
 + Sqrt Decomposition
 + Mo's Algorithm
 
+// Có thể chuyển dời sang tháng 6 (do lịch học)
 + Số học, toán học.
 + Tổ hợp, chỉnh hợp, hoán vị, chia kẹo euler, ... (Nghịch đảo fermat)
 + Bao hàm loại trừ
