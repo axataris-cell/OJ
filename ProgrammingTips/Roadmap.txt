@@ -10,7 +10,7 @@
 + Làm nốt dijkstra trong CP Advanced
 
 5/2026
-+ DP nâng cao: DP bitmask / digit / matrix / SOS / DP DAG / Broken Profile
++ DP nâng cao: DP bitmask / digit / matrix mult / SOS / DP DAG / Broken Profile
 + Sweep line
 + Sqrt Decomposition
 + Mo's Algorithm
