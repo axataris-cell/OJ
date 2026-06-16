@@ -1,0 +1,67 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "debug.onTaskErrors": "showErrors",
+    "workbench.editorAssociations": {
+      "*.mp3": "wavPreview.audioPreview",
+      "*.pdf": "cweijan.officeViewer"
+    },
+    "window.zoomLevel": 0,
+    "background.enabled": true,
+    
+    // "background.editor": {
+    //   "useFront": true,
+    //   "style": {
+    //     "background-position": "30% 100%",
+    //     "background-size": "cover",
+    //     "opacity": 0.25
+    //   },
+    //   "styles": [{}, {}, {}],
+    //   "images": [
+    //     "https://endfield.wiki.gg/images/Snapshot_Estella_3.png?f01d11",
+    //   ],
+    //   "interval": 0,
+    //   "random": false
+    // },
+
+    "background.fullscreen": {
+      "useFront": false,
+      "style": {
+        "background-position": "30% 100%",
+        "background-size": "cover",
+        "opacity": 20
+      },
+      "styles": [{}, {}, {}],
+      "images": [
+        "https://endfield.wiki.gg/images/Snapshot_Estella_3.png?f01d11",
+      ],
+      "interval": 0,
+      "random": false
+    },
+
+    // "background.panel": {
+    //   "useFront": false,
+    //   "style": {
+    //     "background-position": "100% 100%",
+    //     "background-size": "auto",
+    //     "opacity": 0.12
+    //   },
+    //   "styles": [{}, {}, {}],
+    //   "images": [
+    //   ],
+    //   "interval": 0,
+    //   "random": false
+    // },
+
+  "editor.fontSize": 20,
+  "files.autoSave": "onFocusChange",
+  "editor.mouseWheelZoom": true,
+  "workbench.colorCustomizations": {
+    "editor.lineHighlightBackground": "#9bc9e52c",
+    "statusBar.background": "#c1e7fb",
+    "statusBar.foreground": "#ffffff",
+    "statusBar.border": "#1c1a58"
+  },
+  "editor.stickyScroll.enabled": false,
+  "editor.stickyScroll.scrollWithEditor": false,
+  "workbench.colorTheme": "Pastel Sky Bright Theme"
+}
