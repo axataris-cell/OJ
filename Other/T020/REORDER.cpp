@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-18 13:39
+// Created: 2026-06-25 14:01
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "kmex"
+#define FILENAME "REORDER"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,56 +41,36 @@ void file() {
     }
 }
 
-#define int long long
-
 void testcase() {
-    int n, q; cin >> n >> q;
-    vector<int> a(n + 5, 0);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    a[n + 1] = INF;
-    sort(a.begin() + 1, a.end());
-    while (q--) {
-        int x; cin >> x;
-        int l = 1, r = n;
-        int v1 = -1, v2 = -1;
-        // tim doan co the co dap an trong mang a
-        while (l <= r) {
-            int mid = (l + r) / 2;
-            int val = a[mid] - mid + 1;
-            int val2 = a[mid + 1] - mid;
-            if (val <= x && x <= val2) {
-                v1 = val;
-                v2 = val2;
+    vector<int> mp('z' - 'a' + 5, 0);
+    string s; cin >> s;
+    int n = s.size();
+    for (int i = 0; i < n; i++) ++mp[s[i] - 'a'];
+    string res = "";
+    for (int rem = n; rem >= 1; rem--) { // remaining
+        bool changed = false;
+        for (int i = 'a' - 'a'; i <= 'z' - 'a'; i++) {
+            if (mp[i] > rem - mp[i]) {
+                if (res.size() && res[res.size() - 1] == char(i + 'a')) continue;
+                res += char(i + 'a');
+                changed = true;
+                --mp[i];
                 break;
-            } else if () {
-
-            } else if () {
-
             }
         }
-        while (v1 <= v2) {
-            int mid = (v1 + v2) / 2;
-            int pos = lower_bound(a.begin() + 1, a.begin() + n + 1, mid) - a.begin() - 2;
-            int cnt = mid - pos;
-            if (cnt == x) {
-                cout << mid << ' ';
+        if (changed) continue;
+        for (int i = 'a' - 'a'; i <= 'z' - 'a'; i++) {
+            if (mp[i]) {
+                if (res.size() && res[res.size() - 1] == char(i + 'a')) continue;
+                res += char(i + 'a');
+                changed = true;
+                --mp[i];
                 break;
-            } else if (cnt < x) {
-                v1 = mid + 1;
-            } else if (cnt > x) {
-                v2 = mid - 1;
             }
         }
     }
+    cout << (res.size() == n ? res : "-1");
 }
-
-/*
-4 1
-1 2 6 7
-1
-*/
 
 int32_t main() {
     ios_base::sync_with_stdio(false);

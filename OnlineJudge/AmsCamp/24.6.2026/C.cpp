@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-24 20:04
+// Created: 2026-06-24 08:41
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "1"
+#define FILENAME "C"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -34,24 +34,24 @@ using pll = pair<long long, long long>;
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
 void file() {
-	if (FILE *f = fopen(FILENAME".INP", "r")) {
-		fclose(f);
-		freopen(FILENAME".INP", "r", stdin);
-		freopen(FILENAME".OUT", "w", stdout);
-	}
+    if (FILE *f = fopen(FILENAME".INP", "r")) {
+        fclose(f);
+        freopen(FILENAME".INP", "r", stdin);
+        freopen(FILENAME".OUT", "w", stdout);
+    }
 }
 
 void testcase() {
-	
+    
 }
 
 int32_t main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-	file();
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    file();
 
-	int t = 1; //cin >> t;
-	while (t--) testcase();
+    int t = 1; //cin >> t;
+    while (t--) testcase();
 
-	return 0;
+    return 0;
 }

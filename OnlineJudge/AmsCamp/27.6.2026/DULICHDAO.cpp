@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-18 15:15
+// Created: 2026-06-27 08:11
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "D"
+#define FILENAME "DULICHDAO"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,8 +41,31 @@ void file() {
     }
 }
 
+#define int long long
+
 void testcase() {
-    
+    int n, m; cin >> n >> m;
+    vector<int> pos(m + 1, 0);
+    for (int i = 1; i <= m; i++) {
+        cin >> pos[i];
+    }
+    if (m == 1) {
+        cout << 0;
+        return;
+    }
+    int res = LINF;
+    for (int u = 1; u <= n; u++) {
+        int cur = 0;
+        for (int i = 2; i <= m; i++) {
+            int a = pos[i - 1];
+            int b = pos[i];
+
+            cur += min({llabs(a - b), llabs(a - u) + 1, llabs(b - u) + 1});
+        }
+        res = min(res, cur);
+    }
+
+    cout << res;
 }
 
 int32_t main() {

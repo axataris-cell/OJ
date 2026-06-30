@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-17 21:07
+// Created: 2026-06-25 14:55
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "A"
+#define FILENAME "COVER5G"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,15 +42,42 @@ void file() {
 }
 
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1, 0);
+    int n, m, k; cin >> n >> m >> k;
+    vector<int> X(n + 1, 0), C(n + 1, 0);
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        cin >> X[i];
     }
-    sort(a.begin() + 1, a.end());
     for (int i = 1; i <= n; i++) {
-        cout << a[i] << ' ';
-    }   
+        cin >> C[i];
+    }
+    if (k == 1) {
+        int l = 1, r = 1e9;
+        int res = INF;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            bool ok = false;
+            for (int i = 1; i <= n; i++) {
+                bool eh = true;
+                for (int j = 1; j <= n; j++) {
+                    if (abs(X[i] - X[j]) > mid) {
+                        eh = false;
+                        break;
+                    }
+                }
+                if (eh) {
+                    ok = true;
+                    break;
+                }
+            }
+            if (ok) {
+                res = min(res, mid);
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        cout << res;
+    }
 }
 
 int32_t main() {

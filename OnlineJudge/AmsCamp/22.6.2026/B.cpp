@@ -14,7 +14,7 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-22 15:03
+// Created: 2026-06-23 08:23
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
@@ -41,98 +41,134 @@ void file() {
     }
 }
 
-struct DSU {
-    vector<int> sz, par, mn;
+const int MAXN = 3e5 + 5;
+const int LOG = 20;
 
-    DSU(int n) : sz(n), par(n), mn(n) {}
+struct Edge {
+    int u, v;
+} edges[MAXN];
 
-    void make(int i) {
-        sz[i] = 1;
-        par[i] = i;
-        mn[i] = i;
+vector<pii> g[MAXN];
+int up[MAXN][LOG];
+int depth[MAXN], parent_node[MAXN], up_edge[MAXN];
+int dsu[MAXN], s_min[MAXN], ans[MAXN];
+bool is_tree[MAXN];
+vector<int> unblocks[MAXN];
+
+void dfs(int u, int p, int edge_id, int d) {
+    parent_node[u] = p;
+    up_edge[u] = edge_id;
+    depth[u] = d;
+    up[u][0] = p;
+    for (int j = 1; j < LOG; ++j) {
+        up[u][j] = up[up[u][j - 1]][j - 1];
     }
-
-    int find(int u) {
-        return (u == par[u] ? u : par[u] = find(par[u]));
+    for (auto &[v, id] : g[u]) {
+        if (v != p) {
+            dfs(v, u, id, d + 1);
+        }
     }
+}
 
-    void join(int u, int v) { // u = par v
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        par[v] = u;
-        sz[u] += sz[v];
-        mn[u] = min(mn[u], mn[v]);
+int lca(int u, int v) {
+    if (depth[u] < depth[v]) swap(u, v);
+    for (int j = LOG - 1; j >= 0; --j) {
+        if (depth[u] - (1 << j) >= depth[v]) {
+            u = up[u][j];
+        }
     }
-};
+    if (u == v) return u;
+    for (int j = LOG - 1; j >= 0; --j) {
+        if (up[u][j] != up[v][j]) {
+            u = up[u][j];
+            v = up[v][j];
+        }
+    }
+    return up[u][0];
+}
 
-struct Query {
-    int id, day, ans;
-};
+int get_dsu(int u) {
+    return dsu[u] == u ? u : dsu[u] = get_dsu(dsu[u]);
+}
 
 void testcase() {
-    int n, d; cin >> n >> d;
+    int n, m; cin >> n >> m;
 
-    vector<int> a(n, 0);
-    vector<pii> b(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        b[i] = {a[i], i};
+    for (int i = 1; i <= n; ++i) g[i].clear();
+    for (int i = 1; i <= m; ++i) {
+        unblocks[i].clear();
+        is_tree[i] = false;
+        s_min[i] = INF;
     }
 
-    sort(rall(b));
-
-    vector<Query> q(d);
-    for (int i = 0; i < d; i++) {
-        cin >> q[i].day;
-        q[i].id = i;
-        q[i].ans = 0;
+    for (int i = 1; i <= m; ++i) {
+        cin >> edges[i].u >> edges[i].v;
     }
 
-    sort(all(q), [](Query x, Query y) {
-        return x.day > y.day;
-    });
+    for (int i = 0; i < n - 1; ++i) {
+        int id; cin >> id;
+        is_tree[id] = true;
+    }
 
-    DSU dsu(n);
-    for (int i = 0; i < n; i++) dsu.make(i);
-
-    vector<bool> active(n, false);
-    int icnt = 0;
-    int b_idx = 0;
-
-    for (auto &query : q) {
-        int x = query.day;
-        
-        while (b_idx < n && b[b_idx].first > x) {
-            int idx = b[b_idx].second;
-            active[idx] = true;
-            icnt++;
-
-
-            if (idx > 0 && active[idx - 1]) {
-                if (dsu.find(idx) != dsu.find(idx - 1)) {
-                    dsu.join(idx, idx - 1);
-                    icnt--;
-                }
-            }
-
-            if (idx < n - 1 && active[idx + 1]) {
-                if (dsu.find(idx) != dsu.find(idx + 1)) {
-                    dsu.join(idx, idx + 1);
-                    icnt--;
-                }
-            }
-            b_idx++;
+    for (int i = 1; i <= m; ++i) {
+        if (is_tree[i]) {
+            g[edges[i].u].pb({edges[i].v, i});
+            g[edges[i].v].pb({edges[i].u, i});
         }
-        query.ans = icnt;
     }
 
-    sort(all(q), [](Query x, Query y) {
-        return x.id < y.id;
-    });
+    dfs(1, 0, 0, 0);
 
-    for (int i = 0; i < d; i++) {
-        cout << q[i].ans << (i == d - 1 ? "" : " ");
+    for (int i = 1; i <= n; ++i) dsu[i] = i;
+
+    for (int i = 1; i <= m; ++i) {
+        if (is_tree[i]) continue;
+        int u = edges[i].u, v = edges[i].v;
+        int l = lca(u, v);
+
+        int curr = get_dsu(u);
+        while (depth[curr] > depth[l]) {
+            s_min[up_edge[curr]] = i;
+            dsu[curr] = get_dsu(parent_node[curr]);
+            curr = dsu[curr];
+        }
+
+        curr = get_dsu(v);
+        while (depth[curr] > depth[l]) {
+            s_min[up_edge[curr]] = i;
+            dsu[curr] = get_dsu(parent_node[curr]);
+            curr = dsu[curr];
+        }
+    }
+
+    pqueue<int> pq;
+    
+    for (int i = 1; i <= m; ++i) {
+        if (!is_tree[i]) {
+            pq.push(i);
+        } else {
+            if (s_min[i] == INF) {
+                pq.push(i);
+            } else {
+                unblocks[s_min[i]].pb(i);
+            }
+        }
+    }
+
+    for (int val = m; val >= 1; --val) {
+        int curr = pq.top();
+        pq.pop();
+        ans[curr] = val;
+
+        if (!is_tree[curr]) {
+            for (int nxt : unblocks[curr]) {
+                pq.push(nxt);
+            }
+        }
+    }
+
+    for (int i = 1; i <= m; ++i) {
+        cout << ans[i] << (i == m ? "" : " ");
     }
     cout << el;
 }
@@ -142,7 +178,7 @@ int32_t main() {
     cin.tie(nullptr);
     file();
 
-    int t = 1; cin >> t;
+    int t = 1; // cin >> t;
     while (t--) testcase();
 
     return 0;

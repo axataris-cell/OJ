@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-18 14:28
+// Created: 2026-06-25 09:04
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "CUBES"
+#define FILENAME "NEARSET"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,23 +41,44 @@ void file() {
     }
 }
 
+const int MAXN = 1e5 + 5;
+
+vector<int> xc(MAXN, 0);
+vector<int> yc(MAXN, 0);
+
 void testcase() {
-    int n, m, k; cin >> n >> m >> k;
-    vector<int> color[m + 1];
+    int n, k; cin >> n >> k;
     for (int i = 1; i <= n; i++) {
-        int x; cin >> x;
-        color[x].pb(i);
+        cin >> xc[i] >> yc[i];
     }
+    vector<vector<bool>> vis(1000, vector<bool>(1000, false));
     int res = 0;
-    for (int cc = 1; cc <= m; cc++) {
-        int sz = color[cc].size();
-        int j = 0;
-        for (int i = 0; i < sz; i++) {
-            while (color[cc][i] - color[cc][j] + 1 - (i - j + 1) > k) ++j;
-            res = max(res, i - j + 1);
+    int cur = 0;
+    while (true) {
+        pii best = {-INF, -INF};
+        int mn = INF;
+        for (int x = -100; x <= 100; x++) {
+            for (int y = -100; y <= 100; y++) {
+                if (vis[x + 100][y + 100]) continue;
+                int sum = 0;
+                for (int i = 1; i <= n; i++) {
+                    sum += abs(xc[i] - x) + abs(yc[i] - y);
+                }
+                if (mn > sum) {
+                    best = {x, y};
+                    mn = sum;
+                }
+            }
         }
+        if (cur + mn <= k) {
+            cur += mn;
+            vis[best.fi + 100][best.se + 100] = true;
+            ++res;
+        } else break;
     }
     cout << res;
+    return;
+
 }
 
 int32_t main() {

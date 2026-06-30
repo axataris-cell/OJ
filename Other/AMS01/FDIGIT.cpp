@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-18 13:39
+// Created: 2026-06-30 08:59
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "kmex"
+#define FILENAME "FDIGIT"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -44,44 +44,26 @@ void file() {
 #define int long long
 
 void testcase() {
-    int n, q; 
-    cin >> n >> q;
+    int a, b; cin >> a >> b;
+    int l = a;
+    int r = b;
+    while ((l % 9) != 1) --l;
+    while ((r % 9) != 0) ++r;
 
-    vector<int> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+    int res = (r - l + 1) * 5;
+
+    while (l < a) {
+        if (l % 9 == 0) res -= 9;
+        else res -= l % 9; 
+        ++l;
     }
-
-    sort(a.begin() + 1, a.end());
-    
-    while (q--) {
-        int k; 
-        cin >> k;
-        
-        int l = 1, r = n;
-        int ans_idx = 0;
-
-        while (l <= r) {
-            int mid = (l + r) / 2;
-            int missing = a[mid] - mid + 1;
-            
-            if (missing < k) {
-                ans_idx = mid;
-                l = mid + 1;
-            } else {
-                r = mid - 1;
-            }
-        }
-
-        cout << k + ans_idx - 1 << ' ';
+    while (r > b) {
+        if (r % 9 == 0) res -= 9;
+        else res -= r % 9;
+        --r;
     }
-    cout << el;
+    cout << res;
 }
-/*
-4 1
-1 2 6 7
-1
-*/
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
