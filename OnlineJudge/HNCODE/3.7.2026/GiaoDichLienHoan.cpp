@@ -14,11 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
+// Created: 2026-07-03 08:44
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "bruh"
+#define FILENAME "GiaoDichLienHoan"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -40,12 +41,59 @@ void file() {
     }
 }
 
+#define int long long
+
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1, 0);
+    int n, m; cin >> n >> m;
+
+    vector<int> g[n + 1];
+    vector<int> p(n + 1, 0);
+
     for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+        cin >> p[i];
     }
+    
+    vector<int> deg(n + 1, 0);
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].pb(b);
+        ++deg[b];
+    }
+    
+    vector<int> topo;
+    vector<int> dp(n + 1);
+
+    {
+        queue<int> q;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = p[i];
+            if (deg[i] == 0) {
+                q.push(i);
+            }
+        }
+        while (q.size()) {
+            int u = q.front(); q.pop();
+            topo.pb(u);
+            for (auto v : g[u]) {
+                if (--deg[v] == 0) q.push(v);
+            }
+        }
+    }
+
+
+    for (auto u : topo) {
+        for (auto v : g[u]) {
+            dp[v] = min(dp[v], dp[u]);
+        }
+    }
+
+    int res = 0;
+    for (int i = 1; i <= n; i++) {
+        res = max(res, p[i] - dp[i]);
+    }
+
+    cout << res;
+
 }
 
 int32_t main() {
