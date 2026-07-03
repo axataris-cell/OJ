@@ -14,11 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
+// Created: 2026-07-03 10:18
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "bruh"
+#define FILENAME "Catdutnutthat"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -40,12 +41,36 @@ void file() {
     }
 }
 
+const int MAXN = 2e5 + 5;
+
+vector<int> g[MAXN];
+
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1, 0);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+    int n, m; cin >> n >> m;
+    vector<int> deg(n + 1, 0);
+    for (int i = 1; i <= m; i++) {
+        int a, b; cin >> a >> b;
+        g[a].pb(b);
+        ++deg[b];
     }
+    int init = 0;
+    int res = 0;
+    int best = 1;
+    for (int i = 1; i <= n; i++) {
+        if (deg[i] == 0) ++init;
+    }
+    for (int u = 1; u <= n; u++) {
+        int cnt = init;
+        if (deg[u] == 0) --cnt;
+        for (auto v : g[u]) {
+            if (deg[v] == 1) ++cnt;
+        }
+        if (cnt > res) {
+            res = cnt;
+            best = u;
+        }
+    }
+    cout << best << ' ' << res;
 }
 
 int32_t main() {
