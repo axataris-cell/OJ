@@ -41,8 +41,76 @@ void file() {
     }
 }
 
+#define int long long
+
+struct Fenwick {
+    int n;
+    vector<int> bit;
+
+    Fenwick(int sz) : n(sz), bit(sz + 1) {}
+
+    void update(int pos, int val) {
+        for (; pos <= n; pos += pos & (-pos)) bit[pos] += val;
+    }
+
+    int query(int pos) {
+        int res = 0;
+        for (; pos > 0; pos -= pos & (-pos)) {
+            res += bit[pos];
+        }
+        return res;
+    }
+};
+
 void testcase() {
+    int n, k; cin >> n >> k;
+    vector<int> a(n + 1, 0);
+    vector<int> f(n + 1, 0);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        f[i] = f[i - 1] + a[i];
+    }
+
+    vector<int> b = f;
+    sort(all(b)); // tinh ca f[0]
+    for (int i = 0; i <= n; i++) {
+        f[i] = lower_bound(all(b), f[i]) - b.begin();
+    }
     
+    auto check = [&](int val) {
+        Fenwick BIT(n + 1); 
+        int cnt = 0;
+        
+        BIT.update(f[0] + 1, 1); 
+        
+        for (int i = 1; i <= n; i++) {
+            int original_fi = b[f[i]];
+            int target = original_fi - val;
+
+            int idx = upper_bound(all(b), target) - b.begin(); 
+            
+            cnt += BIT.query(idx);
+
+            BIT.update(f[i] + 1, 1);
+        }
+        return cnt >= k;
+    };
+
+    int L = -1e15;
+    int R = 1e15;
+    int ans = L;
+    
+    while (L <= R) {
+        int mid = L + (R - L) / 2;
+        if (check(mid)) {
+            ans = mid;
+            L = mid + 1;
+        } else {
+            R = mid - 1;
+        }
+    }
+    
+    cout << ans << el;
 }
 
 int32_t main() {
