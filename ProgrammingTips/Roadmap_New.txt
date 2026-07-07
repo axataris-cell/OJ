@@ -1,0 +1,59 @@
+7/2026
+Ôn tập Thuật toán quan trọng cơ bản:
+
+Ưu tiên: 
++ Segment tree, Fenwick tree, Persistent ST, Rollback ST, ... (Làm thêm bài trên MarisaOJ, ... để củng cố)
++ RMQ Sparse table
++ Ôn DP cơ bản
++ Chia căn, Mo's Algorithm
++ DSU, Rollback DSU
++ Chia để trị
++ Centroid Decomposition
++ Euler tour, LCA, ...
+
+8/2026 
+Ôn tập lại các thuật toán cơ bản (p2):
+
+Ưu tiên:
++ Dijkstra (làm hết trong MarisaOJ & CPAD), các thuật toán SP
++ DP Bitmask (SOS), DP Digit, Matrix Multiplication, ...
++ Sweep line
++ Tổ hợp, chỉnh hợp, hoán vị, chia kẹo euler, ... (Nghịch đảo fermat)
++ Bao hàm loại trừ
+
+Đồng thời mở rộng nguồn bài, làm mixed các bài, không học vẹt
+Ôn tập để thi thành phố (> giải Nhì).
+
+9/2026
+Học một số phương pháp tối ưu thuật toán:
++ Tối ưu DP: Alien's trick, Convex Hull trick, Li chao tree, Đảo nhãn, Slope trick, Divide and Conquer, Knuth optimization, ...
++ Parallel binary search, Ternary search
+
+10/2026 -> 11/2026
++ Luồng cực đại trên mạng, cặp ghép cực đại
+Gồm: Dinic, Ford-Fulkerson, Edmonds-Karp, Kuhn
+
+Toán học
++ Thặng dư Trung Hoa (CRT)
++ Dirichlet Convolution
++ Mobius function / Inversed Mobius, phi euler
++ Gauss elimination
++ Miller - Rabin / Pollard Rho
++ Wilson / Lucas (VNOI wiki) (optinal)
++ NTT / FFT (optional)
+
+12/2026 - 1/2026 - 2/2026
++ Ôn các đề thi VOI năm trước
++ Treap
++ HLD
++ Small to large
++ Heuristic
++ Segtree beats
++ Link cut tree
++ Cliques
++ Tree isomorphism
++ Adhoc
++ Chen Danqi
++ Sprague - Grundy
++ Trie / Aho-corasick / Suffix tree / Suffix array
++ Interval tree

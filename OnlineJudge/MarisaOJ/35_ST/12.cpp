@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-02 20:41
+// Created: 2026-07-06 17:07
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "8"
+#define FILENAME "12"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,16 +41,19 @@ void file() {
     }
 }
 
-struct FenwickTree {
+
+struct Fenwick {
     vector<int> bit;
     int n;
-
-    FenwickTree(int _n) : n(_n), bit(_n + 1) {}
-
+    
+    Fenwick(int sz) : bit(sz + 1), n(sz) {}
+    
     void update(int pos, int val) {
-        for (; pos <= n; pos += pos & (-pos)) bit[pos] += val;
+        for (; pos <= n; pos += pos & (-pos)) {
+            bit[pos] += val;
+        }
     }
-
+    
     int query(int pos) {
         int res = 0;
         for (; pos > 0; pos -= pos & (-pos)) res += bit[pos];
@@ -59,40 +62,30 @@ struct FenwickTree {
 };
 
 struct Query {
-    int l, r, k;
-    int id;
+    int l, id;
 };
 
-int n, q;
-
 void testcase() {
-    cin >> n >> q;
-    vector<pii> a(n + 1, {0, 0});
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i].fi;
-        a[i].se = i;
-    }
-    vector<Query> queries(q);
+    int n, q; cin >> n >> q;
+    vector<int> a(n + 1, 0);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    Fenwick BIT(n);
+    vector<vector<Query>> queries(n + 1);
     vector<int> ans(q, 0);
     for (int i = 0; i < q; i++) {
-        cin >> queries[i].l >> queries[i].r >> queries[i].k;
-        queries[i].id = i;
+        int l, r, id; cin >> l >> r;
+        id = i;
+        queries[r].pb({l, id});
     }
-    sort(all(queries), [](Query a, Query b) {
-        return a.k > b.k;
-    });
-    sort(a.begin() + 1, a.end(), greater<pii>());
-
-    FenwickTree BIT(n);
-
-    int cur = 1;
-    for (const auto &[l, r, k, id] : queries) {
-        while (cur <= n && a[cur].fi > k) {
-            BIT.update(a[cur].se, 1);
-            ++cur;
+    map<int, int> lastpos;
+    for (int r = 1; r <= n; r++) {
+        BIT.update(r, 1);
+        if (lastpos[a[r]]) BIT.update(lastpos[a[r]], -1);
+        lastpos[a[r]] = r;
+        for (auto &[l, id] : queries[r]) {
+            ans[id] = BIT.query(r);
+            if (l != 1) ans[id] -= BIT.query(l - 1);
         }
-        ans[id] = BIT.query(r);
-        if (l != 1) ans[id] -= BIT.query(l - 1);
     }
     for (int i = 0; i < q; i++) cout << ans[i] << el;
 }

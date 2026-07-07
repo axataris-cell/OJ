@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-02 20:41
+// Created: 2026-07-06 16:40
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "8"
+#define FILENAME "10"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -58,43 +58,37 @@ struct FenwickTree {
     }
 };
 
-struct Query {
-    int l, r, k;
-    int id;
-};
+const int MAXN = 1e5 + 5;
 
-int n, q;
+vector<int> g[MAXN];
+vector<int> tin(MAXN, 0), tout(MAXN, 0);
+
+int timeDfs = 0;
+
+void dfs(int u, int p) {
+    tin[u] = ++timeDfs;
+    for (int v : g[u]) {
+        if (v == p) continue;
+        dfs(v, u);
+    }
+    tout[u] = ++timeDfs;
+}
 
 void testcase() {
-    cin >> n >> q;
-    vector<pii> a(n + 1, {0, 0});
+    int n; cin >> n;
+    for (int i = 1; i < n; i++) {
+        int u, v; cin >> u >> v;
+        g[u].pb(v);
+        g[v].pb(u);
+    }
+    dfs(1, 1);
+    FenwickTree BIT(timeDfs);
     for (int i = 1; i <= n; i++) {
-        cin >> a[i].fi;
-        a[i].se = i;
+        int x; cin >> x;
+        cout << BIT.query(tin[x]) << el;
+        BIT.update(tin[x], 1);
+        BIT.update(tout[x], -1);
     }
-    vector<Query> queries(q);
-    vector<int> ans(q, 0);
-    for (int i = 0; i < q; i++) {
-        cin >> queries[i].l >> queries[i].r >> queries[i].k;
-        queries[i].id = i;
-    }
-    sort(all(queries), [](Query a, Query b) {
-        return a.k > b.k;
-    });
-    sort(a.begin() + 1, a.end(), greater<pii>());
-
-    FenwickTree BIT(n);
-
-    int cur = 1;
-    for (const auto &[l, r, k, id] : queries) {
-        while (cur <= n && a[cur].fi > k) {
-            BIT.update(a[cur].se, 1);
-            ++cur;
-        }
-        ans[id] = BIT.query(r);
-        if (l != 1) ans[id] -= BIT.query(l - 1);
-    }
-    for (int i = 0; i < q; i++) cout << ans[i] << el;
 }
 
 int32_t main() {
