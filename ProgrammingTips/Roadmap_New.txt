@@ -3,6 +3,7 @@
 
 Ưu tiên: 
 + Segment tree, Fenwick tree, Persistent ST, Rollback ST, ... (Làm thêm bài trên MarisaOJ, ... để củng cố)
++ Iterative Segment Tree
 + RMQ Sparse table
 + Ôn DP cơ bản
 + Chia căn, Mo's Algorithm
