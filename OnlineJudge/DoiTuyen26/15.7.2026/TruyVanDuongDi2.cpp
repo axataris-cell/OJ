@@ -48,7 +48,7 @@ void build() {
     for (int i = n - 1; i > 0; i--) ST[i] = max(ST[i << 1], ST[i << 1 | 1]);
 }
 
-void updateST(int p, int val) {
+void updateST(int p , int val) {
     p--;
     for (ST[p += n] = val; p > 1; p >>= 1) {
         ST[p >> 1] = max(ST[p], ST[p ^ 1]);

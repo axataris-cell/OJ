@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-14 22:03
+// Created: 2026-07-15 16:18
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "3"
+#define FILENAME "IterativeSegtree"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,40 +41,38 @@ void file() {
     }
 }
 
-const ll MOD = 1e9 + 7;
+const int MAXN = 2e5 + 5;
+
+vector<int> a(MAXN, 0);
+vector<int> ST(2 * MAXN, 0);
+
+int n;
+
+void build() {
+    for (int i = 1; i <= n; i++) ST[n + i - 1] = a[i];
+    for (int i = n - 1; i > 0; i--) ST[i] = max(ST[i << 1], ST[i << 1 | 1]);
+}
+
+void update(int p, int val) {
+    for (ST[p += n - 1] += val; p > 1; p >>= 1) {
+        ST[p >> 1] = max(ST[p], ST[p ^ 1]);
+    }
+}
+
+int query(int l, int r) {
+    int res = -INF;
+    for (l += n - 1, r += n; l < r; l >>= 1, r >>= 1) {
+        if (l & 1) res = max(res, ST[l++]);
+        if (r & 1) res = max(res, ST[--r]);
+    }
+    return res;
+}
 
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n);
-    for (auto &x : a) cin >> x;
-
-    ll ans = 0;
-
-    vector<pair<int,ll>> cur;
-
-    for (int x : a) {
-        vector<pair<int,ll>> nxt;
-
-        nxt.push_back({x,1});
-
-        for (auto [g,c] : cur) {
-            int ng = __gcd(g,x);
-
-            if (nxt.back().first == ng)
-                nxt.back().second += c;
-            else
-                nxt.push_back({ng,c});
-        }
-
-        cur = nxt;
-
-        for (auto [g,c] : cur)
-            ans += 1LL * g * c;
-        
-        ans %= MOD;
-    }
-
-    cout << ans % MOD;
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    build();
+    int q; cin >> q;
 }
 
 int32_t main() {

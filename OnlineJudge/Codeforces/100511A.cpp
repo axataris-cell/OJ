@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-14 22:03
+// Created: 2026-07-16 11:56
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "3"
+#define FILENAME "connect"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -34,47 +34,15 @@ using pll = pair<long long, long long>;
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
 void file() {
-    if (FILE *f = fopen(FILENAME".INP", "r")) {
+    if (FILE *f = fopen(FILENAME".in", "r")) {
         fclose(f);
-        freopen(FILENAME".INP", "r", stdin);
-        freopen(FILENAME".OUT", "w", stdout);
+        freopen(FILENAME".in", "r", stdin);
+        freopen(FILENAME".out", "w", stdout);
     }
 }
 
-const ll MOD = 1e9 + 7;
-
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n);
-    for (auto &x : a) cin >> x;
-
-    ll ans = 0;
-
-    vector<pair<int,ll>> cur;
-
-    for (int x : a) {
-        vector<pair<int,ll>> nxt;
-
-        nxt.push_back({x,1});
-
-        for (auto [g,c] : cur) {
-            int ng = __gcd(g,x);
-
-            if (nxt.back().first == ng)
-                nxt.back().second += c;
-            else
-                nxt.push_back({ng,c});
-        }
-
-        cur = nxt;
-
-        for (auto [g,c] : cur)
-            ans += 1LL * g * c;
-        
-        ans %= MOD;
-    }
-
-    cout << ans % MOD;
+    
 }
 
 int32_t main() {
