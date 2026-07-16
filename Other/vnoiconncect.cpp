@@ -41,7 +41,7 @@ void file() {
     }
 }
 
-const int MAXN = 3e5 + 5;
+const int MAXN = 1e5 + 5;
 
 vector<int> par(MAXN), sz(MAXN, 1);
 
@@ -57,7 +57,12 @@ stack<Update> rollback;
 vector<vector<Edge>> ST(4 * MAXN);
 vector<int> rollbackCnt(4 * MAXN, 0);
 
-vector<int> ans(MAXN, 0); // component count at 1..q
+struct Query {
+    int x, y, id;
+};
+
+vector<Query> queries[MAXN];
+bool ans[MAXN];
 
 int find(int u) { // no path comppression
     return (u == par[u] ? u : find(par[u]));
@@ -96,7 +101,11 @@ void solve(int id, int l, int r) {
     }
     compCnt -= rollbackCnt[id] >> 1;
     if (l == r) {
-        ans[l] = compCnt;
+        for (auto [x, y, idx] : queries[l]) {
+            x = find(x);
+            y = find(y);
+            if (x == y) ans[idx] = true;
+        }
     } else {    
         int mid = (l + r) / 2;
         solve(id << 1, l, mid);
@@ -122,38 +131,51 @@ void testcase() {
         par[i] = i;
     }
 
-    map<pii, int> last;
-    queue<int> queries;
+    map<pii, pii> last; // idx - cnt
+    queue<int> qq;
 
     for (int i = 1; i <= q; i++) {
-        char t; cin >> t;
-        if (t == '?') {
-            queries.push(i);
+        int t; cin >> t;
+        if (t == 3) {
+            int x, y; cin >> x >> y;
+            queries[i].push_back({x, y, i});
+            qq.push(i);
             continue;
         }
         
         int a, b; cin >> a >> b;
         if (a > b) swap(a, b);
-        if (t == '+') {
-            last[{a, b}] = i;
+
+        auto &[idx, cnt] = last[{a, b}];
+
+        if (t == 1) {
+            if (cnt == 0) {
+                idx = i;
+            }
+            cnt++;
         } else {
-            update(1, 1, q, last[{a, b}], i, {a, b});
-            last[{a, b}] = 0;
+            if (cnt == 0) continue;
+            --cnt;
+            if (cnt == 0) {
+                update(1, 1, q, idx, i, {a, b});
+                idx = 0;
+            }
         }
     }
 
-    for (auto &[e, idx] : last) {
-        if (idx == 0) continue;
+    for (auto &[e, k] : last) {
+        if (k.fi == 0) continue;
         auto &[u, v] = e;
-        update(1, 1, q, idx, q, {u, v});
+        update(1, 1, q, k.fi, q, {u, v});
     }
 
     solve(1, 1, q);
 
-    while (queries.size()) {
-        int u = queries.front(); queries.pop();
-        cout << ans[u] << el;
+    while (qq.size()) {
+        int u = qq.front(); qq.pop();
+        cout << ans[u];
     }
+
 }
 
 int32_t main() {
