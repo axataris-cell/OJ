@@ -41,8 +41,15 @@ void file() {
     }
 }
 
+const int MAXN = 1e5 + 5;
+
 void testcase() {
-    
+    int n; cin >> n;
+    vector<int> a(n + 1, 0);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    int q; cin >> q;
 }
 
 int32_t main() {

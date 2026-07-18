@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-17 09:20
+// Created: 2026-07-18 16:32
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "TongLuyThuaHai"
+#define FILENAME "AllMST"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,26 +41,8 @@ void file() {
     }
 }
 
-#define int long long
-
-const int LOG = 30;
-
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1, 0);
-    for (int i = 1; i <= n; i++) cin >> a[i];
-
-    umap<int, int> mp;
-    ll res = 0;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 0; j <= LOG; j++) {
-            // if ((1LL << j) - a[i] <= 0) break;
-            res += mp[(1LL << j) - a[i]];
-        }
-        ++mp[a[i]];
-    }
-
-    cout << res;
+    
 }
 
 int32_t main() {
