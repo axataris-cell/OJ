@@ -14,7 +14,7 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-17 21:43
+// Created: 2026-07-21 17:28
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
@@ -41,15 +41,13 @@ void file() {
     }
 }
 
-const int MAXN = 1e5 + 5;
-
 void testcase() {
     int n; cin >> n;
     vector<int> a(n + 1, 0);
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
-    int q; cin >> q;
+    
 }
 
 int32_t main() {

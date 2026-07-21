@@ -6,7 +6,7 @@
 + Iterative Segment Tree
 + RMQ Sparse table
 + Ôn DP cơ bản
-+ Chia căn, Mo's Algorithm
++ Chia căn, Mo's Algorithm, rollback Mo, Mo DSU
 + DSU, Rollback DSU
 + Chia để trị
 + Centroid Decomposition
