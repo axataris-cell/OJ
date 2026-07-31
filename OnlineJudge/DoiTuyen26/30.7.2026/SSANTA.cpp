@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-27 08:00
+// Created: 2026-07-30 14:08
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "thinkfreely"
+#define FILENAME "SSANTA"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,17 +41,48 @@ void file() {
     }
 }
 
-void testcase() {
-    string s;
-    cin >> s;
-    reverse(all(s));
-    ll res = 0;
-    for (int i = 0; i < s.size(); i++) {
-        if (s[i] == '1') {
-            res += (1 << i);
+const int MAXN = 1005;
+
+vector<int> adj[MAXN];
+int match[MAXN];
+bool vis[MAXN];
+
+bool dfs(int u) {
+    for (int v : adj[u]) {
+        if (vis[v]) continue;
+        vis[v] = true;
+
+        if (match[v] == 0 || dfs(match[v])) {
+            match[v] = u;
+            return true;
         }
     }
-    cout << res;
+    return false;
+}
+
+void testcase() {
+    int n; cin >> n;
+
+    for (int i = 1; i <= n; ++i) {
+        int k; cin >> k;
+        while (k--) {
+            int v;
+            cin >> v;
+            adj[i].pb(v);
+        }
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        fill(vis + 1, vis + n + 1, false);
+        dfs(i);
+    }
+
+    vector<int> ans(n + 1);
+    for (int v = 1; v <= n; ++v)
+        if (match[v]) ans[match[v]] = v;
+
+    for (int i = 1; i <= n; ++i)
+        cout << ans[i] << ' ';
 }
 
 int32_t main() {

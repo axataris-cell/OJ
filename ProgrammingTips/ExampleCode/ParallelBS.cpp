@@ -4,7 +4,7 @@ Lặp lại log(Q) lần:
 
     với mỗi cặp l[i], r[i] mà l[i] < r[i]:
         mid = (l[i] + r[i]) / 2
-        thêm i vào check[mid]
+        thêm i vào check[mid];
 
     với mỗi cập nhật thứ q:
         thực hiện cập nhật thứ q vào cấu trúc dữ liệu

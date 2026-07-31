@@ -1,30 +1,49 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define ld long double
-#define el '\n'
-
+#include <iostream>
+#include<stack>
+#include<vector>
 using namespace std;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
 
-void file() {
-	freopen("", "r", stdin);
-	freopen("", "w", stdout);
-}
+int getMaxArea(vector<int>& arr) {
+    int n = arr.size();
+    
+    stack<int> st;
 
-void testcase() {
-	
+    int res = 0;
+    int tp, curr;
+
+    for (int i = 0; i < n; i++) {      
+         
+        while (!st.empty() && arr[st.top()] >= arr[i]) {
+          
+            // The popped item is to be considered as the 
+            // smallest element of the Histogram
+            tp = st.top(); 
+            st.pop();
+          
+            // For the popped item previous smaller element is 
+            // just below it in the stack (or current stack top)
+            // and next smaller element is i
+            int width = st.empty() ? i : i - st.top() - 1;
+          
+            res = max(res,  arr[tp] * width);
+        }
+        st.push(i);
+    }
+
+    // For the remaining items in the stack, next smaller does
+    // not exist. Previous smaller is the item just below in
+    // stack.
+    while (!st.empty()) {
+        tp = st.top(); st.pop();
+        curr = arr[tp] * (st.empty() ? n : n - st.top() - 1);
+        res = max(res, curr);
+    }
+
+    return res;
 }
 
 int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-
-	//file();
-
-	ll t = 1; //cin >> t;
-	while (t--) testcase();
-
-	return 0;
+    vector<int> arr = {60, 20, 50, 40, 10, 50, 60};
+    cout << getMaxArea(arr);
+    return 0;
 }

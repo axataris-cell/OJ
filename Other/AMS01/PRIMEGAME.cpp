@@ -14,11 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
+// Created: 2026-07-31 08:46
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "bruh"
+#define FILENAME "PRIMEGAME"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,11 +42,7 @@ void file() {
 }
 
 void testcase() {
-    int n; cin >> n;
-    vector<int> a(n + 1, 0);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
+    
 }
 
 int32_t main() {

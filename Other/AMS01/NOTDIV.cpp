@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-07-17 15:50
+// Created: 2026-07-31 08:45
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "BLOCK"
+#define FILENAME "NOTDIV"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -42,7 +42,12 @@ void file() {
 }
 
 void testcase() {
-    
+    ll a, b, c, d; cin >> a >> b >> c >> d;
+    ll total = b - a + 1;
+    ll bcnn = c * d / __gcd(c, d);
+    ll B = b / c + b / d - b / bcnn;
+    ll A = (a - 1) / c + (a - 1) / d - (a - 1) / bcnn;
+    cout << total - (B - A);
 }
 
 int32_t main() {
