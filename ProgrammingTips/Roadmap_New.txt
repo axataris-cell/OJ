@@ -5,17 +5,19 @@
 + Segment tree, Fenwick tree, Persistent ST, ... (Làm thêm bài trên MarisaOJ, ... để củng cố)
 + Iterative Segment Tree
 + RMQ Sparse table
-+ Ôn DP cơ bản (Binary Grouping)
-+ Chia căn, Mo's Algorithm, rollback Mo, Mo DSU
++ Chia căn, Mo's Algorithm, rollback Mo
 + DSU, Rollback DSU
-+ Chia để trị
-+ Centroid Decomposition
 + Euler tour, LCA, ...
 
-8/2026 
+8/2026
 Ôn tập lại các thuật toán cơ bản (p2):
 
 Ưu tiên:
++ Ôn DP cơ bản (Binary Grouping) cái này quan trọng nhất <->
++ Centroid Decomposition
++ Chia để trị
++ Làm đa dạng các dạng bài (đặc biệt là nguồn bài trên codeforces)
++ Trie / Aho-corasick 
 + Dijkstra (làm hết trong MarisaOJ & CPAD), các thuật toán SP
 + DP Bitmask (SOS), DP Digit, Matrix Multiplication, ...
 + Sweep line
@@ -56,5 +58,5 @@ Toán học
 + Adhoc
 + Chen Danqi
 + Sprague - Grundy
-+ Trie / Aho-corasick / Suffix tree / Suffix array
++ Suffix tree / Suffix array
 + Interval tree
