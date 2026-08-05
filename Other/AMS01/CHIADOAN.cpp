@@ -66,10 +66,10 @@ void push(int id, int l, int r) {
 
     int mid = (l + r) / 2;
 
-    ST[id << 1] += (mid - l + 1) * lz[id];
+    ST[id << 1] += lz[id];
     lz[id << 1] += lz[id];
 
-    ST[id << 1 | 1] += (r - mid) * lz[id];
+    ST[id << 1 | 1] += lz[id];
     lz[id << 1 | 1] += lz[id];
 
     lz[id] = 0;
@@ -78,7 +78,7 @@ void push(int id, int l, int r) {
 
 void updatePoint(int id, int l, int r, int pos, int val) {
     if (l == r) {
-        ST[id] = val;
+        ST[id] += val;
         return;
     }
     int mid = (l + r) / 2;
@@ -93,7 +93,7 @@ void updateRange(int id, int l, int r, int ql, int qr, int val) {
         return;
     }
     if (ql <= l && r <= qr) {
-        ST[id] += (r - l + 1) * val;
+        ST[id] += val;
         lz[id] += val;
         return;
     }

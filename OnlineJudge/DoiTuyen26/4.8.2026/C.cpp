@@ -14,12 +14,12 @@
 #define el '\n'
 
 // Author: Axataris
-// Created: 2026-06-24 10:45
+// Created: 2026-08-04 19:31
 
 constexpr int INF = 2e9;
 constexpr ll LINF = 4e18;
 
-#define FILENAME "lye"
+#define FILENAME "B"
 
 using namespace std;
 using pii = pair<int, int>;
@@ -41,53 +41,43 @@ void file() {
     }
 }
 
+#define int long long
+
 const int MAXN = 1e5 + 5;
 
+int a[MAXN], b[MAXN];
 vector<int> g[MAXN];
+int dp0[MAXN], dp1[MAXN];
 
-vector<int> low(MAXN, 0), num(MAXN, 0);
-vector<int> scc[MAXN];
-stack<int> tarjan;
-vector<bool> del(MAXN, false);
+void dfs(int u, int p) {
+    int s = 0;
+    vector<int> d;
 
-int sccCount = 0;
-int timeDfs = 0;
-
-void tj(int u) {
-    low[u] = num[u] = ++timeDfs;
-    tarjan.emplace(u);
-    for (const auto & v : g[u]) {
-        if (del[v]) continue;
-        if (!num[v]) {
-            tj(v);
-            low[u] = min(low[u], low[v]);
-        } else low[u] = min(low[u], num[v]);
+    for (int v : g[u]) {
+        if (v == p) continue;
+        dfs(v, u);
+        s += dp1[v];
+        d.pb(dp0[v] - dp1[v]);
     }
-    if (low[u] == num[u]) {
-        int v;
-        ++sccCount;
-        do {
-            v = tarjan.top();
-            del[v] = true;
-            scc[sccCount].push_back(v);
-            tarjan.pop();
-        } while (u != v);
-    }
+
+    sort(all(d));
+    int m = d.size();
+    
+    vector<int> p(m + 1, 0);
+    for
 }
 
 void testcase() {
-    int n, m; cin >> n >> m;
-    for (int i = 1; i <= m; i++) {
+    int n; cin >> n;
+    for (int i = 1; i < n; i++) {
         int a, b; cin >> a >> b;
         g[a].pb(b);
+        g[b].pb(a);
     }
-    for (int i = 1; i <= n; i++) {
-        if (!num[i]) tj(i);
-    }
-    for (int i = 1; i <= sccCount; i++) {
-        for (auto u : scc[i]) cout << u << ' ';
-        cout << el;
-    }
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    for (int i = 1; i <= n; i++) cin >> b[i];
+
+    
 }
 
 int32_t main() {

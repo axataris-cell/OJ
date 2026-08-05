@@ -120,7 +120,7 @@ void testcase() {
             u = dsu.find(u);
             v = dsu.find(v);
             if (dsu.activated[u]) curans -= dsu.sz[u];
-            if (dsu.activated[v]) curans -= dsu.sz[v];
+            if (dsu.activated[v] && u != v) curans -= dsu.sz[v];
             dsu.unite(u, v);
             u = dsu.find(u);
             if (dsu.activated[u]) curans += dsu.sz[u];
