@@ -1,115 +1,96 @@
 #include <bits/stdc++.h>
+using namespace std;
+#define el '\n'
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (x).rbegin(), (x).rend()
-#define fi first
-#define se second
-#define null nullptr
-#define pb push_back
-#define len length
-#define ll long long
-#define ld long double
-#define el '\n'
-
-// Author: Axataris
-// Created: 2026-07-27 22:32
-
-constexpr int INF = 2e9;
-constexpr ll LINF = 4e18;
-
+using pii=pair<int,int>;
 #define FILENAME "K"
+#define fastio ios_base::sync_with_stdio(false),cin.tie(nullptr);
+void file(){if(FILE*f=fopen(FILENAME".INP","r")) fclose(f),freopen(FILENAME".INP","r", stdin),freopen(FILENAME".OUT","w", stdout);}
+const int INF=2e9,MAXN=2e5,LOG=30,MOD=1e9+7,BASE=113;
 
-using namespace std;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
-
-#ifdef LOCAL
-   #define debug(x) cerr << x << '\n'
-#else
-   #define debug(x)
-#endif
-
-mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
-
-void file() {
-    if (FILE *f = fopen(FILENAME".INP", "r")) {
-        fclose(f);
-        freopen(FILENAME".INP", "r", stdin);
-        freopen(FILENAME".OUT", "w", stdout);
-    }
-}
-
-const int MAXN = 1e5 + 5;
-
-struct Query {
-    int k, id;
-};
-
-vector<int> g[MAXN];
-vector<Query> queries[MAXN];
-int ans[MAXN];
-
+const int BLOCK = 400;
+int n=1,m=1,q=1,i=0,j=0;
 int color[MAXN];
+vector<int> g[MAXN];
 
-map<int, int> mp[MAXN];
-map<int, int> freq[MAXN];
+int timeDfs =0;
+int tin[MAXN],tout[MAXN];
+int at[MAXN];
 
-int ST[4 * MAXN];
-
-void update(int id, int l, int r, int pos, int val) {
-    if (l == r) {
-        ST[id] += val;
-        return;
-    }
-    int mid = (l + r) / 2;
-    if (pos <= mid) update(id << 1, l, mid, pos, val);
-    else update(id << 1 | 1, mid + 1, r, pos, val);
-
-    ST[id] = ST[id << 1] + ST[id << 1 | 1];
-}
-
-int query(int id, int l, int r, int ql, int qr) {
-    if (l > qr || r < ql) return 0;
-    if (ql <= l && r <= qr) {
-        return ST[id];
-    }
-    int mid = (l +r ) / 2;
-    return query(id << 1, l, mid, ql, qr) + query(id << 1 | 1, mid + 1, r, ql, qr);
-}
-
+int mp[MAXN],f[MAXN];
 void dfs(int u, int p) {
-    for (int v : g[u]) {
-        if (v == p) continue;
+    tin[u]=++timeDfs;
+    at[timeDfs]=u;
+    for(int v : g[u]) {
+        if(v==p)continue;
+        dfs(v,u);
     }
-    
+    tout[u]=timeDfs;
 }
-
-void testcase() {
-    int n, q; cin >> n >> q;
-    for (int i = 1; i <= n; i++) {
-        cin >> color[i];
-    }
-    for (int i = 1; i < n; i++) {
+void solve() {
+    cin >> n >> q;
+    for(int i =1 ; i<= n;i++) cin >> color[i];
+    for(int i =1 ; i < n; i++) {
         int a, b; cin >> a >> b;
-        g[a].pb(b);
-        g[b].pb(a);
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
-    for (int i = 1; i <= q; i++) {
-        int u, k; cin >> u >> k;
-        queries[u].pb({k, i});
+    dfs(1,1);
+    struct Query{int l,r,k, id;};
+    vector<Query>queries;
+    for(int i =1 ; i <= q;i++) {
+        int v, k;cin>>v >>k;
+        int l = tin[v], r= tout[v];
+        queries.push_back({l,r,k,i});
     }
-    dfs(1, 1);
+    sort(queries.begin(),queries.end(),[](const Query&x,const Query&y) {
+        if (x.l/BLOCK != y.l/BLOCK) {
+            return x.l/BLOCK < y.l/BLOCK;
+        }
+        if ((x.l / BLOCK) & 1) return x.r < y.r;
+        else return x.r>y.r;
+    });
+    vector<int>ans(q+1,0);
+    int L = 1,R=0;
+    auto add=[&](int pos){
+        int v=at[pos];
+        ++mp[color[v]];
+        f[mp[color[v]]]++;
+    };
+    auto remove=[&](int pos){
+        int v=at[pos];
+        --f[mp[color[v]]];
+        --mp[color[v]];
+    };
+    for (auto &[l, r, k, id]: queries) {
+        while (L > l) {
+            --L;
+            add(L);
+        }
+        while (R < r) {
+            ++R;
+            add(R);
+        }
+        while (L < l) {
+            remove(L);
+            ++L;
+        }
+        while (R > r) {
+            remove(R);
+            --R;
+        }
+        ans[id]=f[k];
+    }
+
+    for(int i =1 ; i <= q;i++) {
+        cout << ans[i]<<el;
+    }
 }
-
 int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    file();
-
-    int t = 1; //cin >> t;
-    while (t--) testcase();
-
+    fastio file();
+    int t=1;//cin>>t;
+    while(t--)solve();
     return 0;
 }

@@ -46,6 +46,25 @@ const int MAXN = 2e5 + 5;
 int n, k;
 
 vector<int> g[MAXN];
+int sz[MAXN];
+
+bool del[MAXN];
+int curres=INF;
+int cnt=0;
+
+void dfs(int u, int p, int curx) {
+    sz[u]=1;
+    for(int v:g[u]){
+        if(v==p)continue;
+        dfs(v,u,curx);
+        if (sz[v] >= curx) {
+            del[v]=true;
+            ++cnt;
+            continue;
+        }
+        sz[u]+=sz[v];
+    }
+}
 
 void testcase() {
     cin >> n >> k;
@@ -54,6 +73,29 @@ void testcase() {
         g[u].pb(v);
         g[v].pb(u);
     }
+    int l=1, r=n;
+    int res=1;
+    int debug=1;
+    while (l<=r){
+        int mid= (l+r)/2;
+        cnt=0;
+        for(int i=1;i<=n;i++)del[i]=false;
+        dfs(1,1,mid);
+        curres=sz[1];
+        for(int i=1;i<=n;i++){
+            if (del[i])curres=min(sz[i],curres);
+        }
+        if(cnt>=k){
+            res=mid;
+            // cout<<mid<<el;
+            // for(int i=1;i<=n;i++)cout<< sz[i]<<' ';
+            // cout<<el;
+            debug=curres;
+            l=mid+1;
+        } else r=mid-1;
+    }
+    cout<<debug;
+    // cout<<res;
 }
 
 int32_t main() {

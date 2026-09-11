@@ -1,72 +1,73 @@
 #include <bits/stdc++.h>
+using namespace std;
 #define el '\n'
 
-using namespace std;
+mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
 
-const string NAME = "A";     // problem name
-const string TestType = "Themis";  // "CMS", "Themis"
+const int ntest = 20;
+const string problem = "A";
+const string filename = "brute";
+const string solname = "sol";
 
-const int NTEST = 20;           // number of tests
-const string xau ="0123456789abcdefghijklmnopqrstuvxy";
-
-mt19937_64 rd;
-
-int gen(int lo, int hi){
-    assert(lo <= hi);
-    return rd() % (hi - lo + 1) + lo;
+int gen(int l, int r) {
+    return mt() % (r - l + 1) + l;
 }
 
-void makeTest(ofstream &input, int testId) {
-	// Creating input
-    int n, m, l, r;
-    n = gen(1, 1e9);
-    m = gen(1, 100005);
-    input << n << " " << m << el;
+void gentest(ofstream &out, int id) {
     
-    for (int i = 1; i <= m; i++){
-        l = gen(1, n);
-        r = gen(1, n);
-        input << l << " " << r << el;
-    }
-    
-    // Custom test
-//    if (testId == 1) {
-//    	input << 123456789;
-//    	...
-//	}
 }
 
-int main(){
-    rd.seed(chrono::system_clock::now().time_since_epoch().count());
-    
-    system("MKDIR Test");
-    system(("MKDIR Test\\" + NAME).c_str());
-    
-    for(int i = 0; i < NTEST; i++){
-        string id = to_string(i);          // id of current test
-       // cerr << _ << ' '  << endl;
-        cout << "Making test: " << id << el;
-        string input, output, program = NAME;
+bool comp(const string &f1, const string &f2) {
+    ifstream a(f1), b(f2);
 
-        if (TestType == "CMS") {
-            input  = NAME + id + ".in",
-            output = NAME + id + ".out";
-		}
-        else {
-            string testDir = "Test\\" + NAME + "\\Test" + id;
-            system(("MKDIR " + testDir).c_str());
-            
-            input  = testDir + "\\" + NAME + ".INP";
-            output = testDir + "\\" + NAME + ".OUT";
-		}
+    string s1, s2;
+    while (true) {
+        bool ok1 = (bool)getline(a, s1);
+        bool ok2 = (bool)getline(b, s2);
 
-        ofstream inputFile(input.c_str()); // pointer input
+        if (ok1 != ok2) return false;
+        if (!ok1 && !ok2) return true;
 
-        // create input
-        makeTest(inputFile, i);
-        inputFile.close();
-
-        // create output
-        system((program + ".exe < " + input + " > " + output).c_str());
+        if (s1 != s2) return false;
     }
+}
+
+int main() {
+    system("mkdir Test");
+    system(("mkdir Test\\" + problem).c_str());
+
+    for (int i = 1; i <= ntest; i++) {
+        string id = to_string(i);
+        string testdir = "Test\\" + problem + "\\TEST" + id;
+        string input = testdir + "\\" + problem + ".INP";
+        string output = testdir + "\\" + problem + ".ANS";
+        string tout = testdir + "\\" + solname + ".OUT";
+        system(("mkdir " + testdir).c_str());
+
+        ofstream inputfile(input.c_str());
+        gentest(inputfile, i);
+        inputfile.close();
+
+        {
+            double before = (double)clock() / (double)CLOCKS_PER_SEC;
+            system((filename + ".exe < " + input + " > " + output).c_str());
+            double after = (double)clock() / (double)CLOCKS_PER_SEC;
+            double elapsed = after - before;
+            cout << "Brute " << id << " in " << elapsed << el;
+        }
+        {
+            double before = (double)clock() / (double)CLOCKS_PER_SEC;
+            system((solname + ".exe < " + input + " > " + tout).c_str());
+            double after = (double)clock() / (double)CLOCKS_PER_SEC;
+            double elapsed = after - before;
+            cout << "Solution " << id << " in " << elapsed << el << el;
+        }
+
+        if (!comp(output, tout)) {
+            cout << "WA at test " << id << el;
+            break;
+        }
+    }
+
+    system("pause");
 }
