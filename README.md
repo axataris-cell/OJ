@@ -1,9 +1,1 @@
-<p align="center">
-  <img src="Other\Image\ico1.jpg">
-</p>
-
-<p align="center">
-  <a href="https://codeforces.com/profile/Axataris" style="font-size: 22px;">
-    <strong>Codeforces Profile</strong>
-  </a>
-</p>
+![](https://i.pinimg.com/736x/94/b2/ae/94b2aed17c51a182d4dbb86a781f30e6.jpg)
