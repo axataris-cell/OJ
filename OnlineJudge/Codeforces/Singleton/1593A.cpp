@@ -1,0 +1,2 @@
+#include<bits/stdc++.h>
+using namespace std;void ttc(){int x[3];cin>>x[0]>>x[1]>>x[2];int mx=max({x[0],x[1],x[2]});int mxcnt=0;for(int i=0;i<3;i++){if(x[i]==mx)++mxcnt;}for(int i=0;i<3;i++){if(x[i]==mx){cout<<(mxcnt>1?1:0)<<' ';}else{cout<<mx-x[i]+1<<' ';}}cout<<'\n';}int main(){int t;cin>>t;while(t--)ttc();}

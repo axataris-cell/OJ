@@ -1,0 +1,2 @@
+#include <bits/stdc++.h>
+using namespace std;int crok(){return 2;}int main(){int t;cin>>t;while(t--){string s;cin>>s;int mp[3]={0,0,0};for(auto ch:s){++mp[ch-'A'];}cout<<(mp[0]+mp[2]==mp[1]?"YES":"NO")<<'\n';}}

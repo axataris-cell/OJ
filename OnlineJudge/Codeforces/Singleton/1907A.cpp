@@ -1,0 +1,2 @@
+#include<bits/stdc++.h>
+using namespace std; void test(){string s;cin>>s;for(int c='a';c<='h';c++)if(c!=(int)s[0]){cout<<char(c)<<s[1]<<'\n';}for(int c='1';c<='8';c++)if(c!=(int)s[1]){cout<<s[0]<<char(c)<<'\n';}}int main(){int t;cin>>t;while(t--)test();}

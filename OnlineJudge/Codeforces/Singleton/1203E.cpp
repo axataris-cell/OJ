@@ -1,0 +1,2 @@
+#include<bits/stdc++.h>
+using namespace std;int main(){int n;cin>>n;vector<int>a(n+1,0);for(int i=1;i<=n;i++){cin>>a[i];}vector<bool>matched(150005,false);sort(a.begin()+1,a.end(),greater<int>());for(int i=1;i<=n;i++){for(int j=a[i]+1;j>=a[i]-1;j--){if(!matched[j]){matched[j]=true;break;}}}int cnt=0;for(int i=150001;i>=1;i--){cnt+=(matched[i]?1:0);}cout<<cnt<<'\n';}
