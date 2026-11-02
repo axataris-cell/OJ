@@ -1,38 +1,28 @@
 #include <bits/stdc++.h>
-#include <chrono>
-
+using namespace std;
+#define int long long
+#define el '\n'
 #define umap unordered_map
 #define uset unordered_set
 #define pqueue priority_queue
-#define ll long long
-#define ld long double
-#define el '\n'
-
+using pii=pair<int,int>;
 #define FILENAME ""
-
-using namespace std;
-using pii = pair<int, int>;
-using pll = pair<long long, long long>;
-
-void file() {
-	if (FILE *f = fopen(FILENAME".INP", "r")) {
-		fclose(f);
-		freopen(FILENAME".INP", "r", stdin);
-		freopen(FILENAME".OUT", "w", stdout);
-	}
-}
-
+#define fastio ios_base::sync_with_stdio(false),cin.tie(nullptr);
+void file(){if(FILE*f=fopen(FILENAME".INP","r")) fclose(f),freopen(FILENAME".INP","r", stdin),freopen(FILENAME".OUT","w", stdout);}
+const int INF=4e18,MAXN=2e5+5,LOG=20,MOD=1e9+7,BASE=113,BLOCK=400;
 void testcase() {
-	int a, b; cin >> a >> b;
-	cout << (a ^ (a | b)) + (b ^ (a | b)) << el;
+    int a, b; cin >> a >> b;
+    int res = 0;
+    for (int i = 0; (a >> i) > 0 || (b >> i) > 0; i++) {
+        int cur = 1 << i;
+        int v = (a >> i & 1) ^ (b >> i & 1);
+        res += cur * v;
+    }
+    cout << res << el;
 }
-
 int32_t main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr); file();
-
-	ll t = 1; cin >> t;
-	while (t--) testcase();
-
-	return 0;
+    fastio file();
+    int t=1;cin>>t;
+    while(t--)testcase();
+    return 0;
 }
